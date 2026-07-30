@@ -20,14 +20,14 @@ const CONTACT_DETAILS = [
   {
     icon: Mail,
     title: "Email",
-    value: "support@veromek.com",
-    href: "mailto:support@veromek.com",
+    value: "veromek00@proton.me",
+    href: "mailto:veromek00@proton.me",
   },
   {
     icon: Phone,
     title: "Phone",
-    value: "+34 000 000 000",
-    href: "tel:+34000000000",
+    value: "+34 610 982 845",
+    href: "https://wa.me/34610982845?text=Hello%20VeroMek%2C%20I%20need%20help.",
   },
   {
     icon: MapPin,
@@ -207,7 +207,7 @@ export default function Contact() {
                 <a
                   key={title}
                   href={href}
-                  className="block"
+                  className="block" target="_blank" rel="noreferrer"
                 >
                   {content}
                 </a>
