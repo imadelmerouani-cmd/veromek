@@ -25,6 +25,7 @@ import RefundPolicy from "./pages/RefundPolicy";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
 import About from "./pages/About";
+import EmailConfirmed from "./pages/EmailConfirmed";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 import AdminRoute from "./routes/AdminRoute";
@@ -129,6 +130,11 @@ export default function App() {
         <Route
           path="/about"
           element={<About />}
+        />
+
+        <Route
+          path="/email-confirmed"
+          element={<EmailConfirmed />}
         />
 
         <Route

@@ -209,6 +209,9 @@ export function AuthProvider({ children }) {
           password,
 
           options: {
+            emailRedirectTo:
+              "https://veromek.com/email-confirmed",
+
             data: {
               first_name:
                 firstName?.trim() || "",
