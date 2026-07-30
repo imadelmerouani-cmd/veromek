@@ -13,6 +13,27 @@ const CartContext = createContext(null);
 
 const CART_STORAGE_KEY = "veromek-cart";
 
+function getCartItemKey(item) {
+  if (item?.variant_id != null) {
+    return `variant:${item.variant_id}`;
+  }
+
+  return `product:${item?.id}`;
+}
+
+function matchesCartItem(item, itemKey) {
+  const normalizedKey = String(itemKey);
+
+  return (
+    getCartItemKey(item) ===
+      normalizedKey ||
+    (
+      item?.variant_id == null &&
+      String(item?.id) === normalizedKey
+    )
+  );
+}
+
 function normalizeStock(value) {
   const stock = Number(value);
 
@@ -47,6 +68,7 @@ function normalizeCartItem(item) {
 
   return {
     ...item,
+    cart_key: getCartItemKey(item),
     price: Number(item.price || 0),
     stock,
     quantity: Math.min(quantity, stock),
@@ -162,11 +184,14 @@ export function CartProvider({ children }) {
       const currentCart =
         cartRef.current;
 
+      const productKey =
+        getCartItemKey(product);
+
       const existingProduct =
         currentCart.find(
           (item) =>
-            String(item.id) ===
-            String(product.id)
+            getCartItemKey(item) ===
+            productKey
         );
 
       const currentQuantity =
@@ -209,11 +234,12 @@ export function CartProvider({ children }) {
       if (existingProduct) {
         nextCart = currentCart.map(
           (item) =>
-            String(item.id) ===
-            String(product.id)
+            getCartItemKey(item) ===
+            productKey
               ? {
                   ...item,
                   ...product,
+                  cart_key: productKey,
                   price: Number(
                     product.price || 0
                   ),
@@ -238,6 +264,7 @@ export function CartProvider({ children }) {
         ...currentCart,
         {
           ...product,
+          cart_key: productKey,
           price: Number(
             product.price || 0
           ),
@@ -266,8 +293,10 @@ export function CartProvider({ children }) {
         const selectedItem =
           currentCart.find(
             (item) =>
-              String(item.id) ===
-              String(id)
+              matchesCartItem(
+                item,
+                id
+              )
           );
 
         if (!selectedItem) {
@@ -312,8 +341,10 @@ export function CartProvider({ children }) {
 
         updateCart(
           currentCart.map((item) =>
-            String(item.id) ===
-            String(id)
+            matchesCartItem(
+              item,
+              id
+            )
               ? {
                   ...item,
                   quantity:
@@ -337,8 +368,10 @@ export function CartProvider({ children }) {
         const selectedItem =
           currentCart.find(
             (item) =>
-              String(item.id) ===
-              String(id)
+              matchesCartItem(
+                item,
+                id
+              )
           );
 
         if (!selectedItem) {
@@ -355,8 +388,10 @@ export function CartProvider({ children }) {
           updateCart(
             currentCart.filter(
               (item) =>
-                String(item.id) !==
-                String(id)
+                !matchesCartItem(
+                  item,
+                  id
+                )
             )
           );
 
@@ -369,8 +404,10 @@ export function CartProvider({ children }) {
 
         updateCart(
           currentCart.map((item) =>
-            String(item.id) ===
-            String(id)
+            matchesCartItem(
+              item,
+              id
+            )
               ? {
                   ...item,
                   quantity:
@@ -394,8 +431,10 @@ export function CartProvider({ children }) {
         const selectedItem =
           currentCart.find(
             (item) =>
-              String(item.id) ===
-              String(id)
+              matchesCartItem(
+                item,
+                id
+              )
           );
 
         if (!selectedItem) {
@@ -405,8 +444,10 @@ export function CartProvider({ children }) {
         updateCart(
           currentCart.filter(
             (item) =>
-              String(item.id) !==
-              String(id)
+              !matchesCartItem(
+                item,
+                id
+              )
           )
         );
 
@@ -429,12 +470,24 @@ export function CartProvider({ children }) {
   }, []);
 
   const syncCartStock = useCallback(
-    (products) => {
+    (
+      products,
+      variants = []
+    ) => {
       const productsMap = new Map(
         (products ?? []).map(
           (product) => [
             String(product.id),
             product,
+          ]
+        )
+      );
+
+      const variantsMap = new Map(
+        (variants ?? []).map(
+          (variant) => [
+            String(variant.id),
+            variant,
           ]
         )
       );
@@ -458,9 +511,32 @@ export function CartProvider({ children }) {
             };
           }
 
+          const databaseVariant =
+            item.variant_id != null
+              ? variantsMap.get(
+                  String(
+                    item.variant_id
+                  )
+                )
+              : null;
+
+          if (
+            item.variant_id != null &&
+            !databaseVariant
+          ) {
+            return {
+              ...item,
+              stock: 0,
+              active: false,
+              quantity: 0,
+            };
+          }
+
           const currentStock =
             normalizeStock(
-              databaseProduct.stock
+              databaseVariant
+                ? databaseVariant.stock
+                : databaseProduct.stock
             );
 
           const currentQuantity =
@@ -474,17 +550,43 @@ export function CartProvider({ children }) {
               currentStock
             );
 
+          const isActive =
+            databaseProduct.active !==
+              false &&
+            (
+              !databaseVariant ||
+              databaseVariant
+                .is_active !== false
+            );
+
           return {
             ...item,
             ...databaseProduct,
+            cart_key:
+              getCartItemKey(item),
+            variant_id:
+              databaseVariant?.id ??
+              item.variant_id ??
+              null,
+            size:
+              databaseVariant?.size ??
+              item.size ??
+              null,
+            color:
+              databaseVariant?.color ??
+              item.color ??
+              null,
+            sku:
+              databaseVariant?.sku ??
+              item.sku ??
+              null,
             price: Number(
               databaseProduct.price ||
+                item.price ||
                 0
             ),
             stock: currentStock,
-            active:
-              databaseProduct.active !==
-              false,
+            active: isActive,
             quantity: safeQuantity,
           };
         })
@@ -503,12 +605,19 @@ export function CartProvider({ children }) {
   );
 
   const getCartQuantity =
-    useCallback((productId) => {
+    useCallback((itemOrKey) => {
+      const itemKey =
+        typeof itemOrKey === "object"
+          ? getCartItemKey(itemOrKey)
+          : String(itemOrKey);
+
       const item =
         cartRef.current.find(
           (cartItem) =>
-            String(cartItem.id) ===
-            String(productId)
+            matchesCartItem(
+              cartItem,
+              itemKey
+            )
         );
 
       return Number(
@@ -536,9 +645,7 @@ export function CartProvider({ children }) {
         }
 
         const currentQuantity =
-          getCartQuantity(
-            product.id
-          );
+          getCartQuantity(product);
 
         return (
           currentQuantity +

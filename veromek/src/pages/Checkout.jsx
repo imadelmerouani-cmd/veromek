@@ -455,6 +455,13 @@ export default function Checkout() {
       const rpcItems = cart.map(
         (item) => ({
           product_id: Number(item.id),
+
+          variant_id:
+            item.variant_id === null ||
+            item.variant_id === undefined
+              ? null
+              : Number(item.variant_id),
+
           quantity: Number(
             item.quantity
           ),
@@ -921,13 +928,39 @@ export default function Checkout() {
             <div className="mt-6 max-h-80 space-y-4 overflow-y-auto">
               {cart.map((item) => (
                 <div
-                  key={item.id}
+                  key={
+                    item.cart_key ||
+                    item.variant_id ||
+                    item.id
+                  }
                   className="flex items-start justify-between gap-4"
                 >
                   <div className="min-w-0">
                     <p className="truncate font-semibold">
                       {item.name}
                     </p>
+
+                    {(item.size ||
+                      item.color) && (
+                      <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                        {item.size
+                          ? `Size: ${item.size}`
+                          : ""}
+
+                        {item.size &&
+                        item.color &&
+                        item.color !==
+                          "Default"
+                          ? " · "
+                          : ""}
+
+                        {item.color &&
+                        item.color !==
+                          "Default"
+                          ? `Color: ${item.color}`
+                          : ""}
+                      </p>
+                    )}
 
                     <p className="text-sm text-gray-500">
                       Qty: {item.quantity}

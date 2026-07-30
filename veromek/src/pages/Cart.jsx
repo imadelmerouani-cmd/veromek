@@ -55,34 +55,91 @@ export default function Cart() {
       }
 
       try {
-        const productIds = cart
-          .map((item) => Number(item.id))
-          .filter(Number.isFinite);
+        const productIds = [
+          ...new Set(
+            cart
+              .map((item) =>
+                Number(item.id)
+              )
+              .filter(Number.isFinite)
+          ),
+        ];
 
-        const { data, error } = await supabase
-          .from("products")
-          .select(
-            `
-              id,
-              name,
-              category,
-              price,
-              image,
-              images,
-              description,
-              rating,
-              reviews,
-              stock,
-              active
-            `
-          )
-          .in("id", productIds);
+        const variantIds = [
+          ...new Set(
+            cart
+              .map((item) =>
+                Number(
+                  item.variant_id
+                )
+              )
+              .filter(Number.isFinite)
+          ),
+        ];
 
-        if (error) {
-          throw error;
+        const productRequest =
+          supabase
+            .from("products")
+            .select(
+              `
+                id,
+                name,
+                category,
+                price,
+                image,
+                images,
+                description,
+                rating,
+                reviews,
+                stock,
+                active
+              `
+            )
+            .in("id", productIds);
+
+        const variantRequest =
+          variantIds.length > 0
+            ? supabase
+                .from(
+                  "product_variants"
+                )
+                .select(
+                  `
+                    id,
+                    product_id,
+                    size,
+                    color,
+                    stock,
+                    sku,
+                    is_active
+                  `
+                )
+                .in("id", variantIds)
+            : Promise.resolve({
+                data: [],
+                error: null,
+              });
+
+        const [
+          productResponse,
+          variantResponse,
+        ] = await Promise.all([
+          productRequest,
+          variantRequest,
+        ]);
+
+        if (productResponse.error) {
+          throw productResponse.error;
         }
 
-        syncCartStock(data ?? []);
+        if (variantResponse.error) {
+          throw variantResponse.error;
+        }
+
+        syncCartStock(
+          productResponse.data ?? [],
+          variantResponse.data ?? []
+        );
 
         if (silent) {
           toast.success(
@@ -229,7 +286,11 @@ export default function Cart() {
 
                 return (
                   <article
-                    key={item.id}
+                    key={
+                      item.cart_key ||
+                      item.variant_id ||
+                      item.id
+                    }
                     className={`rounded-3xl border bg-white p-5 dark:bg-zinc-900 ${
                       outOfStock
                         ? "border-red-300 dark:border-red-900"
@@ -270,7 +331,27 @@ export default function Cart() {
                           {item.name}
                         </Link>
 
-                        <p className="mt-2 text-xl font-black">
+                        {(item.size ||
+                          item.color) && (
+                          <div className="mt-3 flex flex-wrap gap-2">
+                            {item.size && (
+                              <span className="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-sm font-bold dark:border-zinc-700 dark:bg-zinc-800">
+                                Size: {item.size}
+                              </span>
+                            )}
+
+                            {item.color &&
+                              item.color !==
+                                "Default" && (
+                                <span className="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-sm font-bold dark:border-zinc-700 dark:bg-zinc-800">
+                                  Color:{" "}
+                                  {item.color}
+                                </span>
+                              )}
+                          </div>
+                        )}
+
+                        <p className="mt-3 text-xl font-black">
                           {formatCurrency(
                             item.price
                           )}
@@ -297,7 +378,9 @@ export default function Cart() {
                             type="button"
                             onClick={() =>
                               decreaseQuantity(
-                                item.id
+                                item.cart_key ||
+                                  item.variant_id ||
+                                  item.id
                               )
                             }
                             className="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-300 transition hover:bg-gray-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
@@ -314,7 +397,9 @@ export default function Cart() {
                             type="button"
                             onClick={() =>
                               increaseQuantity(
-                                item.id
+                                item.cart_key ||
+                                  item.variant_id ||
+                                  item.id
                               )
                             }
                             disabled={
@@ -351,7 +436,9 @@ export default function Cart() {
                           type="button"
                           onClick={() =>
                             removeFromCart(
-                              item.id
+                              item.cart_key ||
+                                item.variant_id ||
+                                item.id
                             )
                           }
                           className="mt-3 inline-flex items-center gap-2 text-sm font-bold text-red-600 hover:underline"

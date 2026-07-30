@@ -26,6 +26,7 @@ import {
 import toast from "react-hot-toast";
 
 import Navbar from "../components/layout/Navbar";
+import VariantModal from "./VariantModal";
 import { supabase } from "../lib/supabase";
 
 const CATEGORIES = [
@@ -443,6 +444,7 @@ function ProductCard({
   onEdit,
   onDelete,
   onToggleActive,
+  onManageVariants,
 }) {
   return (
     <article className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900">
@@ -501,7 +503,18 @@ function ProductCard({
           </p>
         </div>
 
-        <div className="mt-5 grid grid-cols-3 gap-2">
+        <div className="mt-5 grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            onClick={() =>
+              onManageVariants(product)
+            }
+            className="col-span-2 inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-black font-bold text-white transition hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+          >
+            <Boxes size={17} />
+            Manage Variants
+          </button>
+
           <button
             type="button"
             onClick={() => onEdit(product)}
@@ -576,6 +589,11 @@ export default function AdminProducts() {
     useState(false);
   const [editingProduct, setEditingProduct] =
     useState(null);
+
+  const [
+    variantProduct,
+    setVariantProduct,
+  ] = useState(null);
 
   const fetchProducts = useCallback(
     async ({ silent = false } = {}) => {
@@ -659,6 +677,20 @@ export default function AdminProducts() {
 
     setModalOpen(false);
     setEditingProduct(null);
+  };
+
+  const openVariantModal = (product) => {
+    setVariantProduct(product);
+  };
+
+  const closeVariantModal = () => {
+    setVariantProduct(null);
+  };
+
+  const handleVariantsChanged = () => {
+    fetchProducts({
+      silent: true,
+    });
   };
 
   const handleSaveProduct = async (
@@ -993,6 +1025,13 @@ export default function AdminProducts() {
         onSave={handleSaveProduct}
       />
 
+      <VariantModal
+        open={Boolean(variantProduct)}
+        product={variantProduct}
+        onClose={closeVariantModal}
+        onChanged={handleVariantsChanged}
+      />
+
       <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:py-14">
         <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
           <div>
@@ -1237,6 +1276,9 @@ export default function AdminProducts() {
                 onDelete={handleDeleteProduct}
                 onToggleActive={
                   handleToggleActive
+                }
+                onManageVariants={
+                  openVariantModal
                 }
               />
             ))

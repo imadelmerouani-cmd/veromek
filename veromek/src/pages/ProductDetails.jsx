@@ -121,6 +121,18 @@ export default function ProductDetails() {
   const [productError, setProductError] =
     useState("");
 
+  const [variants, setVariants] = useState([]);
+  const [variantsLoading, setVariantsLoading] =
+    useState(true);
+  const [variantsError, setVariantsError] =
+    useState("");
+  const [selectedColor, setSelectedColor] =
+    useState("");
+  const [
+    selectedVariantId,
+    setSelectedVariantId,
+  ] = useState(null);
+
   const [selectedImage, setSelectedImage] =
     useState("");
 
@@ -212,6 +224,140 @@ export default function ProductDetails() {
   useEffect(() => {
     fetchProduct();
   }, [fetchProduct]);
+
+  const fetchVariants = useCallback(async () => {
+    setVariantsLoading(true);
+    setVariantsError("");
+    setSelectedVariantId(null);
+
+    try {
+      const { data, error } = await supabase
+        .from("product_variants")
+        .select(
+          `
+            id,
+            product_id,
+            size,
+            color,
+            stock,
+            sku,
+            is_active
+          `
+        )
+        .eq("product_id", id)
+        .eq("is_active", true);
+
+      if (error) {
+        throw error;
+      }
+
+      const normalizedVariants = (data ?? [])
+        .map((variant) => ({
+          ...variant,
+          size: String(variant.size || "").trim(),
+          color:
+            String(variant.color || "Default").trim() ||
+            "Default",
+          stock: Math.max(
+            0,
+            Number(variant.stock || 0)
+          ),
+        }))
+        .filter((variant) => variant.size)
+        .sort((first, second) => {
+          const colorComparison =
+            first.color.localeCompare(
+              second.color,
+              undefined,
+              {
+                numeric: true,
+                sensitivity: "base",
+              }
+            );
+
+          if (colorComparison !== 0) {
+            return colorComparison;
+          }
+
+          return first.size.localeCompare(
+            second.size,
+            undefined,
+            {
+              numeric: true,
+              sensitivity: "base",
+            }
+          );
+        });
+
+      setVariants(normalizedVariants);
+
+      const firstAvailableVariant =
+        normalizedVariants.find(
+          (variant) => variant.stock > 0
+        ) || normalizedVariants[0];
+
+      setSelectedColor(
+        firstAvailableVariant?.color || ""
+      );
+    } catch (error) {
+      console.error(
+        "Failed to load product variants:",
+        error
+      );
+
+      setVariants([]);
+      setSelectedColor("");
+      setVariantsError(
+        error?.message ||
+          "Failed to load product sizes."
+      );
+    } finally {
+      setVariantsLoading(false);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    fetchVariants();
+  }, [fetchVariants]);
+
+  const variantColors = useMemo(() => {
+    return [
+      ...new Set(
+        variants.map(
+          (variant) => variant.color
+        )
+      ),
+    ];
+  }, [variants]);
+
+  const visibleVariants = useMemo(() => {
+    if (!selectedColor) {
+      return variants;
+    }
+
+    return variants.filter(
+      (variant) =>
+        variant.color === selectedColor
+    );
+  }, [variants, selectedColor]);
+
+  const selectedVariant = useMemo(() => {
+    return (
+      variants.find(
+        (variant) =>
+          String(variant.id) ===
+          String(selectedVariantId)
+      ) || null
+    );
+  }, [variants, selectedVariantId]);
+
+  const totalVariantStock = useMemo(() => {
+    return variants.reduce(
+      (total, variant) =>
+        total + Number(variant.stock || 0),
+      0
+    );
+  }, [variants]);
 
   const fetchReviews = useCallback(async () => {
     if (!product?.id) {
@@ -519,15 +665,49 @@ export default function ProductDetails() {
       return;
     }
 
-    if (product.stock <= 0) {
+    if (variantsLoading) {
       toast.error(
-        "This product is out of stock."
+        "Product sizes are still loading."
       );
       return;
     }
 
-    addToCart(product);
-    toast.success("Product added to cart.");
+    if (variantsError) {
+      toast.error(
+        "Product sizes could not be loaded."
+      );
+      return;
+    }
+
+    if (variants.length === 0) {
+      toast.error(
+        "No sizes are configured for this product."
+      );
+      return;
+    }
+
+    if (!selectedVariant) {
+      toast.error(
+        "Please select a size."
+      );
+      return;
+    }
+
+    if (selectedVariant.stock <= 0) {
+      toast.error(
+        "This size is out of stock."
+      );
+      return;
+    }
+
+    addToCart({
+      ...product,
+      variant_id: selectedVariant.id,
+      size: selectedVariant.size,
+      color: selectedVariant.color,
+      sku: selectedVariant.sku || null,
+      stock: selectedVariant.stock,
+    });
   };
 
   if (productLoading) {
@@ -621,7 +801,18 @@ export default function ProductDetails() {
     product.id
   );
 
-  const outOfStock = product.stock <= 0;
+  const outOfStock =
+    !variantsLoading &&
+    variants.length > 0 &&
+    totalVariantStock <= 0;
+
+  const sizesUnavailable =
+    !variantsLoading &&
+    !variantsError &&
+    variants.length === 0;
+
+  const selectedStock =
+    selectedVariant?.stock ?? totalVariantStock;
 
   return (
     <Layout>
@@ -732,6 +923,134 @@ export default function ProductDetails() {
                 "No product description available."}
             </p>
 
+            <div className="mt-8">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+                    Select size
+                  </h2>
+
+                  <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                    Choose an available size before
+                    adding this product to your cart.
+                  </p>
+                </div>
+
+                {selectedVariant && (
+                  <span className="rounded-full bg-gray-100 px-3 py-1.5 text-sm font-bold text-gray-700 dark:bg-gray-800 dark:text-gray-200">
+                    {selectedVariant.stock} available
+                  </span>
+                )}
+              </div>
+
+              {variantsLoading ? (
+                <div className="mt-4 flex items-center gap-3 rounded-2xl border border-gray-200 p-4 text-gray-500 dark:border-gray-800 dark:text-gray-400">
+                  <LoaderCircle
+                    size={19}
+                    className="animate-spin"
+                  />
+                  Loading available sizes...
+                </div>
+              ) : variantsError ? (
+                <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-300">
+                  <p>{variantsError}</p>
+
+                  <button
+                    type="button"
+                    onClick={fetchVariants}
+                    className="mt-3 font-bold underline"
+                  >
+                    Try loading sizes again
+                  </button>
+                </div>
+              ) : variants.length === 0 ? (
+                <div className="mt-4 rounded-2xl border border-yellow-200 bg-yellow-50 p-4 text-sm text-yellow-800 dark:border-yellow-900 dark:bg-yellow-950/30 dark:text-yellow-300">
+                  Sizes have not been configured for
+                  this product yet.
+                </div>
+              ) : (
+                <>
+                  {variantColors.length > 1 && (
+                    <div className="mt-5">
+                      <p className="text-sm font-bold text-gray-900 dark:text-white">
+                        Color
+                      </p>
+
+                      <div className="mt-3 flex flex-wrap gap-3">
+                        {variantColors.map(
+                          (color) => (
+                            <button
+                              key={color}
+                              type="button"
+                              onClick={() => {
+                                setSelectedColor(color);
+                                setSelectedVariantId(
+                                  null
+                                );
+                              }}
+                              className={`rounded-xl border px-4 py-2.5 text-sm font-bold transition ${
+                                selectedColor === color
+                                  ? "border-black bg-black text-white dark:border-white dark:bg-white dark:text-black"
+                                  : "border-gray-300 bg-white text-gray-900 hover:border-black dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:hover:border-white"
+                              }`}
+                            >
+                              {color}
+                            </button>
+                          )
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="mt-5 grid grid-cols-3 gap-3 sm:grid-cols-4">
+                    {visibleVariants.map(
+                      (variant) => {
+                        const selected =
+                          String(
+                            selectedVariantId
+                          ) ===
+                          String(variant.id);
+
+                        const unavailable =
+                          variant.stock <= 0;
+
+                        return (
+                          <button
+                            key={variant.id}
+                            type="button"
+                            disabled={unavailable}
+                            onClick={() =>
+                              setSelectedVariantId(
+                                variant.id
+                              )
+                            }
+                            className={`relative min-h-14 rounded-xl border px-3 py-3 text-sm font-black transition ${
+                              selected
+                                ? "border-black bg-black text-white ring-2 ring-black/10 dark:border-white dark:bg-white dark:text-black dark:ring-white/20"
+                                : unavailable
+                                  ? "cursor-not-allowed border-gray-200 bg-gray-100 text-gray-400 line-through dark:border-gray-800 dark:bg-gray-900 dark:text-gray-600"
+                                  : "border-gray-300 bg-white text-gray-900 hover:border-black dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:hover:border-white"
+                            }`}
+                            aria-pressed={
+                              selected
+                            }
+                          >
+                            {variant.size}
+
+                            {unavailable && (
+                              <span className="mt-1 block text-[10px] font-semibold no-underline">
+                                Sold out
+                              </span>
+                            )}
+                          </button>
+                        );
+                      }
+                    )}
+                  </div>
+                </>
+              )}
+            </div>
+
             <div className="mt-8 rounded-2xl border border-gray-200 bg-gray-50 p-5 dark:border-gray-800 dark:bg-gray-900">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
@@ -748,14 +1067,16 @@ export default function ProductDetails() {
                   className={`rounded-full px-4 py-2 text-sm font-bold ${
                     outOfStock
                       ? "bg-red-100 text-red-700 dark:bg-red-950/40 dark:text-red-300"
-                      : product.stock <= 5
+                      : selectedStock <= 5
                         ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-950/40 dark:text-yellow-300"
                         : "bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-300"
                   }`}
                 >
                   {outOfStock
                     ? "Out of stock"
-                    : `${product.stock} in stock`}
+                    : selectedVariant
+                      ? `${selectedVariant.stock} in selected size`
+                      : `${totalVariantStock} across all sizes`}
                 </span>
               </div>
             </div>
@@ -764,14 +1085,21 @@ export default function ProductDetails() {
               <button
                 type="button"
                 onClick={handleAddToCart}
-                disabled={outOfStock}
+                disabled={
+                  outOfStock ||
+                  sizesUnavailable ||
+                  variantsLoading ||
+                  Boolean(variantsError)
+                }
                 className="flex flex-1 items-center justify-center gap-3 rounded-2xl bg-black px-8 py-4 font-semibold text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-gray-200"
               >
                 <ShoppingBag size={20} />
 
                 {outOfStock
                   ? "Out of Stock"
-                  : "Add to Cart"}
+                  : sizesUnavailable
+                    ? "Sizes Unavailable"
+                    : "Add to Cart"}
               </button>
 
               <button

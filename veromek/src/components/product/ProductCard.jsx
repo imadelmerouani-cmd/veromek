@@ -1,18 +1,29 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import {
+  Link,
+  useNavigate,
+} from "react-router-dom";
 import {
   Eye,
   Heart,
   ImageIcon,
   ShoppingBag,
   Star,
+  LoaderCircle,
 } from "lucide-react";
 
 import { useCart } from "../../context/CartContext";
 import { useWishlist } from "../../context/WishlistContext";
+import { supabase } from "../../lib/supabase";
 
 export default function ProductCard({
   product,
 }) {
+  const navigate = useNavigate();
+
+  const [adding, setAdding] =
+    useState(false);
+
   const { addToCart } = useCart();
 
   const {
@@ -40,6 +51,50 @@ export default function ProductCard({
   const productReviews = Number(
     product.reviews || 0
   );
+
+  const handleAddToCart = async () => {
+    if (adding) {
+      return;
+    }
+
+    setAdding(true);
+
+    try {
+      const {
+        data: variants,
+        error,
+      } = await supabase
+        .from("product_variants")
+        .select("id")
+        .eq("product_id", product.id)
+        .eq("is_active", true)
+        .limit(1);
+
+      if (error) {
+        throw error;
+      }
+
+      if ((variants ?? []).length > 0) {
+        navigate(`/product/${product.id}`);
+        return;
+      }
+
+      if (outOfStock) {
+        return;
+      }
+
+      addToCart(product);
+    } catch (error) {
+      console.error(
+        "Failed to check product variants:",
+        error
+      );
+
+      navigate(`/product/${product.id}`);
+    } finally {
+      setAdding(false);
+    }
+  };
 
   return (
     <article className="group overflow-hidden rounded-3xl border border-gray-200 bg-white text-gray-950 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl dark:border-zinc-800 dark:bg-zinc-900 dark:text-white">
@@ -194,17 +249,24 @@ export default function ProductCard({
 
           <button
             type="button"
-            onClick={() =>
-              addToCart(product)
-            }
-            disabled={outOfStock}
+            onClick={handleAddToCart}
+            disabled={adding}
             className="flex items-center justify-center gap-2 rounded-xl bg-black px-4 py-3 font-semibold text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500 dark:bg-white dark:text-black dark:hover:bg-gray-200 dark:disabled:bg-zinc-700 dark:disabled:text-zinc-400"
           >
-            <ShoppingBag size={18} />
+            {adding ? (
+              <LoaderCircle
+                size={18}
+                className="animate-spin"
+              />
+            ) : (
+              <ShoppingBag size={18} />
+            )}
 
-            {outOfStock
-              ? "Sold out"
-              : "Add"}
+            {adding
+              ? "Checking..."
+              : outOfStock
+                ? "Check sizes"
+                : "Add"}
           </button>
         </div>
       </div>

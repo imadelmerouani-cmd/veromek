@@ -47,6 +47,9 @@ export default function MyOrders() {
               id,
               product_id,
               product_name,
+              variant_id,
+              size,
+              color,
               price,
               quantity,
               image
@@ -322,6 +325,14 @@ export default function MyOrders() {
                               <p className="truncate font-semibold text-gray-900 dark:text-white">
                                 {item.product_name}
                               </p>
+
+                              {(item.size || item.color) && (
+                                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                                  {item.size ? `Size: ${item.size}` : ""}
+                                  {item.size && item.color && item.color !== "Default" ? " · " : ""}
+                                  {item.color && item.color !== "Default" ? `Color: ${item.color}` : ""}
+                                </p>
+                              )}
 
                               <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                                 Quantity: {item.quantity}
