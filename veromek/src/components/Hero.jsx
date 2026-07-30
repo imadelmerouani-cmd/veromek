@@ -44,8 +44,8 @@ export default function Hero() {
         <div className="flex justify-center">
           <div className="overflow-hidden rounded-3xl bg-white p-5 shadow-2xl transition-colors dark:bg-zinc-900">
             <img
-              src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=900"
-              alt="Red sneakers"
+              src="/LOGO1.jpg"
+              alt="VeroMek hero"
               className="h-[500px] w-[450px] rounded-2xl object-cover transition duration-500 hover:scale-105"
             />
           </div>
