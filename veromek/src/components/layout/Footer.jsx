@@ -25,21 +25,6 @@ export default function Footer() {
             lifestyle.
           </p>
 
-          <div className="mt-6 flex flex-wrap gap-3">
-            <a
-              href="#"
-              className="rounded-xl border border-gray-200 px-4 py-2 text-sm font-bold transition hover:bg-gray-100 dark:border-zinc-800 dark:hover:bg-zinc-900"
-            >
-              Instagram
-            </a>
-
-            <a
-              href="#"
-              className="rounded-xl border border-gray-200 px-4 py-2 text-sm font-bold transition hover:bg-gray-100 dark:border-zinc-800 dark:hover:bg-zinc-900"
-            >
-              Facebook
-            </a>
-          </div>
         </div>
 
         <div>
@@ -161,10 +146,10 @@ export default function Footer() {
               />
 
               <a
-                href="mailto:support@veromek.com"
+                href="mailto:veromek00@proton.me"
                 className="break-all transition hover:text-black dark:hover:text-white"
               >
-                support@veromek.com
+                veromek00@proton.me
               </a>
             </li>
 
@@ -175,10 +160,13 @@ export default function Footer() {
               />
 
               <a
-                href="tel:+34000000000"
+                href="https://wa.me/34610982845?text=Hello%20VeroMek%2C%20I%20need%20help."
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Chat with VeroMek on WhatsApp"
                 className="transition hover:text-black dark:hover:text-white"
               >
-                +34 000 000 000
+                +34 610 982 845
               </a>
             </li>
 
