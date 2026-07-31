@@ -15,6 +15,10 @@ import {
   ShoppingBag,
   Star,
   Trash2,
+  ShieldCheck,
+  Truck,
+  RotateCcw,
+  BadgeCheck,
 } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -911,7 +915,19 @@ export default function ProductDetails() {
               </a>
             </div>
 
-            <p className="mt-7 text-4xl font-extrabold text-gray-900 dark:text-white">
+            <div className="mt-6 flex flex-wrap gap-2">
+              <span className="inline-flex items-center gap-2 rounded-full bg-orange-100 px-3 py-1.5 text-sm font-black text-orange-700 dark:bg-orange-950/40 dark:text-orange-300">
+                <BadgeCheck size={16} />
+                Popular choice
+              </span>
+
+              <span className="inline-flex items-center gap-2 rounded-full bg-green-100 px-3 py-1.5 text-sm font-black text-green-700 dark:bg-green-950/40 dark:text-green-300">
+                <Truck size={16} />
+                Tracked delivery
+              </span>
+            </div>
+
+            <p className="mt-5 text-4xl font-extrabold text-gray-900 dark:text-white">
               $
               {Number(product.price).toFixed(
                 2
@@ -1075,8 +1091,12 @@ export default function ProductDetails() {
                   {outOfStock
                     ? "Out of stock"
                     : selectedVariant
-                      ? `${selectedVariant.stock} in selected size`
-                      : `${totalVariantStock} across all sizes`}
+                      ? selectedVariant.stock <= 5
+                        ? `Only ${selectedVariant.stock} left in this size`
+                        : "In stock"
+                      : totalVariantStock <= 5
+                        ? `Only ${totalVariantStock} left`
+                        : "In stock"}
                 </span>
               </div>
             </div>
@@ -1126,6 +1146,38 @@ export default function ProductDetails() {
                   ? "Saved"
                   : "Wishlist"}
               </button>
+            </div>
+
+            <div className="mt-5 grid gap-3 sm:grid-cols-3">
+              <div className="flex items-center gap-3 rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+                <ShieldCheck size={22} className="shrink-0" />
+                <div>
+                  <p className="text-sm font-black">Secure checkout</p>
+                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    Protected shopping
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+                <Truck size={22} className="shrink-0" />
+                <div>
+                  <p className="text-sm font-black">Tracked delivery</p>
+                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    Follow your order
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+                <RotateCcw size={22} className="shrink-0" />
+                <div>
+                  <p className="text-sm font-black">Easy returns</p>
+                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    Within 30 days
+                  </p>
+                </div>
+              </div>
             </div>
 
             <div className="mt-10 border-t border-gray-200 pt-8 dark:border-gray-800">
@@ -1492,6 +1544,40 @@ export default function ProductDetails() {
           </div>
         </div>
       </section>
+
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 p-3 shadow-[0_-8px_24px_rgba(0,0,0,0.08)] backdrop-blur lg:hidden dark:border-gray-800 dark:bg-zinc-950/95">
+        <div className="mx-auto flex max-w-7xl items-center gap-3">
+          <div className="min-w-0">
+            <p className="text-xs font-semibold text-gray-500 dark:text-gray-400">
+              Price
+            </p>
+            <p className="truncate text-lg font-black">
+              ${Number(product.price).toFixed(2)}
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleAddToCart}
+            disabled={
+              outOfStock ||
+              sizesUnavailable ||
+              variantsLoading ||
+              Boolean(variantsError)
+            }
+            className="ml-auto inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-2xl bg-black px-5 font-black text-white transition disabled:cursor-not-allowed disabled:opacity-50 dark:bg-white dark:text-black"
+          >
+            <ShoppingBag size={19} />
+            {outOfStock
+              ? "Out of stock"
+              : selectedVariant
+                ? `Add size ${selectedVariant.size}`
+                : "Select a size"}
+          </button>
+        </div>
+      </div>
+
+      <div className="h-24 lg:hidden" />
     </Layout>
   );
 }
