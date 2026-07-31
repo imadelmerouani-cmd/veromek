@@ -834,5 +834,61 @@
     "checkingCoupon": "Comprobando...",
     "applyCouponShort": "Aplicar",
     "couponAppliedCode": "Cupón {{code}} aplicado."
+  },
+  "profile": {
+    "welcomeBack": "Te damos la bienvenida de nuevo a VeroMek.",
+    "firstName": "Nombre",
+    "lastName": "Apellidos",
+    "email": "Correo electrónico",
+    "memberSince": "Miembro desde",
+    "logout": "Cerrar sesión",
+    "loggedOut": "Sesión cerrada correctamente."
+  },
+  "orders": {
+    "loadError": "No se pudieron cargar tus pedidos.",
+    "unknownDate": "Fecha desconocida",
+    "invoiceDownloaded": "La factura del pedido #{{id}} se ha descargado.",
+    "invoiceError": "No se pudo generar la factura.",
+    "loading": "Cargando tus pedidos...",
+    "loginRequired": "Inicio de sesión requerido",
+    "loginDescription": "Inicia sesión para ver tus pedidos anteriores.",
+    "login": "Iniciar sesión",
+    "account": "Cuenta",
+    "title": "Mis pedidos",
+    "count_one": "{{count}} pedido",
+    "count_other": "{{count}} pedidos",
+    "emptyTitle": "Todavía no hay pedidos",
+    "emptyDescription": "Los productos que compres aparecerán aquí.",
+    "startShopping": "Empezar a comprar",
+    "order": "Pedido",
+    "placedOn": "Realizado el",
+    "payment": "Pago",
+    "notSpecified": "No especificado",
+    "status": "Estado",
+    "downloadInvoice": "Descargar factura",
+    "orderItems": "Artículos del pedido",
+    "size": "Talla: {{size}}",
+    "color": "Color: {{color}}",
+    "quantity": "Cantidad: {{quantity}}",
+    "shippingAddress": "Dirección de envío",
+    "subtotal": "Subtotal",
+    "coupon": "Cupón {{code}}",
+    "shipping": "Envío",
+    "free": "GRATIS",
+    "total": "Total",
+    "statuses": {
+      "pending": "Pendiente",
+      "processing": "En preparación",
+      "shipped": "Enviado",
+      "delivered": "Entregado",
+      "cancelled": "Cancelado",
+      "unknown": "Desconocido"
+    },
+    "paymentMethods": {
+      "stripe": "Stripe",
+      "paypal": "PayPal",
+      "cash": "Efectivo",
+      "cod": "Pago contra reembolso"
+    }
   }
 }

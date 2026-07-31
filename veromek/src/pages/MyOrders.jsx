@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 import Layout from "../components/layout/Layout";
 import { useAuth } from "../context/AuthContext";
@@ -18,6 +19,7 @@ import { supabase } from "../lib/supabase";
 import { generateOrderInvoice } from "../utils/generateInvoice";
 
 export default function MyOrders() {
+  const { t, i18n } = useTranslation();
   const { user, authLoading } = useAuth();
 
   const [orders, setOrders] = useState([]);
@@ -69,8 +71,7 @@ export default function MyOrders() {
         console.error("Failed to load orders:", error);
 
         toast.error(
-          error?.message ||
-            "Failed to load your orders."
+          error?.message || t("orders.loadError")
         );
       } finally {
         setOrdersLoading(false);
@@ -78,7 +79,7 @@ export default function MyOrders() {
     };
 
     fetchOrders();
-  }, [user, authLoading]);
+  }, [user, authLoading, t]);
 
   const formatPrice = (value) => {
     return Number(value || 0).toFixed(2);
@@ -86,16 +87,49 @@ export default function MyOrders() {
 
   const formatDate = (date) => {
     if (!date) {
-      return "Unknown date";
+      return t("orders.unknownDate");
     }
 
-    return new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    }).format(new Date(date));
+    return new Intl.DateTimeFormat(
+      i18n.resolvedLanguage || "en",
+      {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      }
+    ).format(new Date(date));
+  };
+
+  const getStatusLabel = (status) => {
+    const normalizedStatus = String(
+      status || "unknown"
+    ).toLowerCase();
+
+    const key = `orders.statuses.${normalizedStatus}`;
+    const translated = t(key);
+
+    return translated === key
+      ? normalizedStatus
+      : translated;
+  };
+
+  const getPaymentLabel = (paymentMethod) => {
+    if (!paymentMethod) {
+      return t("orders.notSpecified");
+    }
+
+    const normalizedMethod = String(
+      paymentMethod
+    ).toLowerCase();
+
+    const key = `orders.paymentMethods.${normalizedMethod}`;
+    const translated = t(key);
+
+    return translated === key
+      ? paymentMethod
+      : translated;
   };
 
   const handleDownloadInvoice = (order) => {
@@ -103,7 +137,9 @@ export default function MyOrders() {
       generateOrderInvoice(order);
 
       toast.success(
-        `Invoice for order #${order.id} downloaded.`
+        t("orders.invoiceDownloaded", {
+          id: order.id,
+        })
       );
     } catch (error) {
       console.error(
@@ -113,7 +149,7 @@ export default function MyOrders() {
 
       toast.error(
         error?.message ||
-          "Failed to generate invoice."
+          t("orders.invoiceError")
       );
     }
   };
@@ -129,7 +165,7 @@ export default function MyOrders() {
             />
 
             <p className="mt-4 text-gray-600 dark:text-gray-400">
-              Loading your orders...
+              {t("orders.loading")}
             </p>
           </div>
         </section>
@@ -148,11 +184,11 @@ export default function MyOrders() {
             />
 
             <h1 className="mb-3 text-3xl font-bold text-gray-900 dark:text-white">
-              Login Required
+              {t("orders.loginRequired")}
             </h1>
 
             <p className="mb-8 text-gray-600 dark:text-gray-400">
-              Log in to view your previous orders.
+              {t("orders.loginDescription")}
             </p>
 
             <Link
@@ -162,7 +198,7 @@ export default function MyOrders() {
               }}
               className="inline-flex rounded-xl bg-black px-7 py-3 font-semibold text-white transition hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
             >
-              Login
+              {t("orders.login")}
             </Link>
           </div>
         </section>
@@ -176,17 +212,18 @@ export default function MyOrders() {
         <div className="mb-10 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
             <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-400">
-              Account
+              {t("orders.account")}
             </p>
 
             <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl dark:text-white">
-              My Orders
+              {t("orders.title")}
             </h1>
           </div>
 
           <p className="text-gray-600 dark:text-gray-400">
-            {orders.length}{" "}
-            {orders.length === 1 ? "order" : "orders"}
+            {t("orders.count", {
+              count: orders.length,
+            })}
           </p>
         </div>
 
@@ -198,18 +235,18 @@ export default function MyOrders() {
             />
 
             <h2 className="mb-3 text-2xl font-bold text-gray-900 dark:text-white">
-              No Orders Yet
+              {t("orders.emptyTitle")}
             </h2>
 
             <p className="mx-auto mb-8 max-w-md text-gray-600 dark:text-gray-400">
-              Products you order will appear here.
+              {t("orders.emptyDescription")}
             </p>
 
             <Link
               to="/shop"
               className="inline-flex rounded-xl bg-black px-7 py-3 font-semibold text-white transition hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
             >
-              Start Shopping
+              {t("orders.startShopping")}
             </Link>
           </div>
         ) : (
@@ -222,7 +259,7 @@ export default function MyOrders() {
                 <div className="grid gap-5 border-b border-gray-200 bg-gray-50 p-6 md:grid-cols-4 dark:border-gray-800 dark:bg-gray-950">
                   <div>
                     <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                      Order
+                      {t("orders.order")}
                     </p>
 
                     <p className="font-bold text-gray-900 dark:text-white">
@@ -233,7 +270,7 @@ export default function MyOrders() {
                   <div>
                     <p className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
                       <CalendarDays size={14} />
-                      Placed On
+                      {t("orders.placedOn")}
                     </p>
 
                     <p className="text-sm font-medium text-gray-900 dark:text-white">
@@ -244,18 +281,19 @@ export default function MyOrders() {
                   <div>
                     <p className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
                       <CreditCard size={14} />
-                      Payment
+                      {t("orders.payment")}
                     </p>
 
-                    <p className="capitalize font-medium text-gray-900 dark:text-white">
-                      {order.payment_method ||
-                        "Not specified"}
+                    <p className="font-medium text-gray-900 dark:text-white">
+                      {getPaymentLabel(
+                        order.payment_method
+                      )}
                     </p>
                   </div>
 
                   <div>
                     <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                      Status
+                      {t("orders.status")}
                     </p>
 
                     <span
@@ -271,7 +309,7 @@ export default function MyOrders() {
                           : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300"
                       }`}
                     >
-                      {order.status}
+                      {getStatusLabel(order.status)}
                     </span>
 
                     <p className="mt-3 text-xl font-bold text-gray-900 dark:text-white">
@@ -281,21 +319,19 @@ export default function MyOrders() {
                     <button
                       type="button"
                       onClick={() =>
-                        handleDownloadInvoice(
-                          order
-                        )
+                        handleDownloadInvoice(order)
                       }
                       className="mt-3 inline-flex items-center justify-center gap-2 rounded-xl border border-gray-300 px-4 py-2 text-sm font-bold text-gray-900 transition hover:bg-gray-100 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
                     >
                       <Download size={16} />
-                      Download Invoice
+                      {t("orders.downloadInvoice")}
                     </button>
                   </div>
                 </div>
 
                 <div className="p-6">
                   <h2 className="mb-5 text-xl font-bold text-gray-900 dark:text-white">
-                    Order Items
+                    {t("orders.orderItems")}
                   </h2>
 
                   <div className="space-y-4">
@@ -328,21 +364,35 @@ export default function MyOrders() {
 
                               {(item.size || item.color) && (
                                 <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                                  {item.size ? `Size: ${item.size}` : ""}
-                                  {item.size && item.color && item.color !== "Default" ? " · " : ""}
-                                  {item.color && item.color !== "Default" ? `Color: ${item.color}` : ""}
+                                  {item.size
+                                    ? t("orders.size", {
+                                        size: item.size,
+                                      })
+                                    : ""}
+                                  {item.size &&
+                                  item.color &&
+                                  item.color !== "Default"
+                                    ? " · "
+                                    : ""}
+                                  {item.color &&
+                                  item.color !== "Default"
+                                    ? t("orders.color", {
+                                        color: item.color,
+                                      })
+                                    : ""}
                                 </p>
                               )}
 
                               <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                                Quantity: {item.quantity}
+                                {t("orders.quantity", {
+                                  quantity: item.quantity,
+                                })}
                               </p>
                             </div>
                           </div>
 
                           <p className="shrink-0 font-bold text-gray-900 dark:text-white">
-                            $
-                            {formatPrice(
+                            ${formatPrice(
                               Number(item.price) *
                                 item.quantity
                             )}
@@ -356,7 +406,7 @@ export default function MyOrders() {
                     <div>
                       <h3 className="mb-3 flex items-center gap-2 font-bold text-gray-900 dark:text-white">
                         <Truck size={19} />
-                        Shipping Address
+                        {t("orders.shippingAddress")}
                       </h3>
 
                       <div className="space-y-1 text-sm text-gray-600 dark:text-gray-400">
@@ -379,7 +429,7 @@ export default function MyOrders() {
 
                     <div className="space-y-3 md:ml-auto md:w-full md:max-w-xs">
                       <div className="flex justify-between text-gray-600 dark:text-gray-400">
-                        <span>Subtotal</span>
+                        <span>{t("orders.subtotal")}</span>
 
                         <span>
                           ${formatPrice(order.subtotal)}
@@ -397,7 +447,9 @@ export default function MyOrders() {
                                 />
 
                                 <span className="truncate">
-                                  Coupon {order.coupon_code}
+                                  {t("orders.coupon", {
+                                    code: order.coupon_code,
+                                  })}
                                 </span>
                               </span>
 
@@ -409,11 +461,11 @@ export default function MyOrders() {
                         )}
 
                       <div className="flex justify-between text-gray-600 dark:text-gray-400">
-                        <span>Shipping</span>
+                        <span>{t("orders.shipping")}</span>
 
                         <span>
                           {Number(order.shipping) === 0
-                            ? "FREE"
+                            ? t("orders.free")
                             : `$${formatPrice(
                                 order.shipping
                               )}`}
@@ -421,7 +473,7 @@ export default function MyOrders() {
                       </div>
 
                       <div className="flex justify-between border-t border-gray-200 pt-3 text-xl font-bold text-gray-900 dark:border-gray-800 dark:text-white">
-                        <span>Total</span>
+                        <span>{t("orders.total")}</span>
 
                         <span>
                           ${formatPrice(order.total)}

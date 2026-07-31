@@ -1,11 +1,13 @@
 import { Navigate } from "react-router-dom";
 import { Calendar, LogOut, Mail, User } from "lucide-react";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 import Layout from "../components/layout/Layout";
 import { useAuth } from "../context/AuthContext";
 
 export default function Profile() {
+  const { t, i18n } = useTranslation();
   const {
     user,
     authLoading,
@@ -21,7 +23,7 @@ export default function Profile() {
       return;
     }
 
-    toast.success("Logged out successfully!");
+    toast.success(t("profile.loggedOut"));
   };
 
   if (authLoading) {
@@ -48,9 +50,14 @@ export default function Profile() {
     `${firstName} ${lastName}`.trim() ||
     user.email.split("@")[0];
 
-  const createdAt = new Date(
-    user.created_at
-  ).toLocaleDateString();
+  const createdAt = new Intl.DateTimeFormat(
+    i18n.resolvedLanguage || "en",
+    {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }
+  ).format(new Date(user.created_at));
 
   return (
     <Layout>
@@ -68,14 +75,14 @@ export default function Profile() {
             </h1>
 
             <p className="mt-2 text-gray-500 dark:text-gray-400">
-              Welcome back to VeroMek.
+              {t("profile.welcomeBack")}
             </p>
 
             <div className="mt-10 grid gap-5 md:grid-cols-2">
               <div className="rounded-2xl border border-gray-200 p-5 dark:border-zinc-700">
                 <div className="mb-2 flex items-center gap-2 font-semibold">
                   <User size={18} />
-                  First Name
+                  {t("profile.firstName")}
                 </div>
 
                 <p>{firstName || "-"}</p>
@@ -84,7 +91,7 @@ export default function Profile() {
               <div className="rounded-2xl border border-gray-200 p-5 dark:border-zinc-700">
                 <div className="mb-2 flex items-center gap-2 font-semibold">
                   <User size={18} />
-                  Last Name
+                  {t("profile.lastName")}
                 </div>
 
                 <p>{lastName || "-"}</p>
@@ -93,7 +100,7 @@ export default function Profile() {
               <div className="rounded-2xl border border-gray-200 p-5 dark:border-zinc-700">
                 <div className="mb-2 flex items-center gap-2 font-semibold">
                   <Mail size={18} />
-                  Email
+                  {t("profile.email")}
                 </div>
 
                 <p className="break-all">
@@ -104,7 +111,7 @@ export default function Profile() {
               <div className="rounded-2xl border border-gray-200 p-5 dark:border-zinc-700">
                 <div className="mb-2 flex items-center gap-2 font-semibold">
                   <Calendar size={18} />
-                  Member Since
+                  {t("profile.memberSince")}
                 </div>
 
                 <p>{createdAt}</p>
@@ -113,11 +120,12 @@ export default function Profile() {
 
             <div className="mt-10">
               <button
+                type="button"
                 onClick={handleLogout}
                 className="flex items-center gap-2 rounded-xl bg-red-600 px-6 py-3 font-semibold text-white transition hover:bg-red-700"
               >
                 <LogOut size={18} />
-                Logout
+                {t("profile.logout")}
               </button>
             </div>
           </div>

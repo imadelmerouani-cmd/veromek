@@ -864,5 +864,61 @@
     "checkingCoupon": "Checking...",
     "applyCouponShort": "Apply",
     "couponAppliedCode": "Coupon {{code}} applied."
+  },
+  "profile": {
+    "welcomeBack": "Welcome back to VeroMek.",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "memberSince": "Member Since",
+    "logout": "Logout",
+    "loggedOut": "Logged out successfully!"
+  },
+  "orders": {
+    "loadError": "Failed to load your orders.",
+    "unknownDate": "Unknown date",
+    "invoiceDownloaded": "Invoice for order #{{id}} downloaded.",
+    "invoiceError": "Failed to generate invoice.",
+    "loading": "Loading your orders...",
+    "loginRequired": "Login Required",
+    "loginDescription": "Log in to view your previous orders.",
+    "login": "Login",
+    "account": "Account",
+    "title": "My Orders",
+    "count_one": "{{count}} order",
+    "count_other": "{{count}} orders",
+    "emptyTitle": "No Orders Yet",
+    "emptyDescription": "Products you order will appear here.",
+    "startShopping": "Start Shopping",
+    "order": "Order",
+    "placedOn": "Placed On",
+    "payment": "Payment",
+    "notSpecified": "Not specified",
+    "status": "Status",
+    "downloadInvoice": "Download Invoice",
+    "orderItems": "Order Items",
+    "size": "Size: {{size}}",
+    "color": "Color: {{color}}",
+    "quantity": "Quantity: {{quantity}}",
+    "shippingAddress": "Shipping Address",
+    "subtotal": "Subtotal",
+    "coupon": "Coupon {{code}}",
+    "shipping": "Shipping",
+    "free": "FREE",
+    "total": "Total",
+    "statuses": {
+      "pending": "Pending",
+      "processing": "Processing",
+      "shipped": "Shipped",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled",
+      "unknown": "Unknown"
+    },
+    "paymentMethods": {
+      "stripe": "Stripe",
+      "paypal": "PayPal",
+      "cash": "Cash",
+      "cod": "Cash on delivery"
+    }
   }
 }

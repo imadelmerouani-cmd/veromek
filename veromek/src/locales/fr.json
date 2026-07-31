@@ -834,5 +834,61 @@
     "checkingCoupon": "Vérification...",
     "applyCouponShort": "Appliquer",
     "couponAppliedCode": "Coupon {{code}} appliqué."
+  },
+  "profile": {
+    "welcomeBack": "Bienvenue à nouveau sur VeroMek.",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Adresse e-mail",
+    "memberSince": "Membre depuis",
+    "logout": "Déconnexion",
+    "loggedOut": "Déconnexion réussie."
+  },
+  "orders": {
+    "loadError": "Impossible de charger vos commandes.",
+    "unknownDate": "Date inconnue",
+    "invoiceDownloaded": "La facture de la commande n°{{id}} a été téléchargée.",
+    "invoiceError": "Impossible de générer la facture.",
+    "loading": "Chargement de vos commandes...",
+    "loginRequired": "Connexion requise",
+    "loginDescription": "Connectez-vous pour consulter vos commandes précédentes.",
+    "login": "Connexion",
+    "account": "Compte",
+    "title": "Mes commandes",
+    "count_one": "{{count}} commande",
+    "count_other": "{{count}} commandes",
+    "emptyTitle": "Aucune commande pour le moment",
+    "emptyDescription": "Les produits que vous commandez apparaîtront ici.",
+    "startShopping": "Commencer mes achats",
+    "order": "Commande",
+    "placedOn": "Passée le",
+    "payment": "Paiement",
+    "notSpecified": "Non précisé",
+    "status": "Statut",
+    "downloadInvoice": "Télécharger la facture",
+    "orderItems": "Articles de la commande",
+    "size": "Taille : {{size}}",
+    "color": "Couleur : {{color}}",
+    "quantity": "Quantité : {{quantity}}",
+    "shippingAddress": "Adresse de livraison",
+    "subtotal": "Sous-total",
+    "coupon": "Code promo {{code}}",
+    "shipping": "Livraison",
+    "free": "GRATUITE",
+    "total": "Total",
+    "statuses": {
+      "pending": "En attente",
+      "processing": "En préparation",
+      "shipped": "Expédiée",
+      "delivered": "Livrée",
+      "cancelled": "Annulée",
+      "unknown": "Inconnu"
+    },
+    "paymentMethods": {
+      "stripe": "Stripe",
+      "paypal": "PayPal",
+      "cash": "Espèces",
+      "cod": "Paiement à la livraison"
+    }
   }
 }
