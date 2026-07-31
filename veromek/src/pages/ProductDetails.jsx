@@ -26,6 +26,7 @@ import {
 import toast from "react-hot-toast";
 
 import Layout from "../components/layout/Layout";
+import ProductCard from "../components/product/ProductCard";
 import { useCart } from "../context/CartContext";
 import { useWishlist } from "../context/WishlistContext";
 import { useAuth } from "../context/AuthContext";
@@ -190,6 +191,11 @@ export default function ProductDetails() {
 
   const [processingCountdown, setProcessingCountdown] =
     useState(() => getProcessingCountdown());
+
+  const [relatedProducts, setRelatedProducts] =
+    useState([]);
+  const [relatedLoading, setRelatedLoading] =
+    useState(false);
 
   useEffect(() => {
     const interval = window.setInterval(() => {
@@ -463,6 +469,98 @@ export default function ProductDetails() {
   useEffect(() => {
     fetchReviews();
   }, [fetchReviews]);
+
+  useEffect(() => {
+    let mounted = true;
+
+    const fetchRelatedProducts = async () => {
+      if (!product?.id || !product?.category) {
+        if (mounted) {
+          setRelatedProducts([]);
+        }
+        return;
+      }
+
+      setRelatedLoading(true);
+
+      try {
+        const { data, error } = await supabase
+          .from("products")
+          .select(
+            `
+              id,
+              name,
+              category,
+              price,
+              image,
+              images,
+              description,
+              rating,
+              reviews,
+              stock,
+              active,
+              created_at
+            `
+          )
+          .eq("active", true)
+          .eq("category", product.category)
+          .neq("id", product.id)
+          .order("rating", {
+            ascending: false,
+          })
+          .order("created_at", {
+            ascending: false,
+          })
+          .limit(4);
+
+        if (error) {
+          throw error;
+        }
+
+        const normalized = (data ?? []).map(
+          (item) => ({
+            ...item,
+            price: Number(item.price || 0),
+            rating: Number(item.rating || 0),
+            reviews: Number(item.reviews || 0),
+            stock: Math.max(
+              0,
+              Number(item.stock || 0)
+            ),
+            images: Array.isArray(item.images)
+              ? item.images
+              : [],
+          })
+        );
+
+        if (mounted) {
+          setRelatedProducts(normalized);
+        }
+      } catch (error) {
+        console.error(
+          "Failed to load related products:",
+          error
+        );
+
+        if (mounted) {
+          setRelatedProducts([]);
+        }
+      } finally {
+        if (mounted) {
+          setRelatedLoading(false);
+        }
+      }
+    };
+
+    fetchRelatedProducts();
+
+    return () => {
+      mounted = false;
+    };
+  }, [
+    product?.id,
+    product?.category,
+  ]);
 
   const userReview = useMemo(() => {
     if (!user) {
@@ -1735,6 +1833,69 @@ export default function ProductDetails() {
           </div>
         </div>
       </section>
+
+      {(relatedLoading ||
+        relatedProducts.length > 0) && (
+        <section className="border-t border-gray-200 dark:border-gray-800">
+          <div className="mx-auto max-w-7xl px-6 py-16">
+            <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+              <div>
+                <p className="text-sm font-black uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">
+                  More from this collection
+                </p>
+
+                <h2 className="mt-3 text-3xl font-black tracking-tight text-gray-900 sm:text-4xl dark:text-white">
+                  You may also like
+                </h2>
+
+                <p className="mt-3 max-w-xl text-gray-500 dark:text-gray-400">
+                  Explore similar products selected from
+                  the same category.
+                </p>
+              </div>
+
+              <Link
+                to={`/shop?category=${encodeURIComponent(
+                  product.category
+                )}`}
+                className="inline-flex items-center justify-center rounded-xl border border-gray-300 px-5 py-3 font-black transition hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-900"
+              >
+                View category
+              </Link>
+            </div>
+
+            {relatedLoading ? (
+              <div className="flex min-h-72 items-center justify-center rounded-3xl border border-gray-200 dark:border-gray-800">
+                <div className="text-center">
+                  <LoaderCircle
+                    size={38}
+                    className="mx-auto animate-spin"
+                  />
+
+                  <p className="mt-4 font-semibold text-gray-500 dark:text-gray-400">
+                    Loading related products...
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-2 md:overflow-visible lg:grid-cols-4">
+                {relatedProducts.map(
+                  (relatedProduct) => (
+                    <div
+                      key={relatedProduct.id}
+                      className="w-[82%] shrink-0 snap-start sm:w-[46%] md:w-auto"
+                    >
+                      <ProductCard
+                        product={relatedProduct}
+                      />
+                    </div>
+                  )
+                )}
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 p-3 shadow-[0_-8px_24px_rgba(0,0,0,0.08)] backdrop-blur lg:hidden dark:border-gray-800 dark:bg-zinc-950/95">
         <div className="mx-auto flex max-w-7xl items-center gap-3">
