@@ -19,6 +19,9 @@ import {
   Truck,
   RotateCcw,
   BadgeCheck,
+  Clock3,
+  CreditCard,
+  MapPin,
 } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -110,6 +113,36 @@ function formatReviewDate(value) {
   }).format(date);
 }
 
+function getProcessingCountdown() {
+  const now = new Date();
+  const cutoff = new Date(now);
+
+  cutoff.setHours(17, 0, 0, 0);
+
+  if (now >= cutoff) {
+    cutoff.setDate(cutoff.getDate() + 1);
+  }
+
+  const difference = Math.max(
+    0,
+    cutoff.getTime() - now.getTime()
+  );
+
+  const hours = Math.floor(
+    difference / (1000 * 60 * 60)
+  );
+
+  const minutes = Math.floor(
+    (difference % (1000 * 60 * 60)) /
+      (1000 * 60)
+  );
+
+  return {
+    hours,
+    minutes,
+  };
+}
+
 export default function ProductDetails() {
   const { id } = useParams();
 
@@ -154,6 +187,21 @@ export default function ProductDetails() {
 
   const [reviewDeleting, setReviewDeleting] =
     useState(false);
+
+  const [processingCountdown, setProcessingCountdown] =
+    useState(() => getProcessingCountdown());
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setProcessingCountdown(
+        getProcessingCountdown()
+      );
+    }, 60000);
+
+    return () => {
+      window.clearInterval(interval);
+    };
+  }, []);
 
   const fetchProduct = useCallback(async () => {
     setProductLoading(true);
@@ -1178,6 +1226,149 @@ export default function ProductDetails() {
                   </p>
                 </div>
               </div>
+            </div>
+
+            <div className="mt-8 grid gap-4 lg:grid-cols-2">
+              <article className="rounded-3xl border border-gray-200 bg-gray-50 p-6 dark:border-gray-800 dark:bg-gray-900">
+                <div className="flex items-start gap-4">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-black text-white dark:bg-white dark:text-black">
+                    <Clock3 size={21} />
+                  </div>
+
+                  <div>
+                    <p className="font-black">
+                      Next processing cutoff
+                    </p>
+
+                    <p className="mt-2 text-2xl font-black">
+                      {String(
+                        processingCountdown.hours
+                      ).padStart(2, "0")}
+                      h{" "}
+                      {String(
+                        processingCountdown.minutes
+                      ).padStart(2, "0")}
+                      m
+                    </p>
+
+                    <p className="mt-2 text-sm leading-6 text-gray-500 dark:text-gray-400">
+                      Orders are normally prepared within
+                      24–48 hours. Tracking is shared when
+                      available.
+                    </p>
+                  </div>
+                </div>
+              </article>
+
+              <article className="rounded-3xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
+                <div className="flex items-start gap-4">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-black text-white dark:bg-white dark:text-black">
+                    <CreditCard size={21} />
+                  </div>
+
+                  <div>
+                    <p className="font-black">
+                      Secure payment
+                    </p>
+
+                    <p className="mt-2 text-sm leading-6 text-gray-500 dark:text-gray-400">
+                      Available payment options are shown
+                      securely during checkout.
+                    </p>
+
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {[
+                        "Protected checkout",
+                        "Encrypted details",
+                        "Order confirmation",
+                      ].map((label) => (
+                        <span
+                          key={label}
+                          className="rounded-full bg-gray-100 px-3 py-1.5 text-xs font-black dark:bg-gray-800"
+                        >
+                          {label}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+              <article className="rounded-3xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
+                <h2 className="text-lg font-black">
+                  Product highlights
+                </h2>
+
+                <ul className="mt-4 space-y-3 text-sm text-gray-600 dark:text-gray-300">
+                  {[
+                    "Carefully selected product",
+                    "Clear size and stock information",
+                    "Modern everyday style",
+                    "Customer support available",
+                  ].map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-center gap-3"
+                    >
+                      <BadgeCheck
+                        size={18}
+                        className="shrink-0 text-green-600 dark:text-green-300"
+                      />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </article>
+
+              <article className="rounded-3xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
+                <h2 className="text-lg font-black">
+                  Shipping & returns
+                </h2>
+
+                <ul className="mt-4 space-y-3 text-sm text-gray-600 dark:text-gray-300">
+                  <li className="flex items-center gap-3">
+                    <Truck
+                      size={18}
+                      className="shrink-0"
+                    />
+                    Processing normally takes 24–48 hours.
+                  </li>
+
+                  <li className="flex items-center gap-3">
+                    <MapPin
+                      size={18}
+                      className="shrink-0"
+                    />
+                    Tracking details are shared when available.
+                  </li>
+
+                  <li className="flex items-center gap-3">
+                    <RotateCcw
+                      size={18}
+                      className="shrink-0"
+                    />
+                    Returns follow the VeroMek returns policy.
+                  </li>
+                </ul>
+
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <Link
+                    to="/shipping-policy"
+                    className="text-sm font-black underline underline-offset-4"
+                  >
+                    Shipping policy
+                  </Link>
+
+                  <Link
+                    to="/refund-policy"
+                    className="text-sm font-black underline underline-offset-4"
+                  >
+                    Returns policy
+                  </Link>
+                </div>
+              </article>
             </div>
 
             <div className="mt-10 border-t border-gray-200 pt-8 dark:border-gray-800">
