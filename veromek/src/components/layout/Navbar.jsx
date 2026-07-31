@@ -18,13 +18,16 @@ import {
   X,
 } from "lucide-react";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 import { useCart } from "../../context/CartContext";
 import { useWishlist } from "../../context/WishlistContext";
 import { useTheme } from "../../context/ThemeContext";
 import { useAuth } from "../../context/AuthContext";
+import { changeStoreLanguage } from "../../i18n";
 
 export default function Navbar() {
+  const { t, i18n } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
   const [logoutLoading, setLogoutLoading] =
@@ -62,7 +65,7 @@ export default function Navbar() {
     user?.user_metadata?.first_name ||
     user?.user_metadata?.full_name ||
     user?.email?.split("@")[0] ||
-    "Account";
+    t("nav.account");
 
   useEffect(() => {
     setMenuOpen(false);
@@ -116,53 +119,41 @@ export default function Navbar() {
       setAccountOpen(false);
       setMenuOpen(false);
 
-      toast.success("Logged out successfully!");
+      toast.success(t("nav.loggedOut"));
 
       navigate("/", {
         replace: true,
       });
     } catch (error) {
       console.error(error);
-      toast.error("Something went wrong.");
+      toast.error(t("nav.somethingWrong"));
     } finally {
       setLogoutLoading(false);
     }
   };
 
   const navLinks = [
-    {
-      label: "Home",
-      to: "/",
-    },
-    {
-      label: "Shop",
-      to: "/shop",
-    },
-    {
-      label: "About",
-      to: "/about",
-    },
-    {
-      label: "Contact",
-      to: "/contact",
-    },
+    { label: t("nav.home"), to: "/" },
+    { label: t("nav.shop"), to: "/shop" },
+    { label: t("nav.about"), to: "/about" },
+    { label: t("nav.contact"), to: "/contact" },
   ];
 
   const informationLinks = [
     {
-      label: "Shipping Policy",
+      label: t("nav.shippingPolicy"),
       to: "/shipping-policy",
     },
     {
-      label: "Returns & Refunds",
+      label: t("nav.returnsRefunds"),
       to: "/refund-policy",
     },
     {
-      label: "Privacy Policy",
+      label: t("nav.privacyPolicy"),
       to: "/privacy-policy",
     },
     {
-      label: "Terms & Conditions",
+      label: t("nav.termsConditions"),
       to: "/terms",
     },
   ];
@@ -176,7 +167,7 @@ export default function Navbar() {
               type="button"
               onClick={() => setMenuOpen(true)}
               className="flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 transition hover:bg-gray-100 dark:border-zinc-700 dark:hover:bg-zinc-800 lg:hidden"
-              aria-label="Open navigation menu"
+              aria-label={t("nav.openMenu")}
             >
               <Menu size={21} />
             </button>
@@ -227,19 +218,38 @@ export default function Navbar() {
           </nav>
 
           <div className="flex items-center gap-2 sm:gap-3">
+            <label className="hidden sm:block">
+              <span className="sr-only">
+                {t("common.language")}
+              </span>
+
+              <select
+                value={i18n.resolvedLanguage || "en"}
+                onChange={(event) =>
+                  changeStoreLanguage(event.target.value)
+                }
+                className="h-11 rounded-xl border border-gray-200 bg-white px-3 text-sm font-black outline-none transition hover:bg-gray-100 dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-800"
+                aria-label={t("common.language")}
+              >
+                <option value="en">EN</option>
+                <option value="es">ES</option>
+                <option value="fr">FR</option>
+              </select>
+            </label>
+
             <button
               type="button"
               onClick={toggleTheme}
               className="flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 transition hover:bg-gray-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
               aria-label={
                 darkMode
-                  ? "Switch to light mode"
-                  : "Switch to dark mode"
+                  ? t("nav.switchLight")
+                  : t("nav.switchDark")
               }
               title={
                 darkMode
-                  ? "Switch to light mode"
-                  : "Switch to dark mode"
+                  ? t("nav.switchLight")
+                  : t("nav.switchDark")
               }
             >
               {darkMode ? (
@@ -252,7 +262,7 @@ export default function Navbar() {
             <Link
               to="/wishlist"
               className="relative flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 transition hover:bg-gray-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
-              aria-label="Open wishlist"
+              aria-label={t("nav.openWishlist")}
             >
               <Heart size={20} />
 
@@ -278,7 +288,7 @@ export default function Navbar() {
                     }
                     className="flex h-11 max-w-44 items-center gap-2 rounded-xl border border-gray-200 px-4 transition hover:bg-gray-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
                     aria-expanded={accountOpen}
-                    aria-label="Open account menu"
+                    aria-label={t("nav.openAccount")}
                   >
                     <User size={18} />
 
@@ -354,8 +364,8 @@ export default function Navbar() {
                           <LogOut size={18} />
 
                           {logoutLoading
-                            ? "Logging out..."
-                            : "Logout"}
+                            ? t("nav.loggingOut")
+                            : t("nav.logout")}
                         </button>
                       </div>
                     </div>
@@ -374,7 +384,7 @@ export default function Navbar() {
             <Link
               to="/cart"
               className="relative flex h-11 items-center gap-2 rounded-xl bg-black px-3 text-white transition hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 sm:px-5"
-              aria-label="Open cart"
+              aria-label={t("nav.openCart")}
             >
               <ShoppingCart size={19} />
 
@@ -398,7 +408,7 @@ export default function Navbar() {
             type="button"
             onClick={() => setMenuOpen(false)}
             className="absolute inset-0 bg-black/60"
-            aria-label="Close navigation menu"
+            aria-label={t("nav.closeMenu")}
           />
 
           <aside className="absolute left-0 top-0 flex h-full w-[85%] max-w-sm flex-col bg-white text-gray-950 shadow-2xl dark:bg-zinc-950 dark:text-white">
@@ -417,7 +427,7 @@ export default function Navbar() {
                 type="button"
                 onClick={() => setMenuOpen(false)}
                 className="flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 transition hover:bg-gray-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
-                aria-label="Close navigation menu"
+                aria-label={t("nav.closeMenu")}
               >
                 <X size={21} />
               </button>
@@ -503,6 +513,24 @@ export default function Navbar() {
             </nav>
 
             <div className="border-t border-gray-200 p-6 dark:border-zinc-800">
+              <label className="mb-3 block">
+                <span className="mb-2 block text-sm font-black">
+                  {t("common.language")}
+                </span>
+
+                <select
+                  value={i18n.resolvedLanguage || "en"}
+                  onChange={(event) =>
+                    changeStoreLanguage(event.target.value)
+                  }
+                  className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 font-semibold outline-none dark:border-zinc-700 dark:bg-zinc-950"
+                >
+                  <option value="en">{t("common.english")}</option>
+                  <option value="es">{t("common.spanish")}</option>
+                  <option value="fr">{t("common.french")}</option>
+                </select>
+              </label>
+
               <button
                 type="button"
                 onClick={toggleTheme}
@@ -565,8 +593,8 @@ export default function Navbar() {
                       <LogOut size={18} />
 
                       {logoutLoading
-                        ? "Logging out..."
-                        : "Logout"}
+                        ? t("nav.loggingOut")
+                        : t("nav.logout")}
                     </button>
                   </>
                 ) : (
