@@ -1,259 +1,44 @@
-import {
-  CheckCircle2,
-  Globe2,
-  HeartHandshake,
-  PackageCheck,
-  ShieldCheck,
-  ShoppingBag,
-  Sparkles,
-  Users,
-} from "lucide-react";
+import { CheckCircle2, HeartHandshake, PackageCheck, ShieldCheck, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
-
+import { useTranslation } from "react-i18next";
 import Layout from "../components/layout/Layout";
 
-const VALUES = [
-  {
-    icon: PackageCheck,
-    title: "Curated products",
-    description:
-      "We focus on a clear, carefully selected catalogue rather than an overwhelming shopping experience.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Secure experience",
-    description:
-      "We build the store around secure accounts, protected order handling and transparent policies.",
-  },
-  {
-    icon: HeartHandshake,
-    title: "Customer support",
-    description:
-      "We aim to communicate clearly and help customers before, during and after an order.",
-  },
-  {
-    icon: Sparkles,
-    title: "Modern design",
-    description:
-      "VeroMek combines a premium visual identity with a simple and responsive shopping experience.",
-  },
-];
-
-const PRINCIPLES = [
-  "Clear product information and pricing.",
-  "Transparent shipping and return policies.",
-  "Respect for customer privacy and security.",
-  "Continuous improvement of the shopping experience.",
-];
+const icons = [PackageCheck, ShieldCheck, HeartHandshake, Sparkles];
 
 export default function About() {
+  const { t } = useTranslation();
+  const values = t("about.values", { returnObjects: true });
+  const principles = t("about.principles", { returnObjects: true });
+
   return (
     <Layout>
       <section className="overflow-hidden bg-black text-white dark:bg-white dark:text-black">
-        <div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 lg:grid-cols-2 lg:items-center sm:py-24">
+        <div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 sm:py-24 lg:grid-cols-2 lg:items-center">
           <div>
-            <p className="text-sm font-black uppercase tracking-[0.25em] text-gray-400 dark:text-gray-600">
-              About VeroMek
-            </p>
-
-            <h1 className="mt-5 text-4xl font-black tracking-tight sm:text-6xl">
-              Premium style.
-              <br />
-              Simple shopping.
-            </h1>
-
-            <p className="mt-6 max-w-xl text-lg leading-8 text-gray-300 dark:text-gray-600">
-              VeroMek is an online store built
-              around modern design, carefully
-              presented products and a customer
-              experience that stays clear from
-              discovery to delivery.
-            </p>
-
+            <p className="text-sm font-black uppercase tracking-[0.25em] text-gray-400 dark:text-gray-600">{t("about.eyebrow")}</p>
+            <h1 className="mt-5 text-4xl font-black tracking-tight sm:text-6xl">{t("about.title1")}<br />{t("about.title2")}</h1>
+            <p className="mt-6 max-w-xl text-lg leading-8 text-gray-300 dark:text-gray-600">{t("about.intro")}</p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <Link
-                to="/shop"
-                className="rounded-xl bg-white px-6 py-3 font-bold text-black transition hover:bg-gray-200 dark:bg-black dark:text-white dark:hover:bg-zinc-800"
-              >
-                Explore the shop
-              </Link>
-
-              <Link
-                to="/contact"
-                className="rounded-xl border border-white/30 px-6 py-3 font-bold transition hover:bg-white/10 dark:border-black/30 dark:hover:bg-black/10"
-              >
-                Contact us
-              </Link>
+              <Link to="/shop" className="rounded-xl bg-white px-6 py-3 font-bold text-black dark:bg-black dark:text-white">{t("about.shop")}</Link>
+              <Link to="/contact" className="rounded-xl border border-white/30 px-6 py-3 font-bold dark:border-black/30">{t("about.contact")}</Link>
             </div>
           </div>
-
-          <div className="relative">
-            <div className="absolute -left-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-3xl dark:bg-black/10" />
-
-            <div className="relative grid gap-4 sm:grid-cols-2">
-              <div className="rounded-[32px] bg-white/10 p-7 backdrop-blur dark:bg-black/10">
-                <ShoppingBag size={32} />
-
-                <p className="mt-8 text-4xl font-black">
-                  Easy
-                </p>
-
-                <p className="mt-2 text-gray-300 dark:text-gray-600">
-                  Simple browsing, cart and checkout.
-                </p>
-              </div>
-
-              <div className="rounded-[32px] bg-white p-7 text-black dark:bg-black dark:text-white sm:mt-12">
-                <Globe2 size={32} />
-
-                <p className="mt-8 text-4xl font-black">
-                  Modern
-                </p>
-
-                <p className="mt-2 text-gray-600 dark:text-gray-400">
-                  Responsive and ready for customers.
-                </p>
-              </div>
-
-              <div className="rounded-[32px] bg-white p-7 text-black dark:bg-black dark:text-white">
-                <ShieldCheck size={32} />
-
-                <p className="mt-8 text-4xl font-black">
-                  Secure
-                </p>
-
-                <p className="mt-2 text-gray-600 dark:text-gray-400">
-                  Protected accounts and order handling.
-                </p>
-              </div>
-
-              <div className="rounded-[32px] bg-white/10 p-7 backdrop-blur dark:bg-black/10 sm:mt-12">
-                <Users size={32} />
-
-                <p className="mt-8 text-4xl font-black">
-                  Human
-                </p>
-
-                <p className="mt-2 text-gray-300 dark:text-gray-600">
-                  Clear support when customers need help.
-                </p>
-              </div>
-            </div>
+          <div className="rounded-[36px] bg-white/10 p-8 dark:bg-black/10">
+            <h2 className="text-3xl font-black">{t("about.storyTitle")}</h2>
+            <p className="mt-5 text-lg leading-8 text-gray-300 dark:text-gray-600">{t("about.story")}</p>
           </div>
         </div>
       </section>
-
-      <section className="mx-auto max-w-7xl px-6 py-16 sm:py-20">
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="text-sm font-black uppercase tracking-[0.25em] text-gray-500 dark:text-gray-400">
-            Our purpose
-          </p>
-
-          <h2 className="mt-4 text-3xl font-black tracking-tight sm:text-5xl">
-            A store customers can understand
-            and trust
-          </h2>
-
-          <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">
-            Our goal is to remove unnecessary
-            friction from online shopping. Product
-            information, delivery expectations,
-            order status and support should all
-            remain easy to find.
-          </p>
+      <section className="mx-auto max-w-7xl px-6 py-20">
+        <h2 className="text-4xl font-black">{t("about.valuesTitle")}</h2>
+        <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          {values.map((item,index)=>{ const Icon=icons[index]; return <article key={item.title} className="rounded-3xl border border-gray-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900"><Icon size={24}/><h3 className="mt-5 text-xl font-black">{item.title}</h3><p className="mt-3 leading-7 text-gray-500 dark:text-gray-400">{item.text}</p></article>; })}
         </div>
-
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-          {VALUES.map(
-            ({
-              icon: Icon,
-              title,
-              description,
-            }) => (
-              <article
-                key={title}
-                className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-100 dark:bg-zinc-800">
-                  <Icon size={23} />
-                </div>
-
-                <h3 className="mt-5 text-xl font-black">
-                  {title}
-                </h3>
-
-                <p className="mt-3 text-sm leading-6 text-gray-500 dark:text-gray-400">
-                  {description}
-                </p>
-              </article>
-            )
-          )}
+        <div className="mt-16 grid gap-8 rounded-[36px] bg-gray-50 p-8 dark:bg-zinc-950 lg:grid-cols-2">
+          <h2 className="text-3xl font-black">{t("about.principlesTitle")}</h2>
+          <ul className="space-y-4">{principles.map(item=><li key={item} className="flex gap-3"><CheckCircle2 className="shrink-0" size={21}/><span>{item}</span></li>)}</ul>
         </div>
-
-        <div className="mt-16 grid gap-10 rounded-[36px] border border-gray-200 bg-gray-50 p-7 dark:border-zinc-800 dark:bg-zinc-950 lg:grid-cols-2 lg:p-12">
-          <div>
-            <p className="text-sm font-black uppercase tracking-[0.25em] text-gray-500 dark:text-gray-400">
-              Our approach
-            </p>
-
-            <h2 className="mt-4 text-3xl font-black sm:text-4xl">
-              Built for long-term improvement
-            </h2>
-
-            <p className="mt-5 leading-8 text-gray-600 dark:text-gray-400">
-              VeroMek is designed as a flexible
-              ecommerce platform. The catalogue,
-              branding, policies, payment methods
-              and delivery options can evolve as
-              the business grows.
-            </p>
-          </div>
-
-          <div className="rounded-[28px] bg-white p-6 shadow-sm dark:bg-zinc-900">
-            <h3 className="text-xl font-black">
-              What guides us
-            </h3>
-
-            <ul className="mt-6 space-y-4">
-              {PRINCIPLES.map(
-                (principle) => (
-                  <li
-                    key={principle}
-                    className="flex items-start gap-3"
-                  >
-                    <CheckCircle2
-                      size={20}
-                      className="mt-0.5 shrink-0 text-green-600 dark:text-green-400"
-                    />
-
-                    <span className="leading-7 text-gray-600 dark:text-gray-400">
-                      {principle}
-                    </span>
-                  </li>
-                )
-              )}
-            </ul>
-          </div>
-        </div>
-
-        <div className="mt-16 rounded-[36px] bg-black px-7 py-12 text-center text-white dark:bg-white dark:text-black sm:px-12">
-          <h2 className="text-3xl font-black sm:text-4xl">
-            Questions about VeroMek?
-          </h2>
-
-          <p className="mx-auto mt-4 max-w-2xl leading-7 text-gray-300 dark:text-gray-600">
-            Our support page includes contact
-            details, assistance hours and a secure
-            contact form.
-          </p>
-
-          <Link
-            to="/contact"
-            className="mt-7 inline-flex rounded-xl bg-white px-6 py-3 font-bold text-black transition hover:bg-gray-200 dark:bg-black dark:text-white dark:hover:bg-zinc-800"
-          >
-            Contact our team
-          </Link>
-        </div>
+        <div className="mt-16 rounded-[36px] bg-black p-10 text-center text-white dark:bg-white dark:text-black"><h2 className="text-4xl font-black">{t("about.ctaTitle")}</h2><p className="mx-auto mt-4 max-w-2xl text-gray-300 dark:text-gray-600">{t("about.ctaText")}</p><Link to="/shop" className="mt-7 inline-flex rounded-xl bg-white px-7 py-3 font-black text-black dark:bg-black dark:text-white">{t("about.ctaButton")}</Link></div>
       </section>
     </Layout>
   );

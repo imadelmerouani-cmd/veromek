@@ -11,6 +11,7 @@ import {
   ShoppingBag,
 } from "lucide-react";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 import Layout from "../components/layout/Layout";
 import SearchBar from "../components/SearchBar";
@@ -19,6 +20,7 @@ import ProductCard from "../components/product/ProductCard";
 import { supabase } from "../lib/supabase";
 
 export default function Shop() {
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
 
   const [products, setProducts] = useState([]);
@@ -97,7 +99,7 @@ export default function Shop() {
         setProducts(normalizedProducts);
 
         if (silent) {
-          toast.success("Products updated.");
+          toast.success(t("shop.updated"));
         }
       } catch (error) {
         console.error(
@@ -107,7 +109,7 @@ export default function Shop() {
 
         const message =
           error?.message ||
-          "Failed to load products.";
+          t("shop.loadError");
 
         setErrorMessage(message);
         toast.error(message);
@@ -197,11 +199,11 @@ export default function Shop() {
         <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
           <div>
             <h1 className="text-4xl font-black tracking-tight text-gray-950 sm:text-5xl dark:text-white">
-              Shop
+              {t("shop.title")}
             </h1>
 
             <p className="mt-4 text-gray-500 dark:text-gray-400">
-              Browse all our products.
+              {t("shop.subtitle")}
             </p>
           </div>
 
@@ -223,8 +225,8 @@ export default function Shop() {
             />
 
             {refreshing
-              ? "Refreshing..."
-              : "Refresh"}
+              ? t("shop.refreshing")
+              : t("shop.refresh")}
           </button>
         </div>
 
@@ -249,27 +251,27 @@ export default function Shop() {
             className="rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-950 outline-none transition focus:border-black dark:border-zinc-700 dark:bg-zinc-900 dark:text-white dark:focus:border-white"
           >
             <option value="featured">
-              Featured
+              {t("shop.sortFeatured")}
             </option>
 
             <option value="newest">
-              Newest
+              {t("shop.sortNewest")}
             </option>
 
             <option value="price-low">
-              Price: Low to High
+              {t("shop.sortLow")}
             </option>
 
             <option value="price-high">
-              Price: High to Low
+              {t("shop.sortHigh")}
             </option>
 
             <option value="name">
-              Name A-Z
+              {t("shop.sortName")}
             </option>
 
             <option value="rating">
-              Best Rating
+              {t("shop.sortRating")}
             </option>
           </select>
         </div>
@@ -283,7 +285,7 @@ export default function Shop() {
               />
 
               <p className="mt-4 font-semibold text-gray-500 dark:text-gray-400">
-                Loading products...
+                {t("shop.loading")}
               </p>
             </div>
           </div>
@@ -295,7 +297,7 @@ export default function Shop() {
             />
 
             <h2 className="mt-5 text-2xl font-black text-red-700 dark:text-red-300">
-              Products could not be loaded
+              {t("shop.couldNotLoad")}
             </h2>
 
             <p className="mx-auto mt-3 max-w-xl text-red-600 dark:text-red-400">
@@ -308,7 +310,7 @@ export default function Shop() {
               className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl bg-red-600 px-6 py-3 font-bold text-white transition hover:bg-red-700"
             >
               <RefreshCw size={18} />
-              Try again
+              {t("shop.tryAgain")}
             </button>
           </div>
         ) : (
@@ -316,9 +318,9 @@ export default function Shop() {
             <p className="mb-8 mt-6 text-gray-500 dark:text-gray-400">
               {filteredProducts.length}{" "}
               {filteredProducts.length === 1
-                ? "product"
-                : "products"}{" "}
-              found
+                ? t("shop.product")
+                : t("shop.products")}{" "}
+              {t("shop.found")}
             </p>
 
             {filteredProducts.length > 0 ? (
@@ -340,12 +342,11 @@ export default function Shop() {
                 />
 
                 <h2 className="mt-5 text-2xl font-black">
-                  No products found
+                  {t("shop.none")}
                 </h2>
 
                 <p className="mt-3 text-gray-500 dark:text-gray-400">
-                  Try changing your search or
-                  category.
+                  {t("shop.changeFilters")}
                 </p>
 
                 <button
@@ -353,7 +354,7 @@ export default function Shop() {
                   onClick={resetFilters}
                   className="mt-6 rounded-xl bg-black px-6 py-3 font-bold text-white transition hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
                 >
-                  Reset Filters
+                  {t("shop.reset")}
                 </button>
               </div>
             )}

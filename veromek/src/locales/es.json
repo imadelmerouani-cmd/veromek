@@ -185,5 +185,430 @@
     "previousImage": "Imagen anterior",
     "nextImage": "Imagen siguiente",
     "caption": "Entrega VeroMek verificada"
+  },
+  "shop": {
+    "title": "Tienda",
+    "subtitle": "Explora todos nuestros productos.",
+    "refresh": "Actualizar",
+    "refreshing": "Actualizando...",
+    "updated": "Productos actualizados.",
+    "loadError": "No se pudieron cargar los productos.",
+    "sortFeatured": "Destacados",
+    "sortNewest": "Más recientes",
+    "sortLow": "Precio: menor a mayor",
+    "sortHigh": "Precio: mayor a menor",
+    "sortName": "Nombre A–Z",
+    "sortRating": "Mejor valoración",
+    "loading": "Cargando productos...",
+    "couldNotLoad": "No se pudieron cargar los productos",
+    "tryAgain": "Intentar de nuevo",
+    "product": "producto",
+    "products": "productos",
+    "found": "encontrados",
+    "none": "No se encontraron productos",
+    "changeFilters": "Prueba a cambiar la búsqueda o la categoría.",
+    "reset": "Restablecer filtros",
+    "search": "Buscar productos...",
+    "all": "Todos",
+    "shoes": "Calzado",
+    "clothing": "Ropa",
+    "watch": "Relojes",
+    "bag": "Bolsos"
+  },
+  "about": {
+    "eyebrow": "Sobre VeroMek",
+    "title1": "Estilo premium.",
+    "title2": "Compra sencilla.",
+    "intro": "VeroMek es una tienda online basada en un diseño moderno, productos cuidadosamente presentados y una experiencia clara desde el descubrimiento hasta la entrega.",
+    "shop": "Explorar la tienda",
+    "contact": "Contáctanos",
+    "storyTitle": "Una tienda diseñada con claridad",
+    "story": "Creamos VeroMek para facilitar el descubrimiento de moda moderna. Cada parte de la tienda ayuda a entender los productos, elegir con confianza y comprar de forma segura.",
+    "valuesTitle": "Lo que nos importa",
+    "principlesTitle": "Nuestros principios",
+    "values": [
+      {
+        "title": "Productos seleccionados",
+        "text": "Un catálogo enfocado, elegido por estilo, calidad y uso diario."
+      },
+      {
+        "title": "Experiencia segura",
+        "text": "Cuentas protegidas, gestión segura de pedidos y políticas transparentes."
+      },
+      {
+        "title": "Atención al cliente",
+        "text": "Ayuda clara antes, durante y después de cada pedido."
+      },
+      {
+        "title": "Diseño moderno",
+        "text": "Una identidad visual premium con una experiencia sencilla y adaptable."
+      }
+    ],
+    "principles": [
+      "Información y precios claros.",
+      "Políticas transparentes de envío y devolución.",
+      "Respeto por la privacidad y seguridad del cliente.",
+      "Mejora continua de la experiencia de compra."
+    ],
+    "ctaTitle": "¿Listo para descubrir VeroMek?",
+    "ctaText": "Explora nuestros últimos productos y encuentra un estilo para ti.",
+    "ctaButton": "Empezar a comprar"
+  },
+  "contact": {
+    "eyebrow": "Atención al cliente",
+    "title": "Contacta con VeroMek",
+    "intro": "¿Necesitas ayuda con un producto, pedido, entrega o devolución? Envíanos un mensaje y responderemos lo antes posible.",
+    "email": "Correo electrónico",
+    "whatsapp": "WhatsApp",
+    "location": "Ubicación",
+    "hours": "Horario de atención",
+    "hoursValue": "Lunes–viernes, 9:00–18:00",
+    "formTitle": "Envíanos un mensaje",
+    "name": "Tu nombre",
+    "emailPlaceholder": "tu@ejemplo.com",
+    "subject": "¿Cómo podemos ayudarte?",
+    "message": "Escribe tu mensaje...",
+    "send": "Enviar mensaje",
+    "sending": "Enviando...",
+    "required": "Completa todos los campos.",
+    "sent": "Tu mensaje fue enviado.",
+    "failed": "No se pudo enviar tu mensaje.",
+    "faqTitle": "Respuestas rápidas",
+    "faqs": [
+      {
+        "q": "¿Cuánto tarda la entrega?",
+        "a": "Depende del destino y del método de envío. Las opciones disponibles aparecen durante el pago."
+      },
+      {
+        "q": "¿Puedo cambiar o cancelar mi pedido?",
+        "a": "Contáctanos lo antes posible. Solo se puede cambiar o cancelar antes de que empiece el procesamiento."
+      },
+      {
+        "q": "¿Cómo puedo seguir mi pedido?",
+        "a": "El estado aparece en Mis pedidos. La información de seguimiento se mostrará cuando esté disponible."
+      }
+    ]
+  },
+  "policyCommon": {
+    "legal": "Información legal",
+    "updated": "Última actualización: 31 de julio de 2026",
+    "contactTitle": "¿Necesitas ayuda?",
+    "contactText": "Contacta con support@veromek.com si tienes preguntas sobre esta política."
+  },
+  "shipping": {
+    "title": "Política de envíos",
+    "intro": "Cómo VeroMek prepara, envía y entrega tus pedidos.",
+    "cards": [
+      {
+        "title": "Preparación",
+        "text": "Los pedidos suelen prepararse en 24–48 horas."
+      },
+      {
+        "title": "Seguimiento",
+        "text": "Compartimos el seguimiento cuando está disponible."
+      },
+      {
+        "title": "Envío internacional",
+        "text": "Las opciones dependen del destino."
+      },
+      {
+        "title": "Aduanas",
+        "text": "Pueden aplicarse cargos de importación."
+      }
+    ],
+    "sections": [
+      {
+        "title": "1. Preparación del pedido",
+        "content": [
+          "Los pedidos suelen procesarse en 24–48 horas laborables después de la verificación.",
+          "El proceso puede tardar más durante fines de semana, festivos o promociones.",
+          "Podemos contactarte si falta información o se necesita verificación adicional."
+        ]
+      },
+      {
+        "title": "2. Opciones y costes de envío",
+        "content": [
+          "Los métodos, precios y plazos disponibles aparecen durante el pago.",
+          "Puede ofrecerse envío gratuito al alcanzar el importe mínimo indicado.",
+          "Las promociones pueden estar limitadas por destino, producto o periodo."
+        ]
+      },
+      {
+        "title": "3. Plazos de entrega",
+        "content": [
+          "Las fechas son estimadas salvo garantía expresa.",
+          "Aduanas, clima, transportista o una dirección incorrecta pueden causar retrasos.",
+          "Ayudaremos con incidencias del transportista cuando sea posible."
+        ]
+      },
+      {
+        "title": "4. Seguimiento",
+        "content": [
+          "El seguimiento aparece en los detalles del pedido después del envío cuando está disponible.",
+          "Las actualizaciones pueden tardar hasta 48 horas.",
+          "El cliente debe revisar los avisos y los intentos de entrega."
+        ]
+      },
+      {
+        "title": "5. Dirección y aduanas",
+        "content": [
+          "Introduce una dirección completa y correcta.",
+          "Los pedidos internacionales pueden estar sujetos a impuestos o tasas locales.",
+          "El cliente es responsable de los cargos exigidos por el país de destino."
+        ]
+      },
+      {
+        "title": "6. Entregas fallidas, perdidas o dañadas",
+        "content": [
+          "Sigue las instrucciones del transportista tras un intento fallido.",
+          "Contáctanos rápidamente si el paquete se pierde o llega dañado.",
+          "Conserva embalaje, etiqueta y fotos como prueba."
+        ]
+      }
+    ]
+  },
+  "refund": {
+    "title": "Devoluciones y reembolsos",
+    "intro": "Condiciones y pasos para solicitar una devolución, cambio o reembolso.",
+    "cards": [
+      {
+        "title": "Contacta con soporte",
+        "text": "Envía tu número de pedido y el motivo."
+      },
+      {
+        "title": "Prepara el artículo",
+        "text": "Debe estar sin usar, completo y con su embalaje."
+      },
+      {
+        "title": "Envía la devolución",
+        "text": "Sigue las instrucciones de soporte."
+      },
+      {
+        "title": "Revisión",
+        "text": "Inspeccionamos el artículo antes de aprobar."
+      }
+    ],
+    "sections": [
+      {
+        "title": "1. Plazo",
+        "content": [
+          "Puedes solicitar una devolución dentro de los 14 días naturales posteriores a la recepción, salvo que la ley o la página del producto indique un plazo mayor.",
+          "La solicitud debe enviarse antes de que venza el plazo."
+        ]
+      },
+      {
+        "title": "2. Requisitos",
+        "content": [
+          "El artículo debe estar sin usar, sin lavar y en condiciones de reventa.",
+          "Deben devolverse el embalaje, etiquetas, accesorios y regalos incluidos.",
+          "El reembolso puede reducirse o rechazarse si el producto perdió valor por una manipulación innecesaria."
+        ]
+      },
+      {
+        "title": "3. Solicitud",
+        "content": [
+          "Escribe a support@veromek.com con el número de pedido, nombre, email y motivo.",
+          "No envíes el paquete antes de recibir instrucciones."
+        ]
+      },
+      {
+        "title": "4. Gastos de devolución",
+        "content": [
+          "En cambios de opinión, talla incorrecta o error del cliente, el envío suele ser pagado por el cliente.",
+          "Para productos defectuosos, dañados o incorrectos confirmados, VeroMek puede cubrir gastos razonables."
+        ]
+      },
+      {
+        "title": "5. Inspección y reembolso",
+        "content": [
+          "Los artículos se inspeccionan al llegar.",
+          "Te informaremos si la devolución fue aprobada, parcialmente aprobada o rechazada.",
+          "El reembolso aprobado se envía al método de pago original."
+        ]
+      },
+      {
+        "title": "6. Exclusiones y derechos",
+        "content": [
+          "Los artículos usados, lavados, modificados, dañados o incompletos pueden ser rechazados.",
+          "Esta política no limita los derechos obligatorios del consumidor."
+        ]
+      }
+    ]
+  },
+  "privacy": {
+    "title": "Política de privacidad",
+    "intro": "Cómo VeroMek recopila, utiliza, protege y comparte información personal.",
+    "cards": [
+      {
+        "title": "Datos recopilados",
+        "text": "Datos de cuenta, pedido, contacto, dispositivo y pago."
+      },
+      {
+        "title": "Uso",
+        "text": "Operar la tienda, procesar pedidos, ayudar y prevenir fraude."
+      },
+      {
+        "title": "Protección",
+        "text": "Controles de acceso, proveedores seguros y medidas razonables."
+      },
+      {
+        "title": "Tus opciones",
+        "text": "Puedes tener derechos de acceso, corrección o eliminación."
+      }
+    ],
+    "sections": [
+      {
+        "title": "1. Quiénes somos",
+        "content": [
+          "VeroMek opera esta tienda y es responsable de la información descrita.",
+          "Para solicitudes de privacidad, contacta con support@veromek.com."
+        ]
+      },
+      {
+        "title": "2. Información recopilada",
+        "content": [
+          "Datos de cuenta y contacto, pedidos, entregas, devoluciones y transacciones.",
+          "Datos técnicos como IP, dispositivo, navegador, páginas visitadas y ubicación aproximada.",
+          "Cookies y datos de uso para mantener sesiones y mejorar la tienda."
+        ]
+      },
+      {
+        "title": "3. Uso de la información",
+        "content": [
+          "Crear cuentas, procesar pedidos, prestar soporte y enviar comunicaciones del servicio.",
+          "Prevenir fraude, proteger cuentas y solucionar problemas.",
+          "Cumplir obligaciones legales, fiscales y contables."
+        ]
+      },
+      {
+        "title": "4. Pagos y terceros",
+        "content": [
+          "Los pagos pueden ser procesados por proveedores externos.",
+          "Podemos compartir datos necesarios con servicios de alojamiento, entrega, email, análisis y soporte.",
+          "No vendemos información personal a cambio de dinero."
+        ]
+      },
+      {
+        "title": "5. Transferencias y conservación",
+        "content": [
+          "Algunos proveedores pueden procesar datos fuera de tu país con las garantías necesarias.",
+          "Conservamos la información solo el tiempo razonablemente necesario o exigido por ley."
+        ]
+      },
+      {
+        "title": "6. Cookies y derechos",
+        "content": [
+          "Las cookies esenciales permiten inicio de sesión, carrito y seguridad.",
+          "Según tu ubicación, puedes solicitar acceso, corrección, eliminación, limitación, oposición o portabilidad."
+        ]
+      },
+      {
+        "title": "7. Seguridad, menores y cambios",
+        "content": [
+          "Usa una contraseña segura y avísanos si sospechas acceso no autorizado.",
+          "La tienda no está dirigida a menores sin capacidad legal para comprar online.",
+          "Publicaremos aquí cualquier actualización de esta política."
+        ]
+      }
+    ]
+  },
+  "terms": {
+    "title": "Términos y condiciones",
+    "intro": "Las reglas aplicables al usar VeroMek o realizar un pedido.",
+    "cards": [
+      {
+        "title": "Pedidos",
+        "text": "Sujetos a disponibilidad, verificación y aceptación."
+      },
+      {
+        "title": "Pagos",
+        "text": "Deben estar autorizados y pueden revisarse contra fraude."
+      },
+      {
+        "title": "Cuentas",
+        "text": "Debes mantener seguros tus datos de acceso."
+      },
+      {
+        "title": "Condiciones legales",
+        "text": "Regulan el uso de la web y las compras."
+      }
+    ],
+    "sections": [
+      {
+        "title": "1. Aceptación",
+        "content": [
+          "Al usar la web, crear una cuenta o realizar un pedido, aceptas estas condiciones.",
+          "Debes tener la capacidad legal requerida en tu país."
+        ]
+      },
+      {
+        "title": "2. Cuentas",
+        "content": [
+          "Proporciona información exacta y actualizada.",
+          "Mantén la contraseña confidencial y avisa de accesos no autorizados.",
+          "Podemos suspender cuentas por fraude, abuso o actividad ilegal."
+        ]
+      },
+      {
+        "title": "3. Productos y precios",
+        "content": [
+          "Intentamos mostrar descripciones, imágenes, colores, precios y disponibilidad con precisión.",
+          "La apariencia puede variar según el dispositivo.",
+          "Podemos corregir errores, actualizar datos o retirar productos."
+        ]
+      },
+      {
+        "title": "4. Pedidos y pagos",
+        "content": [
+          "Enviar un pedido constituye una oferta de compra.",
+          "Podemos rechazar o cancelar por falta de stock, pago fallido, fraude, error de precio o restricciones de entrega.",
+          "Usa solo métodos de pago válidos y autorizados."
+        ]
+      },
+      {
+        "title": "5. Promociones",
+        "content": [
+          "Los cupones están sujetos a caducidad, pedido mínimo y límites de uso.",
+          "Salvo indicación contraria, solo se admite un cupón por pedido."
+        ]
+      },
+      {
+        "title": "6. Envíos y devoluciones",
+        "content": [
+          "Los envíos se rigen por la Política de envíos.",
+          "Las devoluciones se rigen por la Política de devoluciones y reembolsos.",
+          "Los derechos obligatorios del consumidor no quedan limitados."
+        ]
+      },
+      {
+        "title": "7. Contenido y propiedad intelectual",
+        "content": [
+          "Las reseñas deben ser honestas, relevantes y legales.",
+          "El diseño, textos, gráficos, logos y software están protegidos.",
+          "No puedes copiar, extraer o explotar comercialmente la web sin permiso."
+        ]
+      },
+      {
+        "title": "8. Uso prohibido y disponibilidad",
+        "content": [
+          "No uses la web para actividades ilegales, fraudulentas o dañinas.",
+          "No garantizamos disponibilidad ininterrumpida y podemos suspender servicios por mantenimiento o seguridad."
+        ]
+      },
+      {
+        "title": "9. Responsabilidad y disputas",
+        "content": [
+          "La responsabilidad se limita en la medida permitida por ley.",
+          "Contáctanos antes de iniciar procedimientos formales."
+        ]
+      },
+      {
+        "title": "10. Cambios y contacto",
+        "content": [
+          "Podemos actualizar estas condiciones por cambios legales, técnicos o comerciales.",
+          "Envía preguntas a support@veromek.com."
+        ]
+      }
+    ]
   }
 }
