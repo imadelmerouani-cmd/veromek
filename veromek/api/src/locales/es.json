@@ -1,0 +1,716 @@
+{
+  "common": {
+    "language": "Idioma",
+    "english": "English",
+    "spanish": "Español",
+    "french": "Français"
+  },
+  "topbar": {
+    "shipping": "🚚 Envío gratis en pedidos elegibles"
+  },
+  "nav": {
+    "home": "Inicio",
+    "shop": "Tienda",
+    "about": "Nosotros",
+    "contact": "Contacto",
+    "policies": "Políticas",
+    "shippingPolicy": "Política de envíos",
+    "returnsRefunds": "Devoluciones y reembolsos",
+    "privacyPolicy": "Política de privacidad",
+    "termsConditions": "Términos y condiciones",
+    "cart": "Carrito",
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "loggingOut": "Cerrando sesión...",
+    "loggedOut": "Sesión cerrada correctamente.",
+    "somethingWrong": "Algo salió mal.",
+    "myProfile": "Mi perfil",
+    "myOrders": "Mis pedidos",
+    "adminDashboard": "Panel de administración",
+    "administrator": "Administrador",
+    "lightMode": "Modo claro",
+    "darkMode": "Modo oscuro",
+    "switchLight": "Cambiar a modo claro",
+    "switchDark": "Cambiar a modo oscuro",
+    "wishlist": "Lista de deseos",
+    "account": "Cuenta",
+    "openMenu": "Abrir menú de navegación",
+    "closeMenu": "Cerrar menú de navegación",
+    "openWishlist": "Abrir lista de deseos",
+    "openCart": "Abrir carrito",
+    "openAccount": "Abrir menú de cuenta"
+  },
+  "footer": {
+    "tagline": "Moda premium para un estilo de vida moderno.",
+    "shop": "Tienda",
+    "allProducts": "Todos los productos",
+    "shoppingCart": "Carrito",
+    "wishlist": "Lista de deseos",
+    "myOrders": "Mis pedidos",
+    "support": "Ayuda",
+    "contactUs": "Contáctanos",
+    "shippingPolicy": "Política de envíos",
+    "returnsRefunds": "Devoluciones y reembolsos",
+    "privacyPolicy": "Política de privacidad",
+    "termsConditions": "Términos y condiciones",
+    "aboutUs": "Sobre nosotros",
+    "contact": "Contacto",
+    "location": "Valencia, España",
+    "rights": "© 2026 VeroMek. Todos los derechos reservados.",
+    "secure": "Compra segura con tecnología de Supabase."
+  },
+  "hero": {
+    "badge": "Lanzamientos limitados · Nuevos estilos",
+    "title": "Moda premium.",
+    "highlight": "Hecha para destacar.",
+    "description": "Descubre calzado, ropa y accesorios en tendencia seleccionados por su estilo moderno, calidad y comodidad diaria.",
+    "shopBestSellers": "Comprar los más vendidos",
+    "exploreAll": "Explorar todos los productos",
+    "trackedDelivery": "Entrega con seguimiento",
+    "secureCheckout": "Compra segura",
+    "carefullySelected": "Selección cuidada",
+    "responsiveSupport": "Soporte rápido",
+    "imageAlt": "Colección de moda VeroMek",
+    "selectionLabel": "Selección VeroMek",
+    "selectionText": "Moda en tendencia, seleccionada para ti."
+  },
+  "trustBar": {
+    "trackedDeliveryTitle": "Entrega con seguimiento",
+    "trackedDeliveryText": "Sigue tu pedido desde el envío hasta la entrega.",
+    "secureShoppingTitle": "Compra segura",
+    "secureShoppingText": "Tu cuenta y el proceso de compra están protegidos.",
+    "selectedProductsTitle": "Productos seleccionados",
+    "selectedProductsText": "Moda elegida por su estilo, calidad y demanda.",
+    "realSupportTitle": "Atención real",
+    "realSupportText": "Contáctanos por WhatsApp o email cuando necesites ayuda."
+  },
+  "categories": {
+    "title": "Comprar por categoría",
+    "shoes": "Calzado",
+    "clothing": "Ropa",
+    "jewelry": "Joyería",
+    "bag": "Bolsos",
+    "watch": "Relojes"
+  },
+  "whyChooseUs": {
+    "eyebrow": "Por qué VeroMek",
+    "title": "Una forma más fácil de comprar moda.",
+    "description": "VeroMek es una tienda de moda seleccionada para clientes que buscan calzado, ropa y accesorios en tendencia sin una experiencia de compra complicada.",
+    "curatedTitle": "Moda seleccionada",
+    "curatedText": "Nos centramos en productos con estilo, demanda y comodidad para el día a día.",
+    "detailsTitle": "Detalles claros",
+    "detailsText": "Las tallas, el stock y la información del producto se muestran antes de comprar.",
+    "saferTitle": "Compra más segura",
+    "saferText": "Acceso seguro, políticas transparentes y un proceso de pedido claro.",
+    "supportTitle": "Soporte que responde",
+    "supportText": "Contacta directamente con VeroMek por WhatsApp o email cuando necesites ayuda."
+  },
+  "socialProof": {
+    "eyebrow": "Pruebas reales de clientes",
+    "title": "Confianza basada en experiencias reales.",
+    "description": "No usamos testimonios falsos. Las reseñas, pruebas de entrega y contenido UGC se publicarán a medida que se completen pedidos reales.",
+    "deliveryTitle": "Pruebas de entrega",
+    "deliveryText": "Aquí aparecerán actualizaciones reales de envío y entrega.",
+    "contentTitle": "Contenido de clientes",
+    "contentText": "Publicaremos fotos y vídeos UGC de clientes con su permiso.",
+    "feedbackTitle": "Opiniones verificadas",
+    "feedbackText": "Solo mostraremos experiencias y reseñas auténticas de clientes."
+  },
+  "faq": {
+    "eyebrow": "Preguntas frecuentes",
+    "title": "¿Dudas antes de comprar?",
+    "description": "Encuentra respuestas rápidas sobre entrega, pago, seguimiento, devoluciones, tallas y soporte.",
+    "items": [
+      {
+        "question": "¿Cuánto tarda la entrega?",
+        "answer": "El tiempo de entrega depende del destino y del método disponible durante el pago. Los datos de seguimiento se facilitan cuando se envía el pedido."
+      },
+      {
+        "question": "¿Cómo puedo seguir mi pedido?",
+        "answer": "Inicia sesión en tu cuenta VeroMek y abre Mis pedidos. Allí aparecerán el estado y el seguimiento cuando estén disponibles."
+      },
+      {
+        "question": "¿Qué métodos de pago se aceptan?",
+        "answer": "Los métodos disponibles se muestran durante el pago. Nunca envíes datos de pago por chat o email."
+      },
+      {
+        "question": "¿Puedo devolver o cambiar un artículo?",
+        "answer": "La elegibilidad depende del estado del artículo y de nuestra política de devoluciones y reembolsos. Contacta con soporte antes de enviarlo."
+      },
+      {
+        "question": "¿Cómo elijo la talla correcta?",
+        "answer": "Selecciona una talla en la página del producto antes de añadirlo al carrito. Revisa los detalles o contacta con soporte si necesitas ayuda."
+      },
+      {
+        "question": "¿Cómo contacto con VeroMek?",
+        "answer": "Contáctanos por WhatsApp en el +34 610 982 845, por email en veromek00@proton.me o desde la página de contacto."
+      }
+    ]
+  },
+  "finalCta": {
+    "eyebrow": "Tu próximo look",
+    "title": "Encuentra el estilo que encaja contigo.",
+    "description": "Explora los productos, elige tu talla y compra mediante un proceso claro y seguro.",
+    "button": "Comprar en VeroMek"
+  },
+  "featured": {
+    "title": "Productos destacados",
+    "description": "Descubre nuestros productos premium más recientes.",
+    "updated": "Productos destacados actualizados.",
+    "loadError": "No se pudieron cargar los productos destacados.",
+    "refreshing": "Actualizando...",
+    "refresh": "Actualizar",
+    "loading": "Cargando productos destacados...",
+    "couldNotLoad": "No se pudieron cargar los productos destacados",
+    "tryAgain": "Intentar de nuevo",
+    "emptyTitle": "No hay productos destacados",
+    "emptyText": "Los productos activos aparecerán aquí."
+  },
+  "deliveryProof": {
+    "badge": "Entregas reales de clientes",
+    "title": "Entregado. Verificado. Compartido por clientes.",
+    "description": "Confirmaciones reales de entrega y capturas de clientes de pedidos completados. Los datos personales se ocultan por privacidad.",
+    "comingSoon": "Las pruebas de entrega estarán disponibles pronto",
+    "comingSoonText": "Añade capturas seguras para la privacidad dentro de",
+    "galleryLabel": "Pruebas de entrega de clientes",
+    "openLabel": "Abrir entrega verificada de cliente",
+    "customerDelivery": "Entrega de cliente",
+    "verified": "Verificado",
+    "imageAlt": "Entrega verificada de un cliente de VeroMek",
+    "cardTitle": "Entrega de cliente verificada",
+    "swipeMore": "Desliza para ver más",
+    "browseHint": "Desliza horizontalmente para ver más entregas.",
+    "previewLabel": "Vista previa de la entrega",
+    "closePreview": "Cerrar vista previa",
+    "previousImage": "Imagen anterior",
+    "nextImage": "Imagen siguiente",
+    "caption": "Entrega VeroMek verificada"
+  },
+  "shop": {
+    "title": "Tienda",
+    "subtitle": "Explora todos nuestros productos.",
+    "refresh": "Actualizar",
+    "refreshing": "Actualizando...",
+    "updated": "Productos actualizados.",
+    "loadError": "No se pudieron cargar los productos.",
+    "sortFeatured": "Destacados",
+    "sortNewest": "Más recientes",
+    "sortLow": "Precio: menor a mayor",
+    "sortHigh": "Precio: mayor a menor",
+    "sortName": "Nombre A–Z",
+    "sortRating": "Mejor valoración",
+    "loading": "Cargando productos...",
+    "couldNotLoad": "No se pudieron cargar los productos",
+    "tryAgain": "Intentar de nuevo",
+    "product": "producto",
+    "products": "productos",
+    "found": "encontrados",
+    "none": "No se encontraron productos",
+    "changeFilters": "Prueba a cambiar la búsqueda o la categoría.",
+    "reset": "Restablecer filtros",
+    "search": "Buscar productos...",
+    "all": "Todos",
+    "shoes": "Calzado",
+    "clothing": "Ropa",
+    "watch": "Relojes",
+    "bag": "Bolsos"
+  },
+  "about": {
+    "eyebrow": "Sobre VeroMek",
+    "title1": "Estilo premium.",
+    "title2": "Compra sencilla.",
+    "intro": "VeroMek es una tienda online basada en un diseño moderno, productos cuidadosamente presentados y una experiencia clara desde el descubrimiento hasta la entrega.",
+    "shop": "Explorar la tienda",
+    "contact": "Contáctanos",
+    "storyTitle": "Una tienda diseñada con claridad",
+    "story": "Creamos VeroMek para facilitar el descubrimiento de moda moderna. Cada parte de la tienda ayuda a entender los productos, elegir con confianza y comprar de forma segura.",
+    "valuesTitle": "Lo que nos importa",
+    "principlesTitle": "Nuestros principios",
+    "values": [
+      {
+        "title": "Productos seleccionados",
+        "text": "Un catálogo enfocado, elegido por estilo, calidad y uso diario."
+      },
+      {
+        "title": "Experiencia segura",
+        "text": "Cuentas protegidas, gestión segura de pedidos y políticas transparentes."
+      },
+      {
+        "title": "Atención al cliente",
+        "text": "Ayuda clara antes, durante y después de cada pedido."
+      },
+      {
+        "title": "Diseño moderno",
+        "text": "Una identidad visual premium con una experiencia sencilla y adaptable."
+      }
+    ],
+    "principles": [
+      "Información y precios claros.",
+      "Políticas transparentes de envío y devolución.",
+      "Respeto por la privacidad y seguridad del cliente.",
+      "Mejora continua de la experiencia de compra."
+    ],
+    "ctaTitle": "¿Listo para descubrir VeroMek?",
+    "ctaText": "Explora nuestros últimos productos y encuentra un estilo para ti.",
+    "ctaButton": "Empezar a comprar"
+  },
+  "contact": {
+    "eyebrow": "Atención al cliente",
+    "title": "Contacta con VeroMek",
+    "intro": "¿Necesitas ayuda con un producto, pedido, entrega o devolución? Envíanos un mensaje y responderemos lo antes posible.",
+    "email": "Correo electrónico",
+    "whatsapp": "WhatsApp",
+    "location": "Ubicación",
+    "hours": "Horario de atención",
+    "hoursValue": "Lunes–viernes, 9:00–18:00",
+    "formTitle": "Envíanos un mensaje",
+    "name": "Tu nombre",
+    "emailPlaceholder": "tu@ejemplo.com",
+    "subject": "¿Cómo podemos ayudarte?",
+    "message": "Escribe tu mensaje...",
+    "send": "Enviar mensaje",
+    "sending": "Enviando...",
+    "required": "Completa todos los campos.",
+    "sent": "Tu mensaje fue enviado.",
+    "failed": "No se pudo enviar tu mensaje.",
+    "faqTitle": "Respuestas rápidas",
+    "faqs": [
+      {
+        "q": "¿Cuánto tarda la entrega?",
+        "a": "Depende del destino y del método de envío. Las opciones disponibles aparecen durante el pago."
+      },
+      {
+        "q": "¿Puedo cambiar o cancelar mi pedido?",
+        "a": "Contáctanos lo antes posible. Solo se puede cambiar o cancelar antes de que empiece el procesamiento."
+      },
+      {
+        "q": "¿Cómo puedo seguir mi pedido?",
+        "a": "El estado aparece en Mis pedidos. La información de seguimiento se mostrará cuando esté disponible."
+      }
+    ]
+  },
+  "policyCommon": {
+    "legal": "Información legal",
+    "updated": "Última actualización: 31 de julio de 2026",
+    "contactTitle": "¿Necesitas ayuda?",
+    "contactText": "Contacta con support@veromek.com si tienes preguntas sobre esta política."
+  },
+  "shipping": {
+    "title": "Política de envíos",
+    "intro": "Cómo VeroMek prepara, envía y entrega tus pedidos.",
+    "cards": [
+      {
+        "title": "Preparación",
+        "text": "Los pedidos suelen prepararse en 24–48 horas."
+      },
+      {
+        "title": "Seguimiento",
+        "text": "Compartimos el seguimiento cuando está disponible."
+      },
+      {
+        "title": "Envío internacional",
+        "text": "Las opciones dependen del destino."
+      },
+      {
+        "title": "Aduanas",
+        "text": "Pueden aplicarse cargos de importación."
+      }
+    ],
+    "sections": [
+      {
+        "title": "1. Preparación del pedido",
+        "content": [
+          "Los pedidos suelen procesarse en 24–48 horas laborables después de la verificación.",
+          "El proceso puede tardar más durante fines de semana, festivos o promociones.",
+          "Podemos contactarte si falta información o se necesita verificación adicional."
+        ]
+      },
+      {
+        "title": "2. Opciones y costes de envío",
+        "content": [
+          "Los métodos, precios y plazos disponibles aparecen durante el pago.",
+          "Puede ofrecerse envío gratuito al alcanzar el importe mínimo indicado.",
+          "Las promociones pueden estar limitadas por destino, producto o periodo."
+        ]
+      },
+      {
+        "title": "3. Plazos de entrega",
+        "content": [
+          "Las fechas son estimadas salvo garantía expresa.",
+          "Aduanas, clima, transportista o una dirección incorrecta pueden causar retrasos.",
+          "Ayudaremos con incidencias del transportista cuando sea posible."
+        ]
+      },
+      {
+        "title": "4. Seguimiento",
+        "content": [
+          "El seguimiento aparece en los detalles del pedido después del envío cuando está disponible.",
+          "Las actualizaciones pueden tardar hasta 48 horas.",
+          "El cliente debe revisar los avisos y los intentos de entrega."
+        ]
+      },
+      {
+        "title": "5. Dirección y aduanas",
+        "content": [
+          "Introduce una dirección completa y correcta.",
+          "Los pedidos internacionales pueden estar sujetos a impuestos o tasas locales.",
+          "El cliente es responsable de los cargos exigidos por el país de destino."
+        ]
+      },
+      {
+        "title": "6. Entregas fallidas, perdidas o dañadas",
+        "content": [
+          "Sigue las instrucciones del transportista tras un intento fallido.",
+          "Contáctanos rápidamente si el paquete se pierde o llega dañado.",
+          "Conserva embalaje, etiqueta y fotos como prueba."
+        ]
+      }
+    ]
+  },
+  "refund": {
+    "title": "Devoluciones y reembolsos",
+    "intro": "Condiciones y pasos para solicitar una devolución, cambio o reembolso.",
+    "cards": [
+      {
+        "title": "Contacta con soporte",
+        "text": "Envía tu número de pedido y el motivo."
+      },
+      {
+        "title": "Prepara el artículo",
+        "text": "Debe estar sin usar, completo y con su embalaje."
+      },
+      {
+        "title": "Envía la devolución",
+        "text": "Sigue las instrucciones de soporte."
+      },
+      {
+        "title": "Revisión",
+        "text": "Inspeccionamos el artículo antes de aprobar."
+      }
+    ],
+    "sections": [
+      {
+        "title": "1. Plazo",
+        "content": [
+          "Puedes solicitar una devolución dentro de los 14 días naturales posteriores a la recepción, salvo que la ley o la página del producto indique un plazo mayor.",
+          "La solicitud debe enviarse antes de que venza el plazo."
+        ]
+      },
+      {
+        "title": "2. Requisitos",
+        "content": [
+          "El artículo debe estar sin usar, sin lavar y en condiciones de reventa.",
+          "Deben devolverse el embalaje, etiquetas, accesorios y regalos incluidos.",
+          "El reembolso puede reducirse o rechazarse si el producto perdió valor por una manipulación innecesaria."
+        ]
+      },
+      {
+        "title": "3. Solicitud",
+        "content": [
+          "Escribe a support@veromek.com con el número de pedido, nombre, email y motivo.",
+          "No envíes el paquete antes de recibir instrucciones."
+        ]
+      },
+      {
+        "title": "4. Gastos de devolución",
+        "content": [
+          "En cambios de opinión, talla incorrecta o error del cliente, el envío suele ser pagado por el cliente.",
+          "Para productos defectuosos, dañados o incorrectos confirmados, VeroMek puede cubrir gastos razonables."
+        ]
+      },
+      {
+        "title": "5. Inspección y reembolso",
+        "content": [
+          "Los artículos se inspeccionan al llegar.",
+          "Te informaremos si la devolución fue aprobada, parcialmente aprobada o rechazada.",
+          "El reembolso aprobado se envía al método de pago original."
+        ]
+      },
+      {
+        "title": "6. Exclusiones y derechos",
+        "content": [
+          "Los artículos usados, lavados, modificados, dañados o incompletos pueden ser rechazados.",
+          "Esta política no limita los derechos obligatorios del consumidor."
+        ]
+      }
+    ]
+  },
+  "privacy": {
+    "title": "Política de privacidad",
+    "intro": "Cómo VeroMek recopila, utiliza, protege y comparte información personal.",
+    "cards": [
+      {
+        "title": "Datos recopilados",
+        "text": "Datos de cuenta, pedido, contacto, dispositivo y pago."
+      },
+      {
+        "title": "Uso",
+        "text": "Operar la tienda, procesar pedidos, ayudar y prevenir fraude."
+      },
+      {
+        "title": "Protección",
+        "text": "Controles de acceso, proveedores seguros y medidas razonables."
+      },
+      {
+        "title": "Tus opciones",
+        "text": "Puedes tener derechos de acceso, corrección o eliminación."
+      }
+    ],
+    "sections": [
+      {
+        "title": "1. Quiénes somos",
+        "content": [
+          "VeroMek opera esta tienda y es responsable de la información descrita.",
+          "Para solicitudes de privacidad, contacta con support@veromek.com."
+        ]
+      },
+      {
+        "title": "2. Información recopilada",
+        "content": [
+          "Datos de cuenta y contacto, pedidos, entregas, devoluciones y transacciones.",
+          "Datos técnicos como IP, dispositivo, navegador, páginas visitadas y ubicación aproximada.",
+          "Cookies y datos de uso para mantener sesiones y mejorar la tienda."
+        ]
+      },
+      {
+        "title": "3. Uso de la información",
+        "content": [
+          "Crear cuentas, procesar pedidos, prestar soporte y enviar comunicaciones del servicio.",
+          "Prevenir fraude, proteger cuentas y solucionar problemas.",
+          "Cumplir obligaciones legales, fiscales y contables."
+        ]
+      },
+      {
+        "title": "4. Pagos y terceros",
+        "content": [
+          "Los pagos pueden ser procesados por proveedores externos.",
+          "Podemos compartir datos necesarios con servicios de alojamiento, entrega, email, análisis y soporte.",
+          "No vendemos información personal a cambio de dinero."
+        ]
+      },
+      {
+        "title": "5. Transferencias y conservación",
+        "content": [
+          "Algunos proveedores pueden procesar datos fuera de tu país con las garantías necesarias.",
+          "Conservamos la información solo el tiempo razonablemente necesario o exigido por ley."
+        ]
+      },
+      {
+        "title": "6. Cookies y derechos",
+        "content": [
+          "Las cookies esenciales permiten inicio de sesión, carrito y seguridad.",
+          "Según tu ubicación, puedes solicitar acceso, corrección, eliminación, limitación, oposición o portabilidad."
+        ]
+      },
+      {
+        "title": "7. Seguridad, menores y cambios",
+        "content": [
+          "Usa una contraseña segura y avísanos si sospechas acceso no autorizado.",
+          "La tienda no está dirigida a menores sin capacidad legal para comprar online.",
+          "Publicaremos aquí cualquier actualización de esta política."
+        ]
+      }
+    ]
+  },
+  "terms": {
+    "title": "Términos y condiciones",
+    "intro": "Las reglas aplicables al usar VeroMek o realizar un pedido.",
+    "cards": [
+      {
+        "title": "Pedidos",
+        "text": "Sujetos a disponibilidad, verificación y aceptación."
+      },
+      {
+        "title": "Pagos",
+        "text": "Deben estar autorizados y pueden revisarse contra fraude."
+      },
+      {
+        "title": "Cuentas",
+        "text": "Debes mantener seguros tus datos de acceso."
+      },
+      {
+        "title": "Condiciones legales",
+        "text": "Regulan el uso de la web y las compras."
+      }
+    ],
+    "sections": [
+      {
+        "title": "1. Aceptación",
+        "content": [
+          "Al usar la web, crear una cuenta o realizar un pedido, aceptas estas condiciones.",
+          "Debes tener la capacidad legal requerida en tu país."
+        ]
+      },
+      {
+        "title": "2. Cuentas",
+        "content": [
+          "Proporciona información exacta y actualizada.",
+          "Mantén la contraseña confidencial y avisa de accesos no autorizados.",
+          "Podemos suspender cuentas por fraude, abuso o actividad ilegal."
+        ]
+      },
+      {
+        "title": "3. Productos y precios",
+        "content": [
+          "Intentamos mostrar descripciones, imágenes, colores, precios y disponibilidad con precisión.",
+          "La apariencia puede variar según el dispositivo.",
+          "Podemos corregir errores, actualizar datos o retirar productos."
+        ]
+      },
+      {
+        "title": "4. Pedidos y pagos",
+        "content": [
+          "Enviar un pedido constituye una oferta de compra.",
+          "Podemos rechazar o cancelar por falta de stock, pago fallido, fraude, error de precio o restricciones de entrega.",
+          "Usa solo métodos de pago válidos y autorizados."
+        ]
+      },
+      {
+        "title": "5. Promociones",
+        "content": [
+          "Los cupones están sujetos a caducidad, pedido mínimo y límites de uso.",
+          "Salvo indicación contraria, solo se admite un cupón por pedido."
+        ]
+      },
+      {
+        "title": "6. Envíos y devoluciones",
+        "content": [
+          "Los envíos se rigen por la Política de envíos.",
+          "Las devoluciones se rigen por la Política de devoluciones y reembolsos.",
+          "Los derechos obligatorios del consumidor no quedan limitados."
+        ]
+      },
+      {
+        "title": "7. Contenido y propiedad intelectual",
+        "content": [
+          "Las reseñas deben ser honestas, relevantes y legales.",
+          "El diseño, textos, gráficos, logos y software están protegidos.",
+          "No puedes copiar, extraer o explotar comercialmente la web sin permiso."
+        ]
+      },
+      {
+        "title": "8. Uso prohibido y disponibilidad",
+        "content": [
+          "No uses la web para actividades ilegales, fraudulentas o dañinas.",
+          "No garantizamos disponibilidad ininterrumpida y podemos suspender servicios por mantenimiento o seguridad."
+        ]
+      },
+      {
+        "title": "9. Responsabilidad y disputas",
+        "content": [
+          "La responsabilidad se limita en la medida permitida por ley.",
+          "Contáctanos antes de iniciar procedimientos formales."
+        ]
+      },
+      {
+        "title": "10. Cambios y contacto",
+        "content": [
+          "Podemos actualizar estas condiciones por cambios legales, técnicos o comerciales.",
+          "Envía preguntas a support@veromek.com."
+        ]
+      }
+    ]
+  },
+  "login": {
+    "fillAll": "Completa todos los campos.",
+    "incorrect": "El correo o la contraseña son incorrectos.",
+    "confirmEmail": "Confirma tu correo antes de iniciar sesión.",
+    "failed": "No se pudo iniciar sesión.",
+    "welcome": "¡Bienvenido de nuevo!",
+    "somethingWrong": "Algo salió mal. Inténtalo de nuevo.",
+    "checking": "Comprobando tu cuenta...",
+    "title": "Bienvenido de nuevo",
+    "subtitle": "Inicia sesión para seguir comprando en VeroMek.",
+    "redirectNotice": "Inicia sesión para continuar a la página solicitada.",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "tu@ejemplo.com",
+    "password": "Contraseña",
+    "passwordPlaceholder": "Introduce tu contraseña",
+    "forgotPassword": "¿Olvidaste la contraseña?",
+    "hidePassword": "Ocultar contraseña",
+    "showPassword": "Mostrar contraseña",
+    "loggingIn": "Iniciando sesión...",
+    "button": "Iniciar sesión",
+    "noAccount": "¿No tienes una cuenta?",
+    "createAccount": "Crear cuenta"
+  },
+  "register": {
+    "fillAll": "Completa todos los campos.",
+    "passwordLength": "La contraseña debe tener al menos 6 caracteres.",
+    "passwordMismatch": "Las contraseñas no coinciden.",
+    "created": "¡Cuenta creada correctamente!",
+    "checkEmail": "Cuenta creada. Revisa tu correo para confirmarla.",
+    "somethingWrong": "Algo salió mal. Inténtalo de nuevo.",
+    "title": "Crear cuenta",
+    "subtitle": "Únete a VeroMek y empieza a comprar.",
+    "firstName": "Nombre",
+    "firstNamePlaceholder": "Nombre",
+    "lastName": "Apellidos",
+    "lastNamePlaceholder": "Apellidos",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "tu@ejemplo.com",
+    "password": "Contraseña",
+    "passwordPlaceholder": "Mínimo 6 caracteres",
+    "confirmPassword": "Confirmar contraseña",
+    "confirmPasswordPlaceholder": "Repite tu contraseña",
+    "hidePassword": "Ocultar contraseña",
+    "showPassword": "Mostrar contraseña",
+    "creating": "Creando cuenta...",
+    "button": "Crear cuenta",
+    "alreadyAccount": "¿Ya tienes una cuenta?",
+    "login": "Iniciar sesión",
+    "duplicateEmail": "Ya existe una cuenta con este correo. Inicia sesión o restablece tu contraseña."
+  },
+  "forgotPassword": {
+    "title": "¿Olvidaste tu contraseña?",
+    "description": "Introduce tu correo electrónico y te enviaremos un enlace seguro para restablecer tu contraseña.",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "tu@ejemplo.com",
+    "sending": "Enviando...",
+    "sendLink": "Enviar enlace",
+    "backToLogin": "Volver al inicio de sesión",
+    "sentTitle": "Revisa tu correo",
+    "sentTo": "Hemos enviado un enlace para restablecer la contraseña a:",
+    "sentInstructions": "Abre el correo y pulsa el enlace para restablecer la contraseña. Revisa la carpeta de spam si no aparece.",
+    "useAnotherEmail": "Usar otro correo",
+    "successToast": "Correo de restablecimiento enviado.",
+    "errors": {
+      "emailRequired": "Introduce tu correo electrónico.",
+      "rateLimit": "Demasiadas solicitudes. Espera un momento e inténtalo de nuevo.",
+      "sendFailed": "No se pudo enviar el correo de restablecimiento."
+    }
+  },
+  "resetPassword": {
+    "verifying": "Verificando tu enlace...",
+    "updatedTitle": "Contraseña actualizada",
+    "updatedDescription": "Tu contraseña se ha cambiado correctamente. Ya puedes iniciar sesión con la nueva contraseña.",
+    "goToLogin": "Ir a iniciar sesión",
+    "invalidTitle": "Enlace no válido",
+    "invalidDescription": "Este enlace para restablecer la contraseña no es válido, ha caducado o ya se ha utilizado.",
+    "requestNewLink": "Solicitar un enlace nuevo",
+    "backToLogin": "Volver al inicio de sesión",
+    "title": "Crear una contraseña nueva",
+    "description": "Elige una contraseña segura para tu cuenta.",
+    "newPassword": "Nueva contraseña",
+    "newPasswordPlaceholder": "Introduce la nueva contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "confirmPasswordPlaceholder": "Confirma la nueva contraseña",
+    "hidePassword": "Ocultar contraseña",
+    "showPassword": "Mostrar contraseña",
+    "requirementsTitle": "Requisitos de la contraseña:",
+    "requirementsText": "Al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número.",
+    "updating": "Actualizando contraseña...",
+    "updateButton": "Actualizar contraseña",
+    "successToast": "Tu contraseña se ha actualizado correctamente.",
+    "errors": {
+      "minLength": "La contraseña debe tener al menos 8 caracteres.",
+      "uppercase": "La contraseña debe contener al menos una letra mayúscula.",
+      "lowercase": "La contraseña debe contener al menos una letra minúscula.",
+      "number": "La contraseña debe contener al menos un número.",
+      "invalidOrExpired": "Este enlace no es válido o ha caducado.",
+      "notMatching": "Las contraseñas no coinciden.",
+      "differentPassword": "Elige una contraseña diferente de la anterior.",
+      "updateFailed": "No se pudo actualizar la contraseña."
+    }
+  }
+}
