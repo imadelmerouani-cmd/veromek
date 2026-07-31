@@ -1,14 +1,11 @@
-import { useTranslation } from "react-i18next";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
 function TopBar() {
-  const { t } = useTranslation();
-
   return (
     <div className="border-b border-zinc-800 bg-black px-4 py-2 text-xs text-white">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 sm:flex-row">
-        <span>{t("topbar.shipping")}</span>
+        <span>🚚 Free shipping on eligible orders</span>
 
         <div className="flex flex-wrap items-center gap-4">
           <a

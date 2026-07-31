@@ -1,0 +1,62 @@
+{
+  "common": {
+    "language": "Idioma",
+    "english": "English",
+    "spanish": "Español",
+    "french": "Français"
+  },
+  "topbar": {
+    "shipping": "🚚 Envío gratis en pedidos elegibles"
+  },
+  "nav": {
+    "home": "Inicio",
+    "shop": "Tienda",
+    "about": "Nosotros",
+    "contact": "Contacto",
+    "policies": "Políticas",
+    "shippingPolicy": "Política de envíos",
+    "returnsRefunds": "Devoluciones y reembolsos",
+    "privacyPolicy": "Política de privacidad",
+    "termsConditions": "Términos y condiciones",
+    "cart": "Carrito",
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "loggingOut": "Cerrando sesión...",
+    "loggedOut": "Sesión cerrada correctamente.",
+    "somethingWrong": "Algo salió mal.",
+    "myProfile": "Mi perfil",
+    "myOrders": "Mis pedidos",
+    "adminDashboard": "Panel de administración",
+    "administrator": "Administrador",
+    "lightMode": "Modo claro",
+    "darkMode": "Modo oscuro",
+    "switchLight": "Cambiar a modo claro",
+    "switchDark": "Cambiar a modo oscuro",
+    "wishlist": "Lista de deseos",
+    "account": "Cuenta",
+    "openMenu": "Abrir menú de navegación",
+    "closeMenu": "Cerrar menú de navegación",
+    "openWishlist": "Abrir lista de deseos",
+    "openCart": "Abrir carrito",
+    "openAccount": "Abrir menú de cuenta"
+  },
+  "footer": {
+    "tagline": "Moda premium para un estilo de vida moderno.",
+    "shop": "Tienda",
+    "allProducts": "Todos los productos",
+    "shoppingCart": "Carrito",
+    "wishlist": "Lista de deseos",
+    "myOrders": "Mis pedidos",
+    "support": "Ayuda",
+    "contactUs": "Contáctanos",
+    "shippingPolicy": "Política de envíos",
+    "returnsRefunds": "Devoluciones y reembolsos",
+    "privacyPolicy": "Política de privacidad",
+    "termsConditions": "Términos y condiciones",
+    "aboutUs": "Sobre nosotros",
+    "contact": "Contacto",
+    "location": "Valencia, España",
+    "rights": "© 2026 VeroMek. Todos los derechos reservados.",
+    "secure": "Compra segura con tecnología de Supabase."
+  }
+}

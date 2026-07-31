@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import {
   Mail,
   MapPin,
@@ -7,8 +6,6 @@ import {
 } from "lucide-react";
 
 export default function Footer() {
-  const { t } = useTranslation();
-
   return (
     <footer className="mt-24 border-t border-gray-200 bg-white text-gray-900 transition-colors dark:border-zinc-800 dark:bg-zinc-950 dark:text-white">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 sm:grid-cols-2 lg:grid-cols-4">
@@ -24,14 +21,15 @@ export default function Footer() {
           </Link>
 
           <p className="mt-4 max-w-xs leading-7 text-gray-500 dark:text-gray-400">
-            {t("footer.tagline")}
+            Premium fashion for a modern
+            lifestyle.
           </p>
 
         </div>
 
         <div>
           <h3 className="mb-4 font-semibold">
-            {t("footer.shop")}
+            Shop
           </h3>
 
           <ul className="space-y-3 text-gray-500 dark:text-gray-400">
@@ -40,7 +38,7 @@ export default function Footer() {
                 to="/shop"
                 className="transition hover:text-black dark:hover:text-white"
               >
-                {t("footer.allProducts")}
+                All products
               </Link>
             </li>
 
@@ -49,7 +47,7 @@ export default function Footer() {
                 to="/cart"
                 className="transition hover:text-black dark:hover:text-white"
               >
-                {t("footer.shoppingCart")}
+                Shopping cart
               </Link>
             </li>
 
@@ -58,7 +56,7 @@ export default function Footer() {
                 to="/wishlist"
                 className="transition hover:text-black dark:hover:text-white"
               >
-                {t("footer.wishlist")}
+                Wishlist
               </Link>
             </li>
 
@@ -67,7 +65,7 @@ export default function Footer() {
                 to="/orders"
                 className="transition hover:text-black dark:hover:text-white"
               >
-                {t("footer.myOrders")}
+                My orders
               </Link>
             </li>
           </ul>
@@ -75,7 +73,7 @@ export default function Footer() {
 
         <div>
           <h3 className="mb-4 font-semibold">
-            {t("footer.support")}
+            Support
           </h3>
 
           <ul className="space-y-3 text-gray-500 dark:text-gray-400">
@@ -84,7 +82,7 @@ export default function Footer() {
                 to="/contact"
                 className="transition hover:text-black dark:hover:text-white"
               >
-                {t("footer.contactUs")}
+                Contact us
               </Link>
             </li>
 
@@ -93,7 +91,7 @@ export default function Footer() {
                 to="/shipping-policy"
                 className="transition hover:text-black dark:hover:text-white"
               >
-                {t("footer.shippingPolicy")}
+                Shipping policy
               </Link>
             </li>
 
@@ -102,7 +100,7 @@ export default function Footer() {
                 to="/refund-policy"
                 className="transition hover:text-black dark:hover:text-white"
               >
-                {t("footer.returnsRefunds")}
+                Returns & refunds
               </Link>
             </li>
 
@@ -111,7 +109,7 @@ export default function Footer() {
                 to="/privacy-policy"
                 className="transition hover:text-black dark:hover:text-white"
               >
-                {t("footer.privacyPolicy")}
+                Privacy policy
               </Link>
             </li>
 
@@ -120,7 +118,7 @@ export default function Footer() {
                 to="/terms"
                 className="transition hover:text-black dark:hover:text-white"
               >
-                {t("footer.termsConditions")}
+                Terms & conditions
               </Link>
             </li>
 
@@ -129,7 +127,7 @@ export default function Footer() {
                 to="/about"
                 className="transition hover:text-black dark:hover:text-white"
               >
-                {t("footer.aboutUs")}
+                About us
               </Link>
             </li>
           </ul>
@@ -137,7 +135,7 @@ export default function Footer() {
 
         <div>
           <h3 className="mb-4 font-semibold">
-            {t("footer.contact")}
+            Contact
           </h3>
 
           <ul className="space-y-4 text-sm text-gray-500 dark:text-gray-400">
@@ -179,7 +177,7 @@ export default function Footer() {
               />
 
               <span>
-                {t("footer.location")}
+                Valencia, Spain
               </span>
             </li>
           </ul>
@@ -189,11 +187,13 @@ export default function Footer() {
       <div className="border-t border-gray-200 px-6 py-6 dark:border-zinc-800">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 text-center text-sm text-gray-500 dark:text-gray-400 sm:flex-row sm:text-left">
           <p>
-            {t("footer.rights")}
+            © 2026 VeroMek. All rights
+            reserved.
           </p>
 
           <p>
-            {t("footer.secure")}
+            Secure shopping powered by
+            Supabase.
           </p>
         </div>
       </div>

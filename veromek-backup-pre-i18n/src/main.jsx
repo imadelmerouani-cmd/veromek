@@ -4,7 +4,6 @@ import { BrowserRouter } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 import App from "./App";
-import "./i18n";
 
 import { CartProvider } from "./context/CartContext";
 import { WishlistProvider } from "./context/WishlistContext";

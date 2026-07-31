@@ -1,0 +1,62 @@
+{
+  "common": {
+    "language": "Langue",
+    "english": "English",
+    "spanish": "Español",
+    "french": "Français"
+  },
+  "topbar": {
+    "shipping": "🚚 Livraison gratuite sur les commandes éligibles"
+  },
+  "nav": {
+    "home": "Accueil",
+    "shop": "Boutique",
+    "about": "À propos",
+    "contact": "Contact",
+    "policies": "Politiques",
+    "shippingPolicy": "Politique de livraison",
+    "returnsRefunds": "Retours et remboursements",
+    "privacyPolicy": "Politique de confidentialité",
+    "termsConditions": "Conditions générales",
+    "cart": "Panier",
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "loggingOut": "Déconnexion...",
+    "loggedOut": "Déconnexion réussie.",
+    "somethingWrong": "Une erreur s'est produite.",
+    "myProfile": "Mon profil",
+    "myOrders": "Mes commandes",
+    "adminDashboard": "Tableau de bord admin",
+    "administrator": "Administrateur",
+    "lightMode": "Mode clair",
+    "darkMode": "Mode sombre",
+    "switchLight": "Passer en mode clair",
+    "switchDark": "Passer en mode sombre",
+    "wishlist": "Liste de souhaits",
+    "account": "Compte",
+    "openMenu": "Ouvrir le menu de navigation",
+    "closeMenu": "Fermer le menu de navigation",
+    "openWishlist": "Ouvrir la liste de souhaits",
+    "openCart": "Ouvrir le panier",
+    "openAccount": "Ouvrir le menu du compte"
+  },
+  "footer": {
+    "tagline": "Mode premium pour un style de vie moderne.",
+    "shop": "Boutique",
+    "allProducts": "Tous les produits",
+    "shoppingCart": "Panier",
+    "wishlist": "Liste de souhaits",
+    "myOrders": "Mes commandes",
+    "support": "Assistance",
+    "contactUs": "Nous contacter",
+    "shippingPolicy": "Politique de livraison",
+    "returnsRefunds": "Retours et remboursements",
+    "privacyPolicy": "Politique de confidentialité",
+    "termsConditions": "Conditions générales",
+    "aboutUs": "À propos",
+    "contact": "Contact",
+    "location": "Valence, Espagne",
+    "rights": "© 2026 VeroMek. Tous droits réservés.",
+    "secure": "Achats sécurisés avec Supabase."
+  }
+}
