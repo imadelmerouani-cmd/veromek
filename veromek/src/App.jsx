@@ -7,6 +7,7 @@ import {
   Route,
 } from "react-router-dom";
 import { LoaderCircle } from "lucide-react";
+import ScrollToTop from "./components/ScrollToTop";
 
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
@@ -66,6 +67,7 @@ function PageLoader() {
 export default function App() {
   return (
     <Suspense fallback={<PageLoader />}>
+      <ScrollToTop />
       <Routes>
         <Route
           path="/"
