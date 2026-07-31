@@ -22,6 +22,7 @@ import {
   Clock3,
   CreditCard,
   MapPin,
+  Plus,
 } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -196,6 +197,15 @@ export default function ProductDetails() {
     useState([]);
   const [relatedLoading, setRelatedLoading] =
     useState(false);
+
+  const [bundleProducts, setBundleProducts] =
+    useState([]);
+  const [bundleLoading, setBundleLoading] =
+    useState(false);
+  const [bundleSelections, setBundleSelections] =
+    useState({});
+  const [bundleChecked, setBundleChecked] =
+    useState({});
 
   useEffect(() => {
     const interval = window.setInterval(() => {
@@ -562,6 +572,231 @@ export default function ProductDetails() {
     product?.category,
   ]);
 
+  useEffect(() => {
+    let mounted = true;
+
+    const fetchBundleProducts = async () => {
+      if (!product?.id) {
+        if (mounted) {
+          setBundleProducts([]);
+          setBundleSelections({});
+          setBundleChecked({});
+        }
+        return;
+      }
+
+      setBundleLoading(true);
+
+      try {
+        const {
+          data: recommendationRows,
+          error: recommendationError,
+        } = await supabase
+          .from("product_recommendations")
+          .select(
+            "recommended_product_id, sort_order"
+          )
+          .eq("product_id", product.id)
+          .order("sort_order", {
+            ascending: true,
+          })
+          .limit(3);
+
+        if (recommendationError) {
+          throw recommendationError;
+        }
+
+        const recommendationIds = (
+          recommendationRows ?? []
+        )
+          .map((row) =>
+            String(row.recommended_product_id)
+          )
+          .filter(Boolean);
+
+        if (recommendationIds.length === 0) {
+          if (mounted) {
+            setBundleProducts([]);
+            setBundleSelections({});
+            setBundleChecked({});
+          }
+          return;
+        }
+
+        const {
+          data: recommendedProducts,
+          error: productsError,
+        } = await supabase
+          .from("products")
+          .select(
+            `
+              id,
+              name,
+              category,
+              price,
+              image,
+              images,
+              stock,
+              active
+            `
+          )
+          .in("id", recommendationIds)
+          .eq("active", true);
+
+        if (productsError) {
+          throw productsError;
+        }
+
+        const {
+          data: recommendedVariants,
+          error: variantsError,
+        } = await supabase
+          .from("product_variants")
+          .select(
+            `
+              id,
+              product_id,
+              size,
+              color,
+              stock,
+              sku,
+              is_active
+            `
+          )
+          .in("product_id", recommendationIds)
+          .eq("is_active", true);
+
+        if (variantsError) {
+          throw variantsError;
+        }
+
+        const productMap = new Map(
+          (recommendedProducts ?? []).map(
+            (item) => [
+              String(item.id),
+              {
+                ...item,
+                price: Number(item.price || 0),
+                stock: Math.max(
+                  0,
+                  Number(item.stock || 0)
+                ),
+                images: Array.isArray(item.images)
+                  ? item.images
+                  : [],
+                variants: [],
+              },
+            ]
+          )
+        );
+
+        (recommendedVariants ?? []).forEach(
+          (variant) => {
+            const item = productMap.get(
+              String(variant.product_id)
+            );
+
+            if (!item) {
+              return;
+            }
+
+            item.variants.push({
+              ...variant,
+              size: String(
+                variant.size || ""
+              ).trim(),
+              color:
+                String(
+                  variant.color || "Default"
+                ).trim() || "Default",
+              stock: Math.max(
+                0,
+                Number(variant.stock || 0)
+              ),
+            });
+          }
+        );
+
+        const orderedProducts =
+          recommendationIds
+            .map((recommendationId) =>
+              productMap.get(
+                String(recommendationId)
+              )
+            )
+            .filter(Boolean)
+            .map((item) => ({
+              ...item,
+              variants: item.variants
+                .filter(
+                  (variant) =>
+                    variant.size &&
+                    variant.stock > 0
+                )
+                .sort((first, second) =>
+                  `${first.color} ${first.size}`.localeCompare(
+                    `${second.color} ${second.size}`,
+                    undefined,
+                    {
+                      numeric: true,
+                      sensitivity: "base",
+                    }
+                  )
+                ),
+            }))
+            .filter(
+              (item) =>
+                item.variants.length > 0
+            );
+
+        if (!mounted) {
+          return;
+        }
+
+        setBundleProducts(orderedProducts);
+
+        setBundleChecked(
+          Object.fromEntries(
+            orderedProducts.map((item) => [
+              String(item.id),
+              true,
+            ])
+          )
+        );
+
+        setBundleSelections(
+          Object.fromEntries(
+            orderedProducts.map((item) => [
+              String(item.id),
+              item.variants[0]?.id || "",
+            ])
+          )
+        );
+      } catch (error) {
+        console.error(
+          "Failed to load product recommendations:",
+          error
+        );
+
+        if (mounted) {
+          setBundleProducts([]);
+          setBundleSelections({});
+          setBundleChecked({});
+        }
+      } finally {
+        if (mounted) {
+          setBundleLoading(false);
+        }
+      }
+    };
+
+    fetchBundleProducts();
+
+    return () => {
+      mounted = false;
+    };
+  }, [product?.id]);
+
   const userReview = useMemo(() => {
     if (!user) {
       return null;
@@ -858,6 +1093,69 @@ export default function ProductDetails() {
       sku: selectedVariant.sku || null,
       stock: selectedVariant.stock,
     });
+  };
+
+  const selectedBundleProducts =
+    bundleProducts.filter(
+      (item) =>
+        bundleChecked[String(item.id)]
+    );
+
+  const bundleTotal =
+    Number(product?.price || 0) +
+    selectedBundleProducts.reduce(
+      (total, item) =>
+        total + Number(item.price || 0),
+      0
+    );
+
+  const handleAddBundleToCart = () => {
+    if (!selectedVariant) {
+      toast.error(
+        "Please select a size for the main product."
+      );
+      return;
+    }
+
+    addToCart({
+      ...product,
+      variant_id: selectedVariant.id,
+      size: selectedVariant.size,
+      color: selectedVariant.color,
+      sku: selectedVariant.sku || null,
+      stock: selectedVariant.stock,
+    });
+
+    for (const item of selectedBundleProducts) {
+      const variantId =
+        bundleSelections[String(item.id)];
+
+      const variant = item.variants.find(
+        (candidate) =>
+          String(candidate.id) ===
+          String(variantId)
+      );
+
+      if (!variant) {
+        toast.error(
+          `Please select a size for ${item.name}.`
+        );
+        return;
+      }
+
+      addToCart({
+        ...item,
+        variant_id: variant.id,
+        size: variant.size,
+        color: variant.color,
+        sku: variant.sku || null,
+        stock: variant.stock,
+      });
+    }
+
+    toast.success(
+      "Selected products were added to your cart."
+    );
   };
 
   if (productLoading) {
@@ -1491,6 +1789,271 @@ export default function ProductDetails() {
           </div>
         </div>
       </section>
+
+      {(bundleLoading ||
+        bundleProducts.length > 0) && (
+        <section className="border-t border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-zinc-950">
+          <div className="mx-auto max-w-7xl px-6 py-16">
+            <div className="mb-9 max-w-3xl">
+              <p className="text-sm font-black uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">
+                Complete the look
+              </p>
+
+              <h2 className="mt-3 text-3xl font-black tracking-tight text-gray-900 sm:text-4xl dark:text-white">
+                Frequently bought together
+              </h2>
+
+              <p className="mt-3 text-gray-500 dark:text-gray-400">
+                Select the products and sizes you
+                would like to add with this item.
+              </p>
+            </div>
+
+            {bundleLoading ? (
+              <div className="flex min-h-64 items-center justify-center rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+                <div className="text-center">
+                  <LoaderCircle
+                    size={38}
+                    className="mx-auto animate-spin"
+                  />
+
+                  <p className="mt-4 font-semibold text-gray-500 dark:text-gray-400">
+                    Loading recommendations...
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
+                <div className="space-y-4">
+                  <article className="rounded-3xl border-2 border-black bg-white p-5 dark:border-white dark:bg-gray-900">
+                    <div className="flex gap-4">
+                      <img
+                        src={
+                          product.image ||
+                          product.images?.[0]
+                        }
+                        alt={product.name}
+                        className="h-24 w-24 rounded-2xl bg-gray-100 object-cover"
+                      />
+
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-start justify-between gap-3">
+                          <div>
+                            <p className="text-xs font-black uppercase tracking-wider text-gray-500">
+                              Main product
+                            </p>
+
+                            <h3 className="mt-1 font-black">
+                              {product.name}
+                            </h3>
+                          </div>
+
+                          <span className="font-black">
+                            $
+                            {Number(
+                              product.price
+                            ).toFixed(2)}
+                          </span>
+                        </div>
+
+                        <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
+                          {selectedVariant
+                            ? `${selectedVariant.color} · Size ${selectedVariant.size}`
+                            : "Select the main product size above."}
+                        </p>
+                      </div>
+                    </div>
+                  </article>
+
+                  {bundleProducts.map((item) => {
+                    const checked =
+                      Boolean(
+                        bundleChecked[
+                          String(item.id)
+                        ]
+                      );
+
+                    return (
+                      <article
+                        key={item.id}
+                        className={`rounded-3xl border bg-white p-5 transition dark:bg-gray-900 ${
+                          checked
+                            ? "border-black dark:border-white"
+                            : "border-gray-200 opacity-70 dark:border-gray-800"
+                        }`}
+                      >
+                        <div className="flex gap-4">
+                          <input
+                            type="checkbox"
+                            checked={checked}
+                            onChange={(event) =>
+                              setBundleChecked(
+                                (current) => ({
+                                  ...current,
+                                  [String(item.id)]:
+                                    event.target
+                                      .checked,
+                                })
+                              )
+                            }
+                            className="mt-2 h-5 w-5 accent-black"
+                            aria-label={`Include ${item.name}`}
+                          />
+
+                          <img
+                            src={
+                              item.image ||
+                              item.images?.[0]
+                            }
+                            alt={item.name}
+                            className="h-24 w-24 rounded-2xl bg-gray-100 object-cover"
+                          />
+
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-start justify-between gap-3">
+                              <div>
+                                <h3 className="font-black">
+                                  {item.name}
+                                </h3>
+
+                                <Link
+                                  to={`/product/${item.id}`}
+                                  className="mt-1 inline-block text-xs font-bold text-gray-500 underline"
+                                >
+                                  View product
+                                </Link>
+                              </div>
+
+                              <span className="font-black">
+                                $
+                                {Number(
+                                  item.price
+                                ).toFixed(2)}
+                              </span>
+                            </div>
+
+                            <label className="mt-4 block text-xs font-black uppercase tracking-wider text-gray-500">
+                              Size & color
+                            </label>
+
+                            <select
+                              value={
+                                bundleSelections[
+                                  String(item.id)
+                                ] || ""
+                              }
+                              onChange={(event) =>
+                                setBundleSelections(
+                                  (current) => ({
+                                    ...current,
+                                    [String(item.id)]:
+                                      event.target
+                                        .value,
+                                  })
+                                )
+                              }
+                              disabled={!checked}
+                              className="mt-2 w-full rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm font-bold outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-gray-950"
+                            >
+                              {item.variants.map(
+                                (variant) => (
+                                  <option
+                                    key={variant.id}
+                                    value={variant.id}
+                                  >
+                                    {variant.color} · Size{" "}
+                                    {variant.size}
+                                  </option>
+                                )
+                              )}
+                            </select>
+                          </div>
+                        </div>
+                      </article>
+                    );
+                  })}
+                </div>
+
+                <aside className="h-fit rounded-3xl bg-black p-6 text-white lg:sticky lg:top-24 dark:bg-white dark:text-black">
+                  <p className="text-sm font-black uppercase tracking-[0.18em] text-gray-400">
+                    Bundle summary
+                  </p>
+
+                  <div className="mt-6 space-y-3 text-sm">
+                    <div className="flex justify-between gap-4">
+                      <span>Main product</span>
+                      <span className="font-black">
+                        $
+                        {Number(
+                          product.price
+                        ).toFixed(2)}
+                      </span>
+                    </div>
+
+                    {selectedBundleProducts.map(
+                      (item) => (
+                        <div
+                          key={item.id}
+                          className="flex justify-between gap-4"
+                        >
+                          <span className="truncate">
+                            {item.name}
+                          </span>
+
+                          <span className="font-black">
+                            $
+                            {Number(
+                              item.price
+                            ).toFixed(2)}
+                          </span>
+                        </div>
+                      )
+                    )}
+                  </div>
+
+                  <div className="my-6 border-t border-white/20 dark:border-black/20" />
+
+                  <div className="flex items-end justify-between gap-4">
+                    <span className="font-black">
+                      Total
+                    </span>
+
+                    <span className="text-3xl font-black">
+                      $
+                      {bundleTotal.toFixed(2)}
+                    </span>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={handleAddBundleToCart}
+                    disabled={
+                      !selectedVariant ||
+                      selectedBundleProducts.some(
+                        (item) =>
+                          !bundleSelections[
+                            String(item.id)
+                          ]
+                      )
+                    }
+                    className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-white px-5 py-4 font-black text-black transition hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-black dark:text-white dark:hover:bg-gray-800"
+                  >
+                    <Plus size={19} />
+                    Add selected items
+                  </button>
+
+                  {!selectedVariant && (
+                    <p className="mt-3 text-center text-xs text-gray-400">
+                      Select a size for the main
+                      product first.
+                    </p>
+                  )}
+                </aside>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       <section
         id="customer-reviews"
