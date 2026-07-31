@@ -12,6 +12,13 @@ import {
   RefreshCw,
   ShoppingBag,
   Trash2,
+  Gift,
+  Truck,
+  ShieldCheck,
+  RotateCcw,
+  Headphones,
+  CreditCard,
+  ArrowRight,
 } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -39,6 +46,11 @@ export default function Cart() {
     useState(true);
 
   const [refreshing, setRefreshing] =
+    useState(false);
+
+  const [upsellProducts, setUpsellProducts] =
+    useState([]);
+  const [upsellLoading, setUpsellLoading] =
     useState(false);
 
   const refreshCartStock = useCallback(
@@ -168,6 +180,148 @@ export default function Cart() {
     refreshCartStock();
   }, [refreshCartStock]);
 
+
+  useEffect(() => {
+    let mounted = true;
+
+    const fetchUpsellProducts = async () => {
+      if (cart.length === 0) {
+        if (mounted) {
+          setUpsellProducts([]);
+        }
+        return;
+      }
+
+      const sourceProductId = Number(
+        cart[0]?.id
+      );
+
+      if (!Number.isFinite(sourceProductId)) {
+        if (mounted) {
+          setUpsellProducts([]);
+        }
+        return;
+      }
+
+      setUpsellLoading(true);
+
+      try {
+        const {
+          data: recommendationRows,
+          error: recommendationError,
+        } = await supabase
+          .from("product_recommendations")
+          .select(
+            "recommended_product_id, sort_order"
+          )
+          .eq("product_id", sourceProductId)
+          .order("sort_order", {
+            ascending: true,
+          })
+          .limit(3);
+
+        if (recommendationError) {
+          throw recommendationError;
+        }
+
+        const cartProductIds = new Set(
+          cart.map((item) =>
+            String(item.id)
+          )
+        );
+
+        const recommendationIds = (
+          recommendationRows ?? []
+        )
+          .map((row) =>
+            String(row.recommended_product_id)
+          )
+          .filter(
+            (productId) =>
+              productId &&
+              !cartProductIds.has(productId)
+          );
+
+        if (recommendationIds.length === 0) {
+          if (mounted) {
+            setUpsellProducts([]);
+          }
+          return;
+        }
+
+        const { data, error } = await supabase
+          .from("products")
+          .select(
+            `
+              id,
+              name,
+              category,
+              price,
+              image,
+              stock,
+              active
+            `
+          )
+          .in("id", recommendationIds)
+          .eq("active", true);
+
+        if (error) {
+          throw error;
+        }
+
+        const productMap = new Map(
+          (data ?? []).map((item) => [
+            String(item.id),
+            {
+              ...item,
+              price: Number(item.price || 0),
+              stock: Math.max(
+                0,
+                Number(item.stock || 0)
+              ),
+            },
+          ])
+        );
+
+        const orderedProducts =
+          recommendationIds
+            .map((productId) =>
+              productMap.get(productId)
+            )
+            .filter(
+              (item) =>
+                item &&
+                item.stock > 0
+            );
+
+        if (mounted) {
+          setUpsellProducts(
+            orderedProducts
+          );
+        }
+      } catch (error) {
+        console.error(
+          "Failed to load cart recommendations:",
+          error
+        );
+
+        if (mounted) {
+          setUpsellProducts([]);
+        }
+      } finally {
+        if (mounted) {
+          setUpsellLoading(false);
+        }
+      }
+    };
+
+    fetchUpsellProducts();
+
+    return () => {
+      mounted = false;
+    };
+  }, [cart]);
+
   const subtotal = cart.reduce(
     (sum, item) =>
       sum +
@@ -183,6 +337,16 @@ export default function Cart() {
       : 15;
 
   const total = subtotal + shipping;
+
+  const freeShippingThreshold = 150;
+  const freeShippingRemaining = Math.max(
+    0,
+    freeShippingThreshold - subtotal
+  );
+  const freeShippingProgress = Math.min(
+    100,
+    (subtotal / freeShippingThreshold) * 100
+  );
 
   const hasUnavailableItems =
     cart.some(
@@ -269,6 +433,50 @@ export default function Cart() {
             </Link>
           </div>
         ) : (
+          <>
+            <div className="mt-10 rounded-3xl border border-gray-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
+            <div className="flex items-start gap-4">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-black text-white dark:bg-white dark:text-black">
+                <Gift size={21} />
+              </div>
+
+              <div className="min-w-0 flex-1">
+                <p className="font-black">
+                  {freeShippingRemaining > 0
+                    ? `Add ${formatCurrency(
+                        freeShippingRemaining
+                      )} more to unlock free shipping`
+                    : "Free shipping unlocked"}
+                </p>
+
+                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                  Free standard shipping applies when
+                  your subtotal reaches{" "}
+                  {formatCurrency(
+                    freeShippingThreshold
+                  )}
+                  .
+                </p>
+
+                <div className="mt-4 h-3 overflow-hidden rounded-full bg-gray-200 dark:bg-zinc-700">
+                  <div
+                    className="h-full rounded-full bg-black transition-all duration-500 dark:bg-white"
+                    style={{
+                      width: `${freeShippingProgress}%`,
+                    }}
+                  />
+                </div>
+
+                <p className="mt-2 text-right text-xs font-black text-gray-500 dark:text-gray-400">
+                  {Math.round(
+                    freeShippingProgress
+                  )}
+                  %
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div className="mt-10 grid gap-10 lg:grid-cols-3">
             <div className="space-y-5 lg:col-span-2">
               {cart.map((item) => {
@@ -496,6 +704,50 @@ export default function Cart() {
                 </div>
               </div>
 
+              <div className="mt-6 rounded-2xl border border-gray-200 bg-gray-50 p-4 dark:border-zinc-700 dark:bg-zinc-800">
+                <div className="flex items-start gap-3">
+                  <Truck
+                    size={20}
+                    className="mt-0.5 shrink-0"
+                  />
+
+                  <div>
+                    <p className="font-black">
+                      Delivery information
+                    </p>
+
+                    <p className="mt-1 text-sm leading-6 text-gray-500 dark:text-gray-400">
+                      Orders are normally prepared within
+                      24–48 hours. Tracking details are
+                      shared when available.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-4 grid gap-3">
+                <div className="flex items-center gap-3 rounded-2xl border border-gray-200 p-4 dark:border-zinc-700">
+                  <ShieldCheck size={20} />
+                  <span className="text-sm font-black">
+                    Secure checkout
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-3 rounded-2xl border border-gray-200 p-4 dark:border-zinc-700">
+                  <RotateCcw size={20} />
+                  <span className="text-sm font-black">
+                    Returns follow store policy
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-3 rounded-2xl border border-gray-200 p-4 dark:border-zinc-700">
+                  <Headphones size={20} />
+                  <span className="text-sm font-black">
+                    Customer support available
+                  </span>
+                </div>
+              </div>
+
               {hasUnavailableItems && (
                 <div className="mt-6 rounded-2xl bg-red-50 p-4 text-sm font-semibold text-red-700 dark:bg-red-950/30 dark:text-red-300">
                   Remove unavailable products before
@@ -519,9 +771,98 @@ export default function Cart() {
                   Proceed to Checkout
                 </Link>
               )}
+
+              <div className="mt-5 rounded-2xl bg-gray-50 p-4 dark:bg-zinc-800">
+                <div className="flex items-center gap-3">
+                  <CreditCard size={20} />
+
+                  <div>
+                    <p className="text-sm font-black">
+                      Secure payment
+                    </p>
+
+                    <p className="mt-1 text-xs leading-5 text-gray-500 dark:text-gray-400">
+                      Available payment methods are shown
+                      securely during checkout.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </aside>
           </div>
+          </>
         )}
+
+        {cart.length > 0 &&
+          (upsellLoading ||
+            upsellProducts.length > 0) && (
+            <section className="mt-16 border-t border-gray-200 pt-14 dark:border-zinc-800">
+              <div className="mb-8">
+                <p className="text-sm font-black uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">
+                  Complete your order
+                </p>
+
+                <h2 className="mt-3 text-3xl font-black">
+                  Recommended for your cart
+                </h2>
+
+                <p className="mt-3 text-gray-500 dark:text-gray-400">
+                  Choose options on the product page
+                  before adding an item to your cart.
+                </p>
+              </div>
+
+              {upsellLoading ? (
+                <div className="flex min-h-48 items-center justify-center rounded-3xl border border-gray-200 dark:border-zinc-800">
+                  <LoaderCircle
+                    size={36}
+                    className="animate-spin"
+                  />
+                </div>
+              ) : (
+                <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                  {upsellProducts.map(
+                    (upsellProduct) => (
+                      <article
+                        key={upsellProduct.id}
+                        className="overflow-hidden rounded-3xl border border-gray-200 bg-white dark:border-zinc-800 dark:bg-zinc-900"
+                      >
+                        <img
+                          src={upsellProduct.image}
+                          alt={upsellProduct.name}
+                          className="h-52 w-full bg-gray-100 object-cover dark:bg-zinc-800"
+                        />
+
+                        <div className="p-5">
+                          <p className="text-xs font-black uppercase tracking-wider text-gray-400">
+                            {upsellProduct.category}
+                          </p>
+
+                          <h3 className="mt-2 text-xl font-black">
+                            {upsellProduct.name}
+                          </h3>
+
+                          <p className="mt-3 text-2xl font-black">
+                            {formatCurrency(
+                              upsellProduct.price
+                            )}
+                          </p>
+
+                          <Link
+                            to={`/product/${upsellProduct.id}`}
+                            className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-black px-4 py-3 font-black text-white transition hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+                          >
+                            Choose options
+                            <ArrowRight size={17} />
+                          </Link>
+                        </div>
+                      </article>
+                    )
+                  )}
+                </div>
+              )}
+            </section>
+          )}
       </section>
     </Layout>
   );
