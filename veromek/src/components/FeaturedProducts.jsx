@@ -9,11 +9,13 @@ import {
   ShoppingBag,
 } from "lucide-react";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 import ProductCard from "./product/ProductCard";
 import { supabase } from "../lib/supabase";
 
 export default function FeaturedProducts() {
+  const { t } = useTranslation();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] =
@@ -81,7 +83,7 @@ export default function FeaturedProducts() {
 
         if (silent) {
           toast.success(
-            "Featured products updated."
+            t("featured.updated")
           );
         }
       } catch (error) {
@@ -92,7 +94,7 @@ export default function FeaturedProducts() {
 
         const message =
           error?.message ||
-          "Failed to load featured products.";
+          t("featured.loadError");
 
         setErrorMessage(message);
         toast.error(message);
@@ -101,7 +103,7 @@ export default function FeaturedProducts() {
         setRefreshing(false);
       }
     },
-    []
+    [t]
   );
 
   useEffect(() => {
@@ -113,11 +115,11 @@ export default function FeaturedProducts() {
       <div className="mb-12 flex flex-col items-center justify-between gap-5 text-center sm:flex-row sm:text-left">
         <div>
           <h2 className="text-4xl font-bold text-gray-900 dark:text-white">
-            Featured Products
+            {t("featured.title")}
           </h2>
 
           <p className="mt-4 text-gray-500 dark:text-gray-400">
-            Discover our newest premium products.
+            {t("featured.description")}
           </p>
         </div>
 
@@ -140,8 +142,8 @@ export default function FeaturedProducts() {
             />
 
             {refreshing
-              ? "Refreshing..."
-              : "Refresh"}
+              ? t("featured.refreshing")
+              : t("featured.refresh")}
           </button>
         )}
       </div>
@@ -155,7 +157,7 @@ export default function FeaturedProducts() {
             />
 
             <p className="mt-4 font-semibold text-gray-500 dark:text-gray-400">
-              Loading featured products...
+              {t("featured.loading")}
             </p>
           </div>
         </div>
@@ -167,7 +169,7 @@ export default function FeaturedProducts() {
           />
 
           <h3 className="mt-5 text-2xl font-black text-red-700 dark:text-red-300">
-            Featured products could not be loaded
+            {t("featured.couldNotLoad")}
           </h3>
 
           <p className="mx-auto mt-3 max-w-xl text-red-600 dark:text-red-400">
@@ -182,7 +184,7 @@ export default function FeaturedProducts() {
             className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl bg-red-600 px-6 py-3 font-bold text-white transition hover:bg-red-700"
           >
             <RefreshCw size={18} />
-            Try again
+            {t("featured.tryAgain")}
           </button>
         </div>
       ) : products.length === 0 ? (
@@ -193,11 +195,11 @@ export default function FeaturedProducts() {
           />
 
           <h3 className="mt-5 text-2xl font-black">
-            No featured products
+            {t("featured.emptyTitle")}
           </h3>
 
           <p className="mt-3 text-gray-500 dark:text-gray-400">
-            Active products will appear here.
+            {t("featured.emptyText")}
           </p>
         </div>
       ) : (

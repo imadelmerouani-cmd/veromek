@@ -11,6 +11,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 
 const proofModules = import.meta.glob(
   "/src/assets/delivery-proof/*.{png,jpg,jpeg,webp}",
@@ -42,6 +43,7 @@ function getProofItems() {
 }
 
 export default function DeliveryProof() {
+  const { t } = useTranslation();
   const proofItems = useMemo(
     () => getProofItems(),
     []
@@ -127,17 +129,15 @@ export default function DeliveryProof() {
         <div className="mb-10 max-w-3xl">
           <div className="inline-flex items-center gap-2 rounded-full bg-green-100 px-4 py-2 text-sm font-black text-green-700 dark:bg-green-950/40 dark:text-green-300">
             <PackageCheck size={17} />
-            Real customer deliveries
+            {t("deliveryProof.badge")}
           </div>
 
           <h2 className="mt-5 text-4xl font-black tracking-tight sm:text-5xl">
-            Delivered. Verified. Shared by customers.
+            {t("deliveryProof.title")}
           </h2>
 
           <p className="mt-5 text-lg leading-8 text-gray-600 dark:text-gray-400">
-            Real delivery confirmations and customer
-            screenshots from completed VeroMek orders.
-            Personal details are hidden for privacy.
+            {t("deliveryProof.description")}
           </p>
         </div>
 
@@ -149,12 +149,11 @@ export default function DeliveryProof() {
             />
 
             <h3 className="mt-5 text-2xl font-black">
-              Delivery proof coming soon
+              {t("deliveryProof.comingSoon")}
             </h3>
 
             <p className="mx-auto mt-3 max-w-lg leading-7 text-gray-500 dark:text-gray-400">
-              Add privacy-safe customer screenshots
-              inside{" "}
+              {t("deliveryProof.comingSoonText")}{" "}
               <code className="rounded bg-gray-200 px-2 py-1 text-sm dark:bg-zinc-800">
                 src/assets/delivery-proof
               </code>
@@ -165,7 +164,7 @@ export default function DeliveryProof() {
           <div className="relative">
             <div
               className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-5 pr-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-              aria-label="Customer delivery proofs"
+              aria-label={t("deliveryProof.galleryLabel")}
             >
               {proofItems.map((item, index) => (
                 <button
@@ -175,7 +174,7 @@ export default function DeliveryProof() {
                     setSelectedIndex(index)
                   }
                   className="group w-[84%] shrink-0 snap-start overflow-hidden rounded-3xl border border-gray-200 bg-white text-left shadow-sm transition hover:-translate-y-1 hover:shadow-xl dark:border-zinc-800 dark:bg-zinc-900 sm:w-[46%] lg:w-[31%]"
-                  aria-label="Open verified customer delivery"
+                  aria-label={t("deliveryProof.openLabel")}
                 >
                   <div className="border-b border-gray-200 bg-black px-5 py-4 text-white dark:border-zinc-800">
                     <div className="flex items-center justify-between gap-3">
@@ -188,13 +187,13 @@ export default function DeliveryProof() {
                         </p>
 
                         <p className="mt-1 text-xs font-bold uppercase tracking-[0.18em] text-gray-400">
-                          Customer delivery
+                          {t("deliveryProof.customerDelivery")}
                         </p>
                       </div>
 
                       <span className="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-xs font-black">
                         <CheckCircle2 size={14} />
-                        Verified
+                        {t("deliveryProof.verified")}
                       </span>
                     </div>
                   </div>
@@ -203,7 +202,7 @@ export default function DeliveryProof() {
                     <div className="relative mx-auto aspect-[4/5] w-full max-w-[300px] overflow-hidden rounded-[22px] border border-gray-200 bg-black shadow-xl dark:border-zinc-700">
                       <img
                         src={item.src}
-                        alt="Verified VeroMek customer delivery"
+                        alt={t("deliveryProof.imageAlt")}
                         loading="lazy"
                         className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-105"
                       />
@@ -215,17 +214,17 @@ export default function DeliveryProof() {
                   <div className="flex items-center justify-between gap-3 p-5">
                     <div>
                       <p className="font-black">
-                        Verified customer delivery
+                        {t("deliveryProof.cardTitle")}
                       </p>
 
                       <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                        Swipe to see more
+                        {t("deliveryProof.swipeMore")}
                       </p>
                     </div>
 
                     <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-green-100 px-3 py-1 text-xs font-black text-green-700 dark:bg-green-950/40 dark:text-green-300">
                       <CheckCircle2 size={14} />
-                      Verified
+                      {t("deliveryProof.verified")}
                     </span>
                   </div>
                 </button>
@@ -233,7 +232,7 @@ export default function DeliveryProof() {
             </div>
 
             <p className="mt-2 text-center text-sm font-semibold text-gray-500 dark:text-gray-400">
-              Swipe horizontally to browse more deliveries.
+              {t("deliveryProof.browseHint")}
             </p>
           </div>
         )}
@@ -244,13 +243,13 @@ export default function DeliveryProof() {
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4"
           role="dialog"
           aria-modal="true"
-          aria-label="Delivery proof preview"
+          aria-label={t("deliveryProof.previewLabel")}
         >
           <button
             type="button"
             onClick={closeLightbox}
             className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-white text-black transition hover:bg-gray-200"
-            aria-label="Close preview"
+            aria-label={t("deliveryProof.closePreview")}
           >
             <X size={22} />
           </button>
@@ -261,7 +260,7 @@ export default function DeliveryProof() {
                 type="button"
                 onClick={showPrevious}
                 className="absolute left-3 flex h-11 w-11 items-center justify-center rounded-full bg-white text-black transition hover:bg-gray-200 sm:left-6"
-                aria-label="Previous image"
+                aria-label={t("deliveryProof.previousImage")}
               >
                 <ChevronLeft size={24} />
               </button>
@@ -270,7 +269,7 @@ export default function DeliveryProof() {
                 type="button"
                 onClick={showNext}
                 className="absolute right-3 flex h-11 w-11 items-center justify-center rounded-full bg-white text-black transition hover:bg-gray-200 sm:right-6"
-                aria-label="Next image"
+                aria-label={t("deliveryProof.nextImage")}
               >
                 <ChevronRight size={24} />
               </button>
@@ -281,7 +280,7 @@ export default function DeliveryProof() {
             <div className="relative mx-auto aspect-[4/5] max-h-[76vh] overflow-hidden rounded-2xl bg-black">
               <img
                 src={selectedItem.src}
-                alt="Verified VeroMek customer delivery"
+                alt={t("deliveryProof.imageAlt")}
                 className="h-full w-full object-cover object-center"
               />
 
@@ -289,7 +288,7 @@ export default function DeliveryProof() {
             </div>
 
             <figcaption className="px-3 pb-2 pt-4 text-center font-black text-black">
-              Verified VeroMek delivery
+              {t("deliveryProof.caption")}
             </figcaption>
           </figure>
         </div>

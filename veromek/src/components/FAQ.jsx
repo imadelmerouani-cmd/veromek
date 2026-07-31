@@ -1,9 +1,26 @@
-const FAQS=[
- {question:"How long does delivery take?",answer:"Delivery time depends on the destination and shipping method available during checkout. Tracking details are provided once the order is dispatched."},
- {question:"How can I track my order?",answer:"Log in to your VeroMek account and open My Orders. Your order status and tracking information will appear there when available."},
- {question:"Which payment methods are accepted?",answer:"The payment methods currently available are shown during checkout. Never send payment details through chat or email."},
- {question:"Can I return or exchange an item?",answer:"Return eligibility depends on the item condition and the terms shown in our Returns & Refunds Policy. Contact support before sending anything back."},
- {question:"How do I choose the correct size?",answer:"Select a size on the product page before adding the item to your cart. Review the product details and contact support when you need help choosing."},
- {question:"How can I contact VeroMek?",answer:"Contact us through WhatsApp at +34 610 982 845, by email at veromek00@proton.me, or through the Contact page."},
-];
-export default function FAQ(){return <section className="bg-gray-50 py-20 dark:bg-zinc-950"><div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[0.8fr_1.2fr]"><div><p className="text-sm font-black uppercase tracking-[0.22em] text-gray-400">Frequently asked</p><h2 className="mt-4 text-4xl font-black tracking-tight sm:text-5xl">Questions before you order?</h2><p className="mt-5 max-w-lg text-lg leading-8 text-gray-600 dark:text-gray-400">Find quick answers about delivery, payment, tracking, returns, sizing and support.</p></div><div className="divide-y divide-gray-200 rounded-3xl border border-gray-200 bg-white px-6 dark:divide-zinc-800 dark:border-zinc-800 dark:bg-zinc-900">{FAQS.map(faq=><details key={faq.question} className="group py-5"><summary className="cursor-pointer list-none pr-8 text-lg font-black">{faq.question}</summary><p className="mt-3 max-w-2xl leading-7 text-gray-500 dark:text-gray-400">{faq.answer}</p></details>)}</div></div></section>}
+import { useTranslation } from "react-i18next";
+
+export default function FAQ() {
+  const { t } = useTranslation();
+  const faqs = t("faq.items", { returnObjects: true });
+
+  return (
+    <section className="bg-gray-50 py-20 dark:bg-zinc-950">
+      <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[0.8fr_1.2fr]">
+        <div>
+          <p className="text-sm font-black uppercase tracking-[0.22em] text-gray-400">{t("faq.eyebrow")}</p>
+          <h2 className="mt-4 text-4xl font-black tracking-tight sm:text-5xl">{t("faq.title")}</h2>
+          <p className="mt-5 max-w-lg text-lg leading-8 text-gray-600 dark:text-gray-400">{t("faq.description")}</p>
+        </div>
+        <div className="divide-y divide-gray-200 rounded-3xl border border-gray-200 bg-white px-6 dark:divide-zinc-800 dark:border-zinc-800 dark:bg-zinc-900">
+          {Array.isArray(faqs) && faqs.map((faq) => (
+            <details key={faq.question} className="group py-5">
+              <summary className="cursor-pointer list-none pr-8 text-lg font-black">{faq.question}</summary>
+              <p className="mt-3 max-w-2xl leading-7 text-gray-500 dark:text-gray-400">{faq.answer}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

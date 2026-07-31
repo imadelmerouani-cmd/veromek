@@ -58,5 +58,132 @@
     "location": "Valence, Espagne",
     "rights": "© 2026 VeroMek. Tous droits réservés.",
     "secure": "Achats sécurisés avec Supabase."
+  },
+  "hero": {
+    "badge": "Séries limitées · Nouveaux styles",
+    "title": "Mode premium.",
+    "highlight": "Pensée pour se démarquer.",
+    "description": "Découvrez des chaussures, vêtements et accessoires tendance sélectionnés pour leur style moderne, leur qualité et leur confort au quotidien.",
+    "shopBestSellers": "Voir les meilleures ventes",
+    "exploreAll": "Voir tous les produits",
+    "trackedDelivery": "Livraison suivie",
+    "secureCheckout": "Paiement sécurisé",
+    "carefullySelected": "Sélection soignée",
+    "responsiveSupport": "Assistance réactive",
+    "imageAlt": "Collection mode VeroMek",
+    "selectionLabel": "Sélection VeroMek",
+    "selectionText": "La mode tendance, sélectionnée pour vous."
+  },
+  "trustBar": {
+    "trackedDeliveryTitle": "Livraison suivie",
+    "trackedDeliveryText": "Suivez votre commande de l’expédition à la livraison.",
+    "secureShoppingTitle": "Achats sécurisés",
+    "secureShoppingText": "Votre compte et votre paiement sont protégés.",
+    "selectedProductsTitle": "Produits sélectionnés",
+    "selectedProductsText": "Une mode choisie pour son style, sa qualité et sa popularité.",
+    "realSupportTitle": "Assistance humaine",
+    "realSupportText": "Contactez-nous par WhatsApp ou email lorsque vous avez besoin d’aide."
+  },
+  "categories": {
+    "title": "Acheter par catégorie",
+    "shoes": "Chaussures",
+    "clothing": "Vêtements",
+    "jewelry": "Bijoux",
+    "bag": "Sacs",
+    "watch": "Montres"
+  },
+  "whyChooseUs": {
+    "eyebrow": "Pourquoi VeroMek",
+    "title": "Une mode plus simple à acheter.",
+    "description": "VeroMek est une boutique de mode sélectionnée pour les clients à la recherche de chaussures, vêtements et accessoires tendance sans parcours d’achat compliqué.",
+    "curatedTitle": "Mode sélectionnée",
+    "curatedText": "Nous privilégions les produits qui associent style, demande et confort au quotidien.",
+    "detailsTitle": "Détails clairs",
+    "detailsText": "Les tailles, le stock et les informations produit sont affichés avant la commande.",
+    "saferTitle": "Achats plus sûrs",
+    "saferText": "Accès sécurisé, politiques transparentes et processus de commande clair.",
+    "supportTitle": "Une assistance réactive",
+    "supportText": "Contactez directement VeroMek par WhatsApp ou email lorsque vous avez besoin d’aide."
+  },
+  "socialProof": {
+    "eyebrow": "Preuves réelles de clients",
+    "title": "Une confiance fondée sur de vraies expériences.",
+    "description": "Nous n’utilisons pas de faux témoignages. Les avis, preuves de livraison et contenus UGC seront publiés au fil des commandes réelles.",
+    "deliveryTitle": "Preuves de livraison",
+    "deliveryText": "Les mises à jour réelles d’expédition et de livraison apparaîtront ici.",
+    "contentTitle": "Contenu client",
+    "contentText": "Les photos et vidéos UGC de clients seront publiées avec leur autorisation.",
+    "feedbackTitle": "Avis vérifiés",
+    "feedbackText": "Seules les expériences et les évaluations authentiques seront affichées."
+  },
+  "faq": {
+    "eyebrow": "Questions fréquentes",
+    "title": "Des questions avant de commander ?",
+    "description": "Trouvez rapidement des réponses sur la livraison, le paiement, le suivi, les retours, les tailles et l’assistance.",
+    "items": [
+      {
+        "question": "Combien de temps prend la livraison ?",
+        "answer": "Le délai dépend de la destination et du mode de livraison disponible au paiement. Les informations de suivi sont fournies après l’expédition."
+      },
+      {
+        "question": "Comment suivre ma commande ?",
+        "answer": "Connectez-vous à votre compte VeroMek et ouvrez Mes commandes. Le statut et le suivi y apparaîtront lorsqu’ils seront disponibles."
+      },
+      {
+        "question": "Quels moyens de paiement sont acceptés ?",
+        "answer": "Les moyens disponibles sont affichés pendant le paiement. N’envoyez jamais vos données de paiement par chat ou email."
+      },
+      {
+        "question": "Puis-je retourner ou échanger un article ?",
+        "answer": "L’éligibilité dépend de l’état de l’article et de notre politique de retours et remboursements. Contactez l’assistance avant tout renvoi."
+      },
+      {
+        "question": "Comment choisir la bonne taille ?",
+        "answer": "Sélectionnez une taille sur la page produit avant de l’ajouter au panier. Consultez les détails ou contactez l’assistance si nécessaire."
+      },
+      {
+        "question": "Comment contacter VeroMek ?",
+        "answer": "Contactez-nous sur WhatsApp au +34 610 982 845, par email à veromek00@proton.me ou via la page Contact."
+      }
+    ]
+  },
+  "finalCta": {
+    "eyebrow": "Votre prochain look",
+    "title": "Trouvez le style qui vous correspond.",
+    "description": "Parcourez les produits, choisissez votre taille et commandez via un paiement clair et sécurisé.",
+    "button": "Acheter chez VeroMek"
+  },
+  "featured": {
+    "title": "Produits à la une",
+    "description": "Découvrez nos nouveaux produits premium.",
+    "updated": "Produits à la une mis à jour.",
+    "loadError": "Impossible de charger les produits à la une.",
+    "refreshing": "Actualisation...",
+    "refresh": "Actualiser",
+    "loading": "Chargement des produits à la une...",
+    "couldNotLoad": "Les produits à la une n’ont pas pu être chargés",
+    "tryAgain": "Réessayer",
+    "emptyTitle": "Aucun produit à la une",
+    "emptyText": "Les produits actifs apparaîtront ici."
+  },
+  "deliveryProof": {
+    "badge": "Livraisons réelles de clients",
+    "title": "Livré. Vérifié. Partagé par les clients.",
+    "description": "Confirmations réelles de livraison et captures de clients provenant de commandes terminées. Les données personnelles sont masquées.",
+    "comingSoon": "Les preuves de livraison arrivent bientôt",
+    "comingSoonText": "Ajoutez des captures respectueuses de la vie privée dans",
+    "galleryLabel": "Preuves de livraison des clients",
+    "openLabel": "Ouvrir une livraison client vérifiée",
+    "customerDelivery": "Livraison client",
+    "verified": "Vérifié",
+    "imageAlt": "Livraison vérifiée d’un client VeroMek",
+    "cardTitle": "Livraison client vérifiée",
+    "swipeMore": "Faites glisser pour en voir plus",
+    "browseHint": "Faites glisser horizontalement pour voir plus de livraisons.",
+    "previewLabel": "Aperçu de la livraison",
+    "closePreview": "Fermer l’aperçu",
+    "previousImage": "Image précédente",
+    "nextImage": "Image suivante",
+    "caption": "Livraison VeroMek vérifiée"
   }
 }
