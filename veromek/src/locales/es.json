@@ -660,5 +660,57 @@
     "alreadyAccount": "¿Ya tienes una cuenta?",
     "login": "Iniciar sesión",
     "duplicateEmail": "Ya existe una cuenta con este correo. Inicia sesión o restablece tu contraseña."
+  },
+  "forgotPassword": {
+    "title": "¿Olvidaste tu contraseña?",
+    "description": "Introduce tu correo electrónico y te enviaremos un enlace seguro para restablecer tu contraseña.",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "tu@ejemplo.com",
+    "sending": "Enviando...",
+    "sendLink": "Enviar enlace",
+    "backToLogin": "Volver al inicio de sesión",
+    "sentTitle": "Revisa tu correo",
+    "sentTo": "Hemos enviado un enlace para restablecer la contraseña a:",
+    "sentInstructions": "Abre el correo y pulsa el enlace para restablecer la contraseña. Revisa la carpeta de spam si no aparece.",
+    "useAnotherEmail": "Usar otro correo",
+    "successToast": "Correo de restablecimiento enviado.",
+    "errors": {
+      "emailRequired": "Introduce tu correo electrónico.",
+      "rateLimit": "Demasiadas solicitudes. Espera un momento e inténtalo de nuevo.",
+      "sendFailed": "No se pudo enviar el correo de restablecimiento."
+    }
+  },
+  "resetPassword": {
+    "verifying": "Verificando tu enlace...",
+    "updatedTitle": "Contraseña actualizada",
+    "updatedDescription": "Tu contraseña se ha cambiado correctamente. Ya puedes iniciar sesión con la nueva contraseña.",
+    "goToLogin": "Ir a iniciar sesión",
+    "invalidTitle": "Enlace no válido",
+    "invalidDescription": "Este enlace para restablecer la contraseña no es válido, ha caducado o ya se ha utilizado.",
+    "requestNewLink": "Solicitar un enlace nuevo",
+    "backToLogin": "Volver al inicio de sesión",
+    "title": "Crear una contraseña nueva",
+    "description": "Elige una contraseña segura para tu cuenta.",
+    "newPassword": "Nueva contraseña",
+    "newPasswordPlaceholder": "Introduce la nueva contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "confirmPasswordPlaceholder": "Confirma la nueva contraseña",
+    "hidePassword": "Ocultar contraseña",
+    "showPassword": "Mostrar contraseña",
+    "requirementsTitle": "Requisitos de la contraseña:",
+    "requirementsText": "Al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número.",
+    "updating": "Actualizando contraseña...",
+    "updateButton": "Actualizar contraseña",
+    "successToast": "Tu contraseña se ha actualizado correctamente.",
+    "errors": {
+      "minLength": "La contraseña debe tener al menos 8 caracteres.",
+      "uppercase": "La contraseña debe contener al menos una letra mayúscula.",
+      "lowercase": "La contraseña debe contener al menos una letra minúscula.",
+      "number": "La contraseña debe contener al menos un número.",
+      "invalidOrExpired": "Este enlace no es válido o ha caducado.",
+      "notMatching": "Las contraseñas no coinciden.",
+      "differentPassword": "Elige una contraseña diferente de la anterior.",
+      "updateFailed": "No se pudo actualizar la contraseña."
+    }
   }
 }

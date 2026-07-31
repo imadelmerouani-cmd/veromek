@@ -690,5 +690,57 @@
     "alreadyAccount": "Already have an account?",
     "login": "Login",
     "duplicateEmail": "An account with this email already exists. Please log in or reset your password."
+  },
+  "forgotPassword": {
+    "title": "Forgot Password?",
+    "description": "Enter your email address and we will send you a secure password reset link.",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "sending": "Sending...",
+    "sendLink": "Send Reset Link",
+    "backToLogin": "Back to Login",
+    "sentTitle": "Check Your Email",
+    "sentTo": "We sent a password reset link to:",
+    "sentInstructions": "Open the email and press the password reset link. Check the spam folder if the email does not appear.",
+    "useAnotherEmail": "Use Another Email",
+    "successToast": "Password reset email sent.",
+    "errors": {
+      "emailRequired": "Please enter your email address.",
+      "rateLimit": "Too many requests. Wait a moment and try again.",
+      "sendFailed": "Failed to send the reset email."
+    }
+  },
+  "resetPassword": {
+    "verifying": "Verifying your reset link...",
+    "updatedTitle": "Password Updated",
+    "updatedDescription": "Your password was changed successfully. You can now log in using your new password.",
+    "goToLogin": "Go to Login",
+    "invalidTitle": "Invalid Reset Link",
+    "invalidDescription": "This password reset link is invalid, expired, or has already been used.",
+    "requestNewLink": "Request New Link",
+    "backToLogin": "Back to Login",
+    "title": "Create New Password",
+    "description": "Choose a strong password for your account.",
+    "newPassword": "New Password",
+    "newPasswordPlaceholder": "Enter new password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Confirm new password",
+    "hidePassword": "Hide password",
+    "showPassword": "Show password",
+    "requirementsTitle": "Password requirements:",
+    "requirementsText": "At least 8 characters, one uppercase letter, one lowercase letter and one number.",
+    "updating": "Updating Password...",
+    "updateButton": "Update Password",
+    "successToast": "Your password was updated successfully.",
+    "errors": {
+      "minLength": "Password must contain at least 8 characters.",
+      "uppercase": "Password must contain at least one uppercase letter.",
+      "lowercase": "Password must contain at least one lowercase letter.",
+      "number": "Password must contain at least one number.",
+      "invalidOrExpired": "This password reset link is invalid or expired.",
+      "notMatching": "The passwords do not match.",
+      "differentPassword": "Choose a password different from your previous password.",
+      "updateFailed": "Failed to update your password."
+    }
   }
 }

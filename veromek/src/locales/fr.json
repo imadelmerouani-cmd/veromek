@@ -660,5 +660,57 @@
     "alreadyAccount": "Vous avez déjà un compte ?",
     "login": "Se connecter",
     "duplicateEmail": "Un compte existe déjà avec cet e-mail. Connectez-vous ou réinitialisez votre mot de passe."
+  },
+  "forgotPassword": {
+    "title": "Mot de passe oublié ?",
+    "description": "Saisissez votre adresse e-mail et nous vous enverrons un lien sécurisé pour réinitialiser votre mot de passe.",
+    "emailLabel": "Adresse e-mail",
+    "emailPlaceholder": "vous@exemple.com",
+    "sending": "Envoi...",
+    "sendLink": "Envoyer le lien",
+    "backToLogin": "Retour à la connexion",
+    "sentTitle": "Consultez votre e-mail",
+    "sentTo": "Nous avons envoyé un lien de réinitialisation à :",
+    "sentInstructions": "Ouvrez l’e-mail et cliquez sur le lien de réinitialisation. Vérifiez le dossier spam si le message n’apparaît pas.",
+    "useAnotherEmail": "Utiliser une autre adresse",
+    "successToast": "E-mail de réinitialisation envoyé.",
+    "errors": {
+      "emailRequired": "Veuillez saisir votre adresse e-mail.",
+      "rateLimit": "Trop de demandes. Patientez un moment puis réessayez.",
+      "sendFailed": "Impossible d’envoyer l’e-mail de réinitialisation."
+    }
+  },
+  "resetPassword": {
+    "verifying": "Vérification de votre lien...",
+    "updatedTitle": "Mot de passe mis à jour",
+    "updatedDescription": "Votre mot de passe a été modifié avec succès. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.",
+    "goToLogin": "Aller à la connexion",
+    "invalidTitle": "Lien non valide",
+    "invalidDescription": "Ce lien de réinitialisation est non valide, expiré ou a déjà été utilisé.",
+    "requestNewLink": "Demander un nouveau lien",
+    "backToLogin": "Retour à la connexion",
+    "title": "Créer un nouveau mot de passe",
+    "description": "Choisissez un mot de passe sécurisé pour votre compte.",
+    "newPassword": "Nouveau mot de passe",
+    "newPasswordPlaceholder": "Saisissez le nouveau mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "confirmPasswordPlaceholder": "Confirmez le nouveau mot de passe",
+    "hidePassword": "Masquer le mot de passe",
+    "showPassword": "Afficher le mot de passe",
+    "requirementsTitle": "Exigences du mot de passe :",
+    "requirementsText": "Au moins 8 caractères, une majuscule, une minuscule et un chiffre.",
+    "updating": "Mise à jour du mot de passe...",
+    "updateButton": "Mettre à jour le mot de passe",
+    "successToast": "Votre mot de passe a été mis à jour avec succès.",
+    "errors": {
+      "minLength": "Le mot de passe doit contenir au moins 8 caractères.",
+      "uppercase": "Le mot de passe doit contenir au moins une majuscule.",
+      "lowercase": "Le mot de passe doit contenir au moins une minuscule.",
+      "number": "Le mot de passe doit contenir au moins un chiffre.",
+      "invalidOrExpired": "Ce lien est non valide ou a expiré.",
+      "notMatching": "Les mots de passe ne correspondent pas.",
+      "differentPassword": "Choisissez un mot de passe différent de l’ancien.",
+      "updateFailed": "Impossible de mettre à jour votre mot de passe."
+    }
   }
 }

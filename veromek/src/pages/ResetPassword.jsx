@@ -16,64 +16,49 @@ import {
   useNavigate,
 } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 import Layout from "../components/layout/Layout";
 import { supabase } from "../lib/supabase";
 
-function validatePassword(password) {
+function validatePassword(password, t) {
   if (password.length < 8) {
-    return "Password must contain at least 8 characters.";
+    return t("resetPassword.errors.minLength");
   }
 
   if (!/[A-Z]/.test(password)) {
-    return "Password must contain at least one uppercase letter.";
+    return t("resetPassword.errors.uppercase");
   }
 
   if (!/[a-z]/.test(password)) {
-    return "Password must contain at least one lowercase letter.";
+    return t("resetPassword.errors.lowercase");
   }
 
   if (!/[0-9]/.test(password)) {
-    return "Password must contain at least one number.";
+    return t("resetPassword.errors.number");
   }
 
   return "";
 }
 
 export default function ResetPassword() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const [password, setPassword] =
     useState("");
-
-  const [
-    confirmPassword,
-    setConfirmPassword,
-  ] = useState("");
-
-  const [
-    showPassword,
-    setShowPassword,
-  ] = useState(false);
-
-  const [
-    showConfirmPassword,
-    setShowConfirmPassword,
-  ] = useState(false);
-
-  const [
-    checkingSession,
-    setCheckingSession,
-  ] = useState(true);
-
-  const [
-    recoverySessionAvailable,
-    setRecoverySessionAvailable,
-  ] = useState(false);
-
+  const [confirmPassword, setConfirmPassword] =
+    useState("");
+  const [showPassword, setShowPassword] =
+    useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState(false);
+  const [checkingSession, setCheckingSession] =
+    useState(true);
+  const [recoverySessionAvailable, setRecoverySessionAvailable] =
+    useState(false);
   const [submitting, setSubmitting] =
     useState(false);
-
   const [passwordUpdated, setPasswordUpdated] =
     useState(false);
 
@@ -157,14 +142,13 @@ export default function ResetPassword() {
 
     if (!recoverySessionAvailable) {
       toast.error(
-        "This password reset link is invalid or expired."
+        t("resetPassword.errors.invalidOrExpired")
       );
-
       return;
     }
 
     const passwordError =
-      validatePassword(password);
+      validatePassword(password, t);
 
     if (passwordError) {
       toast.error(passwordError);
@@ -173,9 +157,8 @@ export default function ResetPassword() {
 
     if (password !== confirmPassword) {
       toast.error(
-        "The passwords do not match."
+        t("resetPassword.errors.notMatching")
       );
-
       return;
     }
 
@@ -192,9 +175,8 @@ export default function ResetPassword() {
       }
 
       setPasswordUpdated(true);
-
       toast.success(
-        "Your password was updated successfully."
+        t("resetPassword.successToast")
       );
 
       const { error: signOutError } =
@@ -221,21 +203,19 @@ export default function ResetPassword() {
         )
       ) {
         toast.error(
-          "Choose a password different from your previous password."
+          t("resetPassword.errors.differentPassword")
         );
       } else if (
         message.includes("expired") ||
         message.includes("invalid")
       ) {
         setRecoverySessionAvailable(false);
-
         toast.error(
-          "This reset link is invalid or expired."
+          t("resetPassword.errors.invalidOrExpired")
         );
       } else {
         toast.error(
-          error?.message ||
-            "Failed to update your password."
+          t("resetPassword.errors.updateFailed")
         );
       }
     } finally {
@@ -254,7 +234,7 @@ export default function ResetPassword() {
             />
 
             <p className="font-semibold text-gray-500 dark:text-gray-400">
-              Verifying your reset link...
+              {t("resetPassword.verifying")}
             </p>
           </div>
         </section>
@@ -272,13 +252,11 @@ export default function ResetPassword() {
             </div>
 
             <h1 className="mt-6 text-3xl font-black">
-              Password Updated
+              {t("resetPassword.updatedTitle")}
             </h1>
 
             <p className="mt-4 leading-7 text-gray-500 dark:text-gray-400">
-              Your password was changed successfully.
-              You can now log in using your new
-              password.
+              {t("resetPassword.updatedDescription")}
             </p>
 
             <button
@@ -291,7 +269,7 @@ export default function ResetPassword() {
               className="mt-7 flex w-full items-center justify-center gap-2 rounded-xl bg-black py-4 text-lg font-semibold text-white transition hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
             >
               <LockKeyhole size={20} />
-              Go to Login
+              {t("resetPassword.goToLogin")}
             </button>
           </div>
         </section>
@@ -309,12 +287,11 @@ export default function ResetPassword() {
             </div>
 
             <h1 className="mt-6 text-3xl font-black">
-              Invalid Reset Link
+              {t("resetPassword.invalidTitle")}
             </h1>
 
             <p className="mt-4 leading-7 text-gray-500 dark:text-gray-400">
-              This password reset link is invalid,
-              expired, or has already been used.
+              {t("resetPassword.invalidDescription")}
             </p>
 
             <Link
@@ -322,14 +299,14 @@ export default function ResetPassword() {
               className="mt-7 flex w-full items-center justify-center gap-2 rounded-xl bg-black py-4 text-lg font-semibold text-white transition hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
             >
               <KeyRound size={20} />
-              Request New Link
+              {t("resetPassword.requestNewLink")}
             </Link>
 
             <Link
               to="/login"
               className="mt-4 inline-flex font-semibold text-gray-600 transition hover:text-black hover:underline dark:text-gray-300 dark:hover:text-white"
             >
-              Back to Login
+              {t("resetPassword.backToLogin")}
             </Link>
           </div>
         </section>
@@ -347,12 +324,11 @@ export default function ResetPassword() {
             </div>
 
             <h1 className="text-3xl font-black">
-              Create New Password
+              {t("resetPassword.title")}
             </h1>
 
             <p className="mt-3 leading-7 text-gray-500 dark:text-gray-400">
-              Choose a strong password for your
-              account.
+              {t("resetPassword.description")}
             </p>
           </div>
 
@@ -365,7 +341,7 @@ export default function ResetPassword() {
                 htmlFor="new-password"
                 className="mb-2 block text-sm font-semibold"
               >
-                New Password
+                {t("resetPassword.newPassword")}
               </label>
 
               <div className="relative">
@@ -376,18 +352,14 @@ export default function ResetPassword() {
 
                 <input
                   id="new-password"
-                  type={
-                    showPassword
-                      ? "text"
-                      : "password"
-                  }
+                  type={showPassword ? "text" : "password"}
                   autoComplete="new-password"
-                  placeholder="Enter new password"
+                  placeholder={t(
+                    "resetPassword.newPasswordPlaceholder"
+                  )}
                   value={password}
                   onChange={(event) =>
-                    setPassword(
-                      event.target.value
-                    )
+                    setPassword(event.target.value)
                   }
                   disabled={submitting}
                   required
@@ -405,8 +377,8 @@ export default function ResetPassword() {
                   disabled={submitting}
                   aria-label={
                     showPassword
-                      ? "Hide password"
-                      : "Show password"
+                      ? t("resetPassword.hidePassword")
+                      : t("resetPassword.showPassword")
                   }
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 transition hover:text-black disabled:opacity-50 dark:hover:text-white"
                 >
@@ -424,7 +396,7 @@ export default function ResetPassword() {
                 htmlFor="confirm-password"
                 className="mb-2 block text-sm font-semibold"
               >
-                Confirm Password
+                {t("resetPassword.confirmPassword")}
               </label>
 
               <div className="relative">
@@ -441,12 +413,12 @@ export default function ResetPassword() {
                       : "password"
                   }
                   autoComplete="new-password"
-                  placeholder="Confirm new password"
+                  placeholder={t(
+                    "resetPassword.confirmPasswordPlaceholder"
+                  )}
                   value={confirmPassword}
                   onChange={(event) =>
-                    setConfirmPassword(
-                      event.target.value
-                    )
+                    setConfirmPassword(event.target.value)
                   }
                   disabled={submitting}
                   required
@@ -464,8 +436,8 @@ export default function ResetPassword() {
                   disabled={submitting}
                   aria-label={
                     showConfirmPassword
-                      ? "Hide password"
-                      : "Show password"
+                      ? t("resetPassword.hidePassword")
+                      : t("resetPassword.showPassword")
                   }
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 transition hover:text-black disabled:opacity-50 dark:hover:text-white"
                 >
@@ -480,13 +452,11 @@ export default function ResetPassword() {
 
             <div className="rounded-2xl bg-gray-50 p-4 text-sm leading-6 text-gray-600 dark:bg-zinc-950 dark:text-gray-300">
               <p className="font-bold">
-                Password requirements:
+                {t("resetPassword.requirementsTitle")}
               </p>
 
               <p className="mt-1">
-                At least 8 characters, one uppercase
-                letter, one lowercase letter and one
-                number.
+                {t("resetPassword.requirementsText")}
               </p>
             </div>
 
@@ -501,12 +471,12 @@ export default function ResetPassword() {
                     size={20}
                     className="animate-spin"
                   />
-                  Updating Password...
+                  {t("resetPassword.updating")}
                 </>
               ) : (
                 <>
                   <KeyRound size={20} />
-                  Update Password
+                  {t("resetPassword.updateButton")}
                 </>
               )}
             </button>

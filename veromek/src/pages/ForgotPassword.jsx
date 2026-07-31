@@ -11,11 +11,13 @@ import {
   useLocation,
 } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 import Layout from "../components/layout/Layout";
 import { supabase } from "../lib/supabase";
 
 export default function ForgotPassword() {
+  const { t } = useTranslation();
   const location = useLocation();
 
   const initialEmail =
@@ -46,7 +48,7 @@ export default function ForgotPassword() {
 
     if (!cleanEmail) {
       toast.error(
-        "Please enter your email address."
+        t("forgotPassword.errors.emailRequired")
       );
 
       return;
@@ -73,7 +75,7 @@ export default function ForgotPassword() {
       setEmailSent(true);
 
       toast.success(
-        "Password reset email sent."
+        t("forgotPassword.successToast")
       );
     } catch (error) {
       console.error(
@@ -81,24 +83,20 @@ export default function ForgotPassword() {
         error
       );
 
-      const message =
-        String(
-          error?.message || ""
-        ).toLowerCase();
+      const message = String(
+        error?.message || ""
+      ).toLowerCase();
 
       if (
         message.includes("rate limit") ||
-        message.includes(
-          "email rate limit"
-        )
+        message.includes("email rate limit")
       ) {
         toast.error(
-          "Too many requests. Wait a moment and try again."
+          t("forgotPassword.errors.rateLimit")
         );
       } else {
         toast.error(
-          error?.message ||
-            "Failed to send the reset email."
+          t("forgotPassword.errors.sendFailed")
         );
       }
     } finally {
@@ -116,11 +114,11 @@ export default function ForgotPassword() {
             </div>
 
             <h1 className="mt-6 text-3xl font-black text-gray-950 dark:text-white">
-              Check Your Email
+              {t("forgotPassword.sentTitle")}
             </h1>
 
             <p className="mt-4 text-gray-500 dark:text-gray-400">
-              We sent a password reset link to:
+              {t("forgotPassword.sentTo")}
             </p>
 
             <p className="mt-2 break-all font-bold text-gray-950 dark:text-white">
@@ -128,19 +126,15 @@ export default function ForgotPassword() {
             </p>
 
             <div className="mt-6 rounded-2xl bg-gray-50 p-4 text-left text-sm leading-6 text-gray-600 dark:bg-zinc-950 dark:text-gray-300">
-              Open the email and press the password
-              reset link. Check the spam folder if
-              the email does not appear.
+              {t("forgotPassword.sentInstructions")}
             </div>
 
             <button
               type="button"
-              onClick={() =>
-                setEmailSent(false)
-              }
+              onClick={() => setEmailSent(false)}
               className="mt-7 w-full rounded-xl border border-gray-300 py-3 font-bold text-gray-950 transition hover:bg-gray-100 dark:border-zinc-700 dark:text-white dark:hover:bg-zinc-800"
             >
-              Use Another Email
+              {t("forgotPassword.useAnotherEmail")}
             </button>
 
             <Link
@@ -148,7 +142,7 @@ export default function ForgotPassword() {
               className="mt-5 inline-flex items-center justify-center gap-2 font-semibold text-gray-600 transition hover:text-black hover:underline dark:text-gray-300 dark:hover:text-white"
             >
               <ArrowLeft size={17} />
-              Back to Login
+              {t("forgotPassword.backToLogin")}
             </Link>
           </div>
         </section>
@@ -166,12 +160,11 @@ export default function ForgotPassword() {
             </div>
 
             <h1 className="text-3xl font-black text-gray-950 dark:text-white">
-              Forgot Password?
+              {t("forgotPassword.title")}
             </h1>
 
             <p className="mt-3 leading-7 text-gray-500 dark:text-gray-400">
-              Enter your email address and we will
-              send you a secure password reset link.
+              {t("forgotPassword.description")}
             </p>
           </div>
 
@@ -184,7 +177,7 @@ export default function ForgotPassword() {
                 htmlFor="forgot-email"
                 className="mb-2 block text-sm font-semibold text-gray-950 dark:text-white"
               >
-                Email
+                {t("forgotPassword.emailLabel")}
               </label>
 
               <div className="relative">
@@ -198,12 +191,12 @@ export default function ForgotPassword() {
                   type="email"
                   name="email"
                   autoComplete="email"
-                  placeholder="you@example.com"
+                  placeholder={t(
+                    "forgotPassword.emailPlaceholder"
+                  )}
                   value={email}
                   onChange={(event) =>
-                    setEmail(
-                      event.target.value
-                    )
+                    setEmail(event.target.value)
                   }
                   disabled={loading}
                   required
@@ -223,12 +216,12 @@ export default function ForgotPassword() {
                     size={20}
                     className="animate-spin"
                   />
-                  Sending...
+                  {t("forgotPassword.sending")}
                 </>
               ) : (
                 <>
                   <Mail size={20} />
-                  Send Reset Link
+                  {t("forgotPassword.sendLink")}
                 </>
               )}
             </button>
@@ -239,7 +232,7 @@ export default function ForgotPassword() {
             className="mt-7 flex items-center justify-center gap-2 font-semibold text-gray-600 transition hover:text-black hover:underline dark:text-gray-300 dark:hover:text-white"
           >
             <ArrowLeft size={17} />
-            Back to Login
+            {t("forgotPassword.backToLogin")}
           </Link>
         </div>
       </section>
