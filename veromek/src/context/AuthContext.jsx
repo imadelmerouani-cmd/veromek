@@ -222,9 +222,32 @@ export function AuthProvider({ children }) {
           },
         });
 
+      if (error) {
+        return {
+          data,
+          error,
+        };
+      }
+
+      const identities =
+        data?.user?.identities;
+
+      const appearsAlreadyRegistered =
+        Array.isArray(identities) &&
+        identities.length === 0;
+
+      if (appearsAlreadyRegistered) {
+        return {
+          data: null,
+          error: new Error(
+            "An account with this email already exists. Please log in or reset your password."
+          ),
+        };
+      }
+
       return {
         data,
-        error,
+        error: null,
       };
     },
     []
