@@ -21,6 +21,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 import Layout from "../components/layout/Layout";
 import { useCart } from "../context/CartContext";
@@ -34,6 +35,7 @@ function formatCurrency(value) {
 }
 
 export default function Cart() {
+  const { t } = useTranslation();
   const {
     cart,
     increaseQuantity,
@@ -154,9 +156,7 @@ export default function Cart() {
         );
 
         if (silent) {
-          toast.success(
-            "Cart stock updated."
-          );
+          toast.success(t("cart.stockUpdated"));
         }
       } catch (error) {
         console.error(
@@ -363,11 +363,11 @@ export default function Cart() {
         <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
           <div>
             <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
-              Shopping Cart
+              {t("cart.title")}
             </h1>
 
             <p className="mt-3 text-gray-500 dark:text-gray-400">
-              Review your items before checkout.
+              {t("cart.subtitle")}
             </p>
           </div>
 
@@ -391,7 +391,7 @@ export default function Cart() {
                 }
               />
 
-              Refresh stock
+              {t("cart.refreshStock")}
             </button>
           )}
         </div>
@@ -406,7 +406,7 @@ export default function Cart() {
               />
 
               <p className="mt-4 font-semibold text-gray-500">
-                Checking stock...
+                {t("cart.checkingStock")}
               </p>
             </div>
           </div>
@@ -418,18 +418,18 @@ export default function Cart() {
             />
 
             <h2 className="mt-5 text-2xl font-black">
-              Your cart is empty
+              {t("cart.emptyTitle")}
             </h2>
 
             <p className="mt-3 text-gray-500 dark:text-gray-400">
-              Add some products to start shopping.
+              {t("cart.emptyText")}
             </p>
 
             <Link
               to="/shop"
               className="mt-6 inline-flex rounded-xl bg-black px-6 py-3 font-semibold text-white transition hover:bg-gray-800 dark:bg-white dark:text-black"
             >
-              Continue Shopping
+              {t("cart.continueShopping")}
             </Link>
           </div>
         ) : (
@@ -443,19 +443,20 @@ export default function Cart() {
               <div className="min-w-0 flex-1">
                 <p className="font-black">
                   {freeShippingRemaining > 0
-                    ? `Add ${formatCurrency(
-                        freeShippingRemaining
-                      )} more to unlock free shipping`
-                    : "Free shipping unlocked"}
+                    ? t("cart.addMore", {
+                        amount: formatCurrency(
+                          freeShippingRemaining
+                        ),
+                      })
+                    : t("cart.freeUnlocked")}
                 </p>
 
                 <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                  Free standard shipping applies when
-                  your subtotal reaches{" "}
-                  {formatCurrency(
-                    freeShippingThreshold
-                  )}
-                  .
+                  {t("cart.freeInfo", {
+                    amount: formatCurrency(
+                      freeShippingThreshold
+                    ),
+                  })}
                 </p>
 
                 <div className="mt-4 h-3 overflow-hidden rounded-full bg-gray-200 dark:bg-zinc-700">
@@ -544,7 +545,9 @@ export default function Cart() {
                           <div className="mt-3 flex flex-wrap gap-2">
                             {item.size && (
                               <span className="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-sm font-bold dark:border-zinc-700 dark:bg-zinc-800">
-                                Size: {item.size}
+                                {t("cart.size", {
+                                  size: item.size,
+                                })}
                               </span>
                             )}
 
@@ -552,8 +555,9 @@ export default function Cart() {
                               item.color !==
                                 "Default" && (
                                 <span className="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-sm font-bold dark:border-zinc-700 dark:bg-zinc-800">
-                                  Color:{" "}
-                                  {item.color}
+                                  {t("cart.color", {
+                                    color: item.color,
+                                  })}
                                 </span>
                               )}
                           </div>
@@ -575,8 +579,10 @@ export default function Cart() {
                           }`}
                         >
                           {outOfStock
-                            ? "Out of stock"
-                            : `${stock} available`}
+                            ? t("cart.outOfStock")
+                            : t("cart.available", {
+                                count: stock,
+                              })}
                         </p>
                       </div>
 
@@ -592,7 +598,7 @@ export default function Cart() {
                               )
                             }
                             className="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-300 transition hover:bg-gray-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
-                            aria-label={`Decrease ${item.name} quantity`}
+                            aria-label={t("cart.decrease", { name: item.name })}
                           >
                             <Minus size={17} />
                           </button>
@@ -615,7 +621,7 @@ export default function Cart() {
                               atMaximum
                             }
                             className="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-300 transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40 dark:border-zinc-700 dark:hover:bg-zinc-800"
-                            aria-label={`Increase ${item.name} quantity`}
+                            aria-label={t("cart.increase", { name: item.name })}
                           >
                             <Plus size={17} />
                           </button>
@@ -624,7 +630,7 @@ export default function Cart() {
                         {atMaximum &&
                           !outOfStock && (
                             <p className="mt-2 text-xs font-bold text-yellow-600 dark:text-yellow-400">
-                              Maximum reached
+                              {t("cart.maximumReached")}
                             </p>
                           )}
 
@@ -652,7 +658,7 @@ export default function Cart() {
                           className="mt-3 inline-flex items-center gap-2 text-sm font-bold text-red-600 hover:underline"
                         >
                           <Trash2 size={15} />
-                          Remove
+                          {t("cart.remove")}
                         </button>
                       </div>
                     </div>
@@ -663,13 +669,13 @@ export default function Cart() {
 
             <aside className="h-fit rounded-3xl border border-gray-200 bg-white p-6 lg:sticky lg:top-28 dark:border-zinc-800 dark:bg-zinc-900">
               <h2 className="text-2xl font-black">
-                Order Summary
+                {t("cart.summary")}
               </h2>
 
               <div className="mt-6 space-y-4">
                 <div className="flex justify-between">
                   <span className="text-gray-500">
-                    Subtotal
+                    {t("cart.subtotal")}
                   </span>
 
                   <span className="font-bold">
@@ -681,12 +687,12 @@ export default function Cart() {
 
                 <div className="flex justify-between">
                   <span className="text-gray-500">
-                    Shipping
+                    {t("cart.shipping")}
                   </span>
 
                   <span className="font-bold">
                     {shipping === 0
-                      ? "FREE"
+                      ? t("cart.free")
                       : formatCurrency(
                           shipping
                         )}
@@ -696,7 +702,7 @@ export default function Cart() {
                 <hr className="border-gray-200 dark:border-zinc-700" />
 
                 <div className="flex justify-between text-2xl font-black">
-                  <span>Total</span>
+                  <span>{t("cart.total")}</span>
 
                   <span>
                     {formatCurrency(total)}
@@ -713,13 +719,11 @@ export default function Cart() {
 
                   <div>
                     <p className="font-black">
-                      Delivery information
+                      {t("cart.deliveryTitle")}
                     </p>
 
                     <p className="mt-1 text-sm leading-6 text-gray-500 dark:text-gray-400">
-                      Orders are normally prepared within
-                      24–48 hours. Tracking details are
-                      shared when available.
+                      {t("cart.deliveryText")}
                     </p>
                   </div>
                 </div>
@@ -729,29 +733,28 @@ export default function Cart() {
                 <div className="flex items-center gap-3 rounded-2xl border border-gray-200 p-4 dark:border-zinc-700">
                   <ShieldCheck size={20} />
                   <span className="text-sm font-black">
-                    Secure checkout
+                    {t("cart.secureCheckout")}
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3 rounded-2xl border border-gray-200 p-4 dark:border-zinc-700">
                   <RotateCcw size={20} />
                   <span className="text-sm font-black">
-                    Returns follow store policy
+                    {t("cart.returnsPolicy")}
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3 rounded-2xl border border-gray-200 p-4 dark:border-zinc-700">
                   <Headphones size={20} />
                   <span className="text-sm font-black">
-                    Customer support available
+                    {t("cart.support")}
                   </span>
                 </div>
               </div>
 
               {hasUnavailableItems && (
                 <div className="mt-6 rounded-2xl bg-red-50 p-4 text-sm font-semibold text-red-700 dark:bg-red-950/30 dark:text-red-300">
-                  Remove unavailable products before
-                  checkout.
+                  {t("cart.removeUnavailable")}
                 </div>
               )}
 
@@ -761,14 +764,14 @@ export default function Cart() {
                   disabled
                   className="mt-7 block w-full cursor-not-allowed rounded-xl bg-gray-300 py-4 text-center text-lg font-semibold text-gray-500 dark:bg-zinc-700 dark:text-zinc-400"
                 >
-                  Checkout unavailable
+                  {t("cart.checkoutUnavailable")}
                 </button>
               ) : (
                 <Link
                   to="/checkout"
                   className="mt-7 block w-full rounded-xl bg-black py-4 text-center text-lg font-semibold text-white transition hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
                 >
-                  Proceed to Checkout
+                  {t("cart.proceed")}
                 </Link>
               )}
 
@@ -778,12 +781,11 @@ export default function Cart() {
 
                   <div>
                     <p className="text-sm font-black">
-                      Secure payment
+                      {t("cart.securePayment")}
                     </p>
 
                     <p className="mt-1 text-xs leading-5 text-gray-500 dark:text-gray-400">
-                      Available payment methods are shown
-                      securely during checkout.
+                      {t("cart.paymentText")}
                     </p>
                   </div>
                 </div>
@@ -799,16 +801,15 @@ export default function Cart() {
             <section className="mt-16 border-t border-gray-200 pt-14 dark:border-zinc-800">
               <div className="mb-8">
                 <p className="text-sm font-black uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">
-                  Complete your order
+                  {t("cart.completeOrder")}
                 </p>
 
                 <h2 className="mt-3 text-3xl font-black">
-                  Recommended for your cart
+                  {t("cart.recommended")}
                 </h2>
 
                 <p className="mt-3 text-gray-500 dark:text-gray-400">
-                  Choose options on the product page
-                  before adding an item to your cart.
+                  {t("cart.recommendText")}
                 </p>
               </div>
 
@@ -852,7 +853,7 @@ export default function Cart() {
                             to={`/product/${upsellProduct.id}`}
                             className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-black px-4 py-3 font-black text-white transition hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
                           >
-                            Choose options
+                            {t("cart.chooseOptions")}
                             <ArrowRight size={17} />
                           </Link>
                         </div>
