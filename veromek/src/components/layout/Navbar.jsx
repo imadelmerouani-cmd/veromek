@@ -196,7 +196,7 @@ export default function Navbar() {
 
             <details className="group relative">
               <summary className="flex cursor-pointer list-none items-center gap-1.5 transition hover:text-gray-500 dark:hover:text-gray-300">
-                Policies
+                {t("nav.policies")}
                 <ChevronDown
                   size={16}
                   className="transition group-open:rotate-180"
@@ -321,7 +321,7 @@ export default function Navbar() {
                         {isAdmin && (
                           <span className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-yellow-100 px-3 py-1 text-xs font-bold text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300">
                             <Crown size={13} />
-                            Administrator
+                            {t("nav.administrator")}
                           </span>
                         )}
                       </div>
@@ -332,7 +332,7 @@ export default function Navbar() {
                           className="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold transition hover:bg-gray-100 dark:hover:bg-zinc-800"
                         >
                           <User size={18} />
-                          My Profile
+                          {t("nav.myProfile")}
                         </Link>
 
                         <Link
@@ -340,7 +340,7 @@ export default function Navbar() {
                           className="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold transition hover:bg-gray-100 dark:hover:bg-zinc-800"
                         >
                           <Package size={18} />
-                          My Orders
+                          {t("nav.myOrders")}
                         </Link>
 
                         {isAdmin && (
@@ -349,7 +349,7 @@ export default function Navbar() {
                             className="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-yellow-700 transition hover:bg-yellow-50 dark:text-yellow-300 dark:hover:bg-yellow-950/30"
                           >
                             <Crown size={18} />
-                            Admin Dashboard
+                            {t("nav.adminDashboard")}
                           </Link>
                         )}
 
@@ -377,7 +377,7 @@ export default function Navbar() {
                   className="hidden h-11 items-center gap-2 rounded-xl border border-gray-200 px-4 transition hover:bg-gray-100 dark:border-zinc-700 dark:hover:bg-zinc-800 sm:flex"
                 >
                   <User size={18} />
-                  Login
+                  {t("nav.login")}
                 </Link>
               ))}
 
@@ -389,7 +389,7 @@ export default function Navbar() {
               <ShoppingCart size={19} />
 
               <span className="hidden sm:inline">
-                Cart
+                {t("nav.cart")}
               </span>
 
               {totalItems > 0 && (
@@ -476,7 +476,7 @@ export default function Navbar() {
               ))}
 
               <p className="pb-2 pt-6 text-xs font-black uppercase tracking-[0.22em] text-gray-400">
-                Policies
+                {t("nav.policies")}
               </p>
 
               {informationLinks.map((link) => (
@@ -603,7 +603,7 @@ export default function Navbar() {
                     className="flex w-full items-center justify-center gap-2 rounded-xl bg-black px-4 py-3 font-semibold text-white transition hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
                   >
                     <User size={18} />
-                    Login
+                    {t("nav.login")}
                   </Link>
                 ))}
             </div>
