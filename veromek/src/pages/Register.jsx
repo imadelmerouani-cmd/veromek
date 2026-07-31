@@ -9,11 +9,13 @@ import {
   UserPlus,
 } from "lucide-react";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 import Layout from "../components/layout/Layout";
 import { useAuth } from "../context/AuthContext";
 
 export default function Register() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const {
@@ -56,19 +58,19 @@ export default function Register() {
       !form.password ||
       !form.confirmPassword
     ) {
-      toast.error("Please fill in all fields.");
+      toast.error(t("register.fillAll"));
       return;
     }
 
     if (form.password.length < 6) {
       toast.error(
-        "Password must contain at least 6 characters."
+        t("register.passwordLength")
       );
       return;
     }
 
     if (form.password !== form.confirmPassword) {
-      toast.error("Passwords do not match.");
+      toast.error(t("register.passwordMismatch"));
       return;
     }
 
@@ -83,24 +85,38 @@ export default function Register() {
       });
 
       if (error) {
-        toast.error(error.message);
+        const errorMessage =
+          error.message?.toLowerCase() || "";
+
+        if (
+          errorMessage.includes(
+            "already exists"
+          )
+        ) {
+          toast.error(
+            t("register.duplicateEmail")
+          );
+        } else {
+          toast.error(error.message);
+        }
+
         return;
       }
 
       if (data.session) {
-        toast.success("Account created successfully!");
+        toast.success(t("register.created"));
         navigate("/", { replace: true });
         return;
       }
 
       toast.success(
-        "Account created! Check your email to confirm it."
+        t("register.checkEmail")
       );
 
       navigate("/login", { replace: true });
     } catch (error) {
       console.error(error);
-      toast.error("Something went wrong. Try again.");
+      toast.error(t("register.somethingWrong"));
     } finally {
       setLoading(false);
     }
@@ -130,11 +146,11 @@ export default function Register() {
             </div>
 
             <h1 className="text-4xl font-bold">
-              Create Account
+              {t("register.title")}
             </h1>
 
             <p className="mt-3 text-gray-500 dark:text-gray-400">
-              Join VeroMek and start shopping.
+              {t("register.subtitle")}
             </p>
           </div>
 
@@ -148,7 +164,7 @@ export default function Register() {
                   htmlFor="firstName"
                   className="mb-2 block text-sm font-semibold"
                 >
-                  First Name
+                  {t("register.firstName")}
                 </label>
 
                 <div className="relative">
@@ -162,7 +178,7 @@ export default function Register() {
                     type="text"
                     name="firstName"
                     autoComplete="given-name"
-                    placeholder="First name"
+                    placeholder={t("register.firstNamePlaceholder")}
                     value={form.firstName}
                     onChange={handleChange}
                     required
@@ -176,7 +192,7 @@ export default function Register() {
                   htmlFor="lastName"
                   className="mb-2 block text-sm font-semibold"
                 >
-                  Last Name
+                  {t("register.lastName")}
                 </label>
 
                 <div className="relative">
@@ -190,7 +206,7 @@ export default function Register() {
                     type="text"
                     name="lastName"
                     autoComplete="family-name"
-                    placeholder="Last name"
+                    placeholder={t("register.lastNamePlaceholder")}
                     value={form.lastName}
                     onChange={handleChange}
                     required
@@ -205,7 +221,7 @@ export default function Register() {
                 htmlFor="email"
                 className="mb-2 block text-sm font-semibold"
               >
-                Email
+                {t("register.email")}
               </label>
 
               <div className="relative">
@@ -219,7 +235,7 @@ export default function Register() {
                   type="email"
                   name="email"
                   autoComplete="email"
-                  placeholder="you@example.com"
+                  placeholder={t("register.emailPlaceholder")}
                   value={form.email}
                   onChange={handleChange}
                   required
@@ -233,7 +249,7 @@ export default function Register() {
                 htmlFor="password"
                 className="mb-2 block text-sm font-semibold"
               >
-                Password
+                {t("register.password")}
               </label>
 
               <div className="relative">
@@ -247,7 +263,7 @@ export default function Register() {
                   type={showPassword ? "text" : "password"}
                   name="password"
                   autoComplete="new-password"
-                  placeholder="Minimum 6 characters"
+                  placeholder={t("register.passwordPlaceholder")}
                   value={form.password}
                   onChange={handleChange}
                   required
@@ -262,8 +278,8 @@ export default function Register() {
                   }
                   aria-label={
                     showPassword
-                      ? "Hide password"
-                      : "Show password"
+                      ? t("register.hidePassword")
+                      : t("register.showPassword")
                   }
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-black dark:hover:text-white"
                 >
@@ -281,7 +297,7 @@ export default function Register() {
                 htmlFor="confirmPassword"
                 className="mb-2 block text-sm font-semibold"
               >
-                Confirm Password
+                {t("register.confirmPassword")}
               </label>
 
               <div className="relative">
@@ -295,7 +311,7 @@ export default function Register() {
                   type={showPassword ? "text" : "password"}
                   name="confirmPassword"
                   autoComplete="new-password"
-                  placeholder="Repeat your password"
+                  placeholder={t("register.confirmPasswordPlaceholder")}
                   value={form.confirmPassword}
                   onChange={handleChange}
                   required
@@ -311,18 +327,18 @@ export default function Register() {
               className="w-full rounded-xl bg-black py-4 text-lg font-semibold text-white hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white dark:text-black dark:hover:bg-gray-200"
             >
               {loading
-                ? "Creating account..."
-                : "Create Account"}
+                ? t("register.creating")
+                : t("register.button")}
             </button>
           </form>
 
           <p className="mt-7 text-center text-gray-500 dark:text-gray-400">
-            Already have an account?{" "}
+            {t("register.alreadyAccount")} {" "}
             <Link
               to="/login"
               className="font-semibold text-black hover:underline dark:text-white"
             >
-              Login
+              {t("register.login")}
             </Link>
           </p>
         </div>

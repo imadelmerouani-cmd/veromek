@@ -13,6 +13,7 @@ import {
   Mail,
 } from "lucide-react";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 import Layout from "../components/layout/Layout";
 import { useAuth } from "../context/AuthContext";
@@ -36,6 +37,7 @@ function getSafeRedirectPath(locationState) {
 }
 
 export default function Login() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -84,7 +86,7 @@ export default function Login() {
 
     if (!email || !password) {
       toast.error(
-        "Please fill in all fields."
+        t("login.fillAll")
       );
 
       return;
@@ -108,7 +110,7 @@ export default function Login() {
           )
         ) {
           toast.error(
-            "Email or password is incorrect."
+            t("login.incorrect")
           );
         } else if (
           errorMessage.includes(
@@ -116,19 +118,19 @@ export default function Login() {
           )
         ) {
           toast.error(
-            "Please confirm your email before logging in."
+            t("login.confirmEmail")
           );
         } else {
           toast.error(
             error.message ||
-              "Login failed."
+              t("login.failed")
           );
         }
 
         return;
       }
 
-      toast.success("Welcome back!");
+      toast.success(t("login.welcome"));
 
       navigate(redirectPath, {
         replace: true,
@@ -141,7 +143,7 @@ export default function Login() {
 
       toast.error(
         error?.message ||
-          "Something went wrong. Try again."
+          t("login.somethingWrong")
       );
     } finally {
       setLoading(false);
@@ -159,7 +161,7 @@ export default function Login() {
             />
 
             <p className="font-semibold text-gray-500 dark:text-gray-400">
-              Checking your account...
+              {t("login.checking")}
             </p>
           </div>
         </div>
@@ -186,19 +188,17 @@ export default function Login() {
             </div>
 
             <h1 className="text-4xl font-bold">
-              Welcome Back
+              {t("login.title")}
             </h1>
 
             <p className="mt-3 text-gray-500 dark:text-gray-400">
-              Login to continue shopping on
-              VeroMek.
+              {t("login.subtitle")}
             </p>
           </div>
 
           {redirectPath !== "/" && (
             <div className="mb-6 rounded-2xl border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-700 dark:border-blue-900 dark:bg-blue-950/30 dark:text-blue-300">
-              Login to continue to the page you
-              requested.
+              {t("login.redirectNotice")}
             </div>
           )}
 
@@ -211,7 +211,7 @@ export default function Login() {
                 htmlFor="email"
                 className="mb-2 block text-sm font-semibold"
               >
-                Email
+                {t("login.email")}
               </label>
 
               <div className="relative">
@@ -225,7 +225,7 @@ export default function Login() {
                   type="email"
                   name="email"
                   autoComplete="email"
-                  placeholder="you@example.com"
+                  placeholder={t("login.emailPlaceholder")}
                   value={form.email}
                   onChange={handleChange}
                   disabled={loading}
@@ -241,7 +241,7 @@ export default function Login() {
                   htmlFor="password"
                   className="block text-sm font-semibold"
                 >
-                  Password
+                  {t("login.password")}
                 </label>
 
                 <Link
@@ -253,7 +253,7 @@ export default function Login() {
                   }}
                   className="text-sm font-semibold text-gray-600 transition hover:text-black hover:underline dark:text-gray-300 dark:hover:text-white"
                 >
-                  Forgot password?
+                  {t("login.forgotPassword")}
                 </Link>
               </div>
 
@@ -272,7 +272,7 @@ export default function Login() {
                   }
                   name="password"
                   autoComplete="current-password"
-                  placeholder="Enter your password"
+                  placeholder={t("login.passwordPlaceholder")}
                   value={form.password}
                   onChange={handleChange}
                   disabled={loading}
@@ -290,8 +290,8 @@ export default function Login() {
                   disabled={loading}
                   aria-label={
                     showPassword
-                      ? "Hide password"
-                      : "Show password"
+                      ? t("login.hidePassword")
+                      : t("login.showPassword")
                   }
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 transition hover:text-black disabled:cursor-not-allowed disabled:opacity-50 dark:hover:text-white"
                 >
@@ -316,21 +316,21 @@ export default function Login() {
                     className="animate-spin"
                   />
 
-                  Logging in...
+                  {t("login.loggingIn")}
                 </>
               ) : (
-                "Login"
+                t("login.button")
               )}
             </button>
           </form>
 
           <p className="mt-7 text-center text-gray-500 dark:text-gray-400">
-            Don&apos;t have an account?{" "}
+            {t("login.noAccount")} {" "}
             <Link
               to="/register"
               className="font-semibold text-black hover:underline dark:text-white"
             >
-              Create account
+              {t("login.createAccount")}
             </Link>
           </p>
         </div>
